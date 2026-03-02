@@ -1,292 +1,226 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Review Removal ROI Calculator — Reputation.ca</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy:#1a2f4e;
-    --navy-dark:#112038;
-    --navy-light:#233d63;
-    --red:#c0392b;
-    --red-light:#e74c3c;
-    --red-dim:rgba(192,57,43,0.1);
-    --white:#ffffff;
-    --off-white:#f8f9fc;
-    --light-grey:#eef1f6;
-    --border:#dde3ed;
-    --text:#1a2f4e;
-    --muted:#6b7a92;
-    --green:#27ae60;
-    --green-dim:rgba(39,174,96,0.1);
-    --blue:#2980b9;
-    --input-bg:#ffffff;
-    --card-bg:#ffffff;
+  :root{
+    --bg:#0f1117;
+    --card:#181c27;
+    --card2:#1e2235;
+    --border:#2a2f45;
+    --accent:#4f8ef7;
+    --accent2:#6c63ff;
+    --gold:#f5c842;
+    --green:#22c55e;
+    --red:#ef4444;
+    --muted:#6b7280;
+    --text:#e8eaf2;
+    --text2:#b0b7cc;
+    --radius:14px;
+    --shadow:0 4px 32px rgba(0,0,0,0.45);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--off-white);color:var(--text);font-family:'Open Sans',sans-serif;min-height:100vh;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
 
-  /* TOP BAR */
-  .topbar{background:var(--navy-dark);padding:10px 0;text-align:center;}
-  .topbar p{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.05em;}
-  .topbar a{color:var(--white);font-weight:600;}
+  .topbar{background:#0a0d14;border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .topbar-left{font-size:12px;color:var(--muted)}
+  .topbar-left a{color:var(--accent);text-decoration:none}
+  .topbar-phone{font-size:13px;font-weight:600;color:var(--text);text-decoration:none}
 
-  /* HEADER */
-  .site-header{background:var(--navy);padding:0;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
-  .header-inner{max-width:1000px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  .header-logo img{height:40px;width:auto;}
-  .header-logo-text{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--white);letter-spacing:-0.02em;}
-  .header-logo-text span{color:#e8b84b;}
-  .header-tagline{font-size:12px;color:rgba(255,255,255,0.65);letter-spacing:0.08em;text-transform:uppercase;text-align:right;}
-  .header-phone{font-size:14px;color:var(--white);font-weight:600;}
+  .site-header{background:linear-gradient(135deg,#0d1220 0%,#141929 100%);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .site-header img{height:36px}
+  .header-right{display:flex;align-items:center;gap:20px}
+  .header-badge{background:rgba(79,142,247,0.12);border:1px solid rgba(79,142,247,0.3);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+  .header-phone{color:var(--text2);font-size:14px;font-weight:600;text-decoration:none}
+  .header-phone:hover{color:var(--accent)}
 
-  /* HERO BANNER */
-  .hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;}
-  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(192,57,43,0.08);pointer-events:none;}
-  .hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none;}
-  .hero-label{display:inline-block;background:var(--red);color:var(--white);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:16px;}
-  .hero h1{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:800;color:var(--white);line-height:1.15;margin-bottom:12px;}
-  .hero h1 span{color:#e8b84b;}
-  .hero p{font-size:15px;color:rgba(255,255,255,0.72);max-width:560px;margin:0 auto;line-height:1.7;}
+  .hero{text-align:center;padding:56px 24px 40px;max-width:760px;margin:0 auto}
+  .hero h1{font-size:clamp(26px,4vw,42px);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:14px}
+  .hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:var(--text2);font-size:16px;line-height:1.6}
 
-  /* WRAPPER */
-  .wrapper{max-width:900px;margin:0 auto;padding:36px 24px 72px;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .card-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+  .card-head::after{content:'';flex:1;height:1px;background:var(--border)}
+  .step-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:800;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-  /* SECTION LABEL */
-  .sec-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-  .sec-label::before{content:'';width:4px;height:16px;background:var(--red);border-radius:2px;flex-shrink:0;}
-  .sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:560px){.form-grid{grid-template-columns:1fr}}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.04em;text-transform:uppercase}
+  .form-group label .auto-tag{background:rgba(34,197,94,0.15);color:var(--green);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px}
+  .form-group input,.form-group select{background:#0f1320;border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;padding:11px 14px;width:100%;outline:none;transition:border .2s}
+  .form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+  .form-group select option{background:#0f1320}
+  .search-wrap{position:relative}
+  .search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:16px}
+  .found-msg{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:var(--green);font-size:12px;padding:9px 14px;border-radius:8px;margin-top:10px;display:none}
+  .hint{font-size:11px;color:var(--muted);margin-top:4px}
 
-  /* CARD */
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:28px;margin-bottom:20px;box-shadow:0 2px 8px rgba(26,47,78,0.06);}
-  .card-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .removal-row{display:flex;align-items:center;gap:10px;padding:12px;background:#0f1320;border:1px solid var(--border);border-radius:9px;margin-bottom:10px}
+  .row-num{background:var(--accent);color:#fff;font-size:11px;font-weight:800;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .removal-row select{flex:1;background:#181c27;border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:13px;padding:8px 10px;outline:none}
+  .removal-row select:focus{border-color:var(--accent)}
+  .row-price{font-size:13px;font-weight:700;color:var(--gold);min-width:60px;text-align:right}
+  .remove-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--red);font-size:18px;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s}
+  .remove-btn:hover{background:rgba(239,68,68,0.25)}
+  .add-row-btn{background:rgba(79,142,247,0.1);border:1px dashed rgba(79,142,247,0.4);color:var(--accent);font-size:13px;font-weight:600;padding:11px;border-radius:9px;width:100%;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .add-row-btn:hover{background:rgba(79,142,247,0.2)}
+  .total-invest{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.25);border-radius:9px;margin-top:14px}
+  .total-invest-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text2)}
+  .total-invest-value{font-size:20px;font-weight:800;color:var(--gold)}
 
-  /* FORM */
-  .fg2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
-  .full{grid-column:1/-1;}
-  .field{display:flex;flex-direction:column;gap:6px;}
-  label{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
-  input[type=text],input[type=number],select{background:var(--input-bg);border:1.5px solid var(--border);border-radius:4px;color:var(--text);font-family:'Open Sans',sans-serif;font-size:14px;padding:10px 13px;outline:none;width:100%;-webkit-appearance:none;transition:border-color 0.2s,box-shadow 0.2s;}
-  input:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,47,78,0.08);}
-  select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a92' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-  select option{background:white;color:var(--text);}
-  .pfx{position:relative;}
-  .pfx span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;font-weight:600;}
-  .pfx input{padding-left:26px;}
-  .fnote{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;}
+  .calc-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:16px;font-weight:800;padding:18px;border:none;border-radius:12px;cursor:pointer;letter-spacing:.02em;margin-top:20px;transition:opacity .2s,transform .1s;box-shadow:0 4px 24px rgba(79,142,247,0.4)}
+  .calc-btn:hover{opacity:.92;transform:translateY(-1px)}
+  .calc-btn:active{transform:translateY(0)}
 
-  /* AUTO TAGS */
-  .auto-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;letter-spacing:0.08em;background:var(--green-dim);color:var(--green);padding:2px 6px;border-radius:2px;margin-left:6px;opacity:0;transition:opacity 0.4s;}
-  .auto-tag.show{opacity:1;}
-  .est-tag{font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.06em;margin-left:6px;}
+  #results{display:none;animation:fadeUp .4s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-  /* SEARCH */
-  .search-wrap{position:relative;}
-  .search-wrap input{padding-right:44px;font-size:15px;padding:12px 44px 12px 14px;border-radius:4px;}
-  .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none;}
-  .found-banner{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.25);border-radius:4px;margin-top:8px;opacity:0;transition:opacity 0.5s;font-size:12px;color:var(--green);}
-  .found-banner.show{opacity:1;}
-  .found-banner strong{color:var(--text);}
+  .headline-loss{text-align:center;padding:28px 20px;background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.03));border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius);margin-bottom:20px}
+  .headline-loss .hl-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px}
+  .headline-loss .hl-num{font-size:clamp(42px,8vw,72px);font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em}
+  .headline-loss .hl-unit{font-size:18px;font-weight:600;color:var(--muted);margin-top:4px}
+  .headline-loss .hl-source{font-size:11px;color:var(--muted);margin-top:10px}
 
-  /* Google autocomplete */
-  .pac-container{background:#fff!important;border:1.5px solid var(--border)!important;border-radius:6px!important;font-family:'Open Sans',sans-serif!important;box-shadow:0 8px 32px rgba(26,47,78,0.12)!important;margin-top:4px!important;}
-  .pac-item{color:var(--muted)!important;padding:10px 14px!important;border-top:1px solid var(--border)!important;cursor:pointer!important;font-size:13px!important;}
-  .pac-item:hover,.pac-item-selected{background:var(--light-grey)!important;}
-  .pac-item-query{color:var(--navy)!important;font-size:14px!important;font-weight:600!important;}
-  .pac-icon{display:none!important;}
-  .pac-matched{color:var(--red)!important;font-weight:700!important;}
+  .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  @media(max-width:600px){.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+  .metric{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 14px;text-align:center}
+  .metric .m-val{font-size:24px;font-weight:800;line-height:1.1;margin-bottom:4px}
+  .metric .m-lbl{font-size:11px;color:var(--muted);font-weight:500;line-height:1.3}
+  .metric.neg .m-val{color:var(--red)}
+  .metric.pos .m-val{color:var(--green)}
+  .metric.gld .m-val{color:var(--gold)}
+  .metric.acc .m-val{color:var(--accent)}
 
-  /* STARS */
-  .star-row{display:flex;gap:4px;align-items:center;padding:6px 0;}
-  .star{font-size:26px;cursor:pointer;color:var(--border);transition:color 0.15s,transform 0.15s;user-select:none;}
-  .star.on{color:#f39c12;}
-  .star:hover{transform:scale(1.15);}
-  .star-val{margin-left:8px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--navy);min-width:50px;}
+  .rating-impact{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 28px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:16px}
+  .ri-block{text-align:center}
+  .ri-stars{font-size:22px;letter-spacing:2px}
+  .ri-num{font-size:28px;font-weight:800;line-height:1;margin:4px 0}
+  .ri-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .ri-arrow{font-size:28px;color:var(--border)}
+  .ri-lift{text-align:center}
+  .ri-lift-n{font-size:32px;font-weight:900;color:var(--green)}
+  .ri-lift-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
-  /* CURRENCY TOGGLE */
-  .cur-toggle{display:flex;border:1.5px solid var(--border);border-radius:4px;overflow:hidden;width:fit-content;margin-top:2px;}
-  .cur-btn{padding:9px 20px;background:var(--white);color:var(--muted);border:none;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:background 0.2s,color 0.2s;}
-  .cur-btn.active{background:var(--navy);color:var(--white);}
+  /* ===== RECOVERY SCENARIOS ===== */
+  .scenarios-section{margin-bottom:20px}
+  .scenarios-header{margin-bottom:18px;text-align:center}
+  .scenarios-header .s-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .scenarios-header h2{font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px}
+  .scenarios-header p{font-size:13px;color:var(--muted)}
 
-  /* VOLUME BAR */
-  .vol-est-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(26,47,78,0.04);border:1px solid var(--border);border-radius:4px;margin-top:6px;font-size:11px;flex-wrap:wrap;gap:6px;}
-  .vol-est-bar .el{color:var(--muted);}
-  .vol-est-bar .ev{color:var(--navy);font-weight:700;font-family:'Montserrat',sans-serif;font-size:14px;}
-  .vol-est-bar .eh{color:var(--muted);font-size:10px;font-style:italic;}
+  .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+  @media(max-width:640px){.sc-grid{grid-template-columns:1fr}}
 
-  /* REMOVALS */
-  .removal-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
-  .removal-row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;background:var(--off-white);border:1.5px solid var(--border);border-radius:4px;padding:8px 12px;animation:fadeUp 0.2s ease forwards;}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-  .rnum{width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--white);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .removal-row select{padding:7px 28px 7px 10px;font-size:12px;border-color:var(--border);}
-  .rprice-del{display:flex;align-items:center;gap:8px;}
-  .rprice{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap;}
-  .del-btn{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;transition:color 0.2s;line-height:1;padding:0 2px;}
-  .del-btn:hover{color:var(--red);}
-  .add-row-btn{display:flex;align-items:center;gap:8px;padding:9px 14px;background:none;border:1.5px dashed var(--border);border-radius:4px;color:var(--muted);font-family:'Open Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;width:100%;margin-top:4px;}
-  .add-row-btn:hover{border-color:var(--navy);color:var(--navy);background:rgba(26,47,78,0.03);}
-  .total-line{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:1px solid var(--border);margin-top:12px;}
-  .total-line .tl{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
-  .total-line .tv{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--navy);}
+  .sc-card{background:var(--card2);border:1px solid var(--border);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+  .sc-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+  .sc-card.feat{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 40px rgba(79,142,247,0.25);background:linear-gradient(160deg,#1a2240 0%,#1e2235 100%);transform:scale(1.03)}
+  .sc-card.feat:hover{transform:scale(1.03) translateY(-3px)}
 
-  /* AUTO-FILLED */
-  .auto-filled{border-color:rgba(39,174,96,0.4)!important;background:rgba(39,174,96,0.03)!important;}
+  .sc-badge{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:7px 0}
 
-  /* CALC BUTTON */
-  .calc-btn{width:100%;padding:17px;background:var(--red);color:var(--white);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;margin-top:6px;box-shadow:0 4px 14px rgba(192,57,43,0.3);}
-  .calc-btn:hover{background:var(--red-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,57,43,0.35);}
+  .sc-body{padding:20px 18px;flex:1;display:flex;flex-direction:column}
 
-  /* RESULTS */
-  #results{opacity:0;transform:translateY(32px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;}
-  #results.visible{opacity:1;transform:translateY(0);pointer-events:all;}
+  .sc-roi-hero{text-align:center;padding:16px 0 14px;border-bottom:1px solid var(--border);margin-bottom:16px}
+  .sc-roi-num{font-size:48px;font-weight:900;line-height:1;letter-spacing:-.03em;color:var(--green)}
+  .sc-roi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+  .sc-card.feat .sc-roi-num{background:linear-gradient(135deg,#22c55e,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:56px}
 
-  .results-hero{background:linear-gradient(135deg,var(--navy-dark),var(--navy));border-radius:6px;padding:36px 32px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden;}
-  .results-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(192,57,43,0.12);pointer-events:none;}
-  .results-hero h2{font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:8px;}
-  .results-hero h2 .red{color:#e8b84b;}
-  .results-hero p{font-size:13px;color:rgba(255,255,255,0.6);}
+  .sc-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .sc-removals{font-size:15px;font-weight:800;color:var(--text)}
+  .sc-cost{font-size:13px;font-weight:700;color:var(--gold);background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);padding:3px 10px;border-radius:20px}
 
-  /* STAT GRID */
-  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 14px;text-align:center;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-  .stat-card.loss::before{background:var(--red);}
-  .stat-card.golt::before{background:#f39c12;}
-  .stat-card.gain::before{background:var(--green);}
-  .stat-card.blut::before{background:var(--blue);}
-  .stat-num{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;line-height:1;margin-bottom:6px;}
-  .stat-card.loss .stat-num{color:var(--red);}
-  .stat-card.golt .stat-num{color:#f39c12;}
-  .stat-card.gain .stat-num{color:var(--green);}
-  .stat-card.blut .stat-num{color:var(--blue);}
-  .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;line-height:1.5;font-weight:600;}
+  .sc-stats{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+  .sc-stat{display:flex;align-items:center;justify-content:space-between}
+  .sc-stat-label{font-size:12px;color:var(--muted)}
+  .sc-stat-value{font-size:13px;font-weight:700;color:var(--text)}
+  .sc-stat-value.pos{color:var(--green)}
 
-  /* RATING COMPARE */
-  .rating-compare{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:22px 28px;display:flex;align-items:center;justify-content:space-around;margin-bottom:20px;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .rblock{text-align:center;}
-  .rblock .rstars{font-size:22px;line-height:1;margin-bottom:4px;}
-  .rblock .rnum2{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:var(--navy);}
-  .rblock .rlbl{font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;font-weight:600;}
-  .rarrow{font-size:24px;color:var(--green);}
-  .rlift .lift-n{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--green);}
-  .rlift .lift-l{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
+  .sc-recov-bar-wrap{margin-bottom:14px}
+  .sc-recov-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px}
+  .sc-recov-bar-track{height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden}
+  .sc-recov-bar-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .8s cubic-bezier(.16,1,.3,1)}
 
-  /* SCENARIOS */
-  .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-  .sc-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 16px;text-align:center;animation:fadeUp 0.4s ease forwards;opacity:0;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .sc-card:nth-child(1){animation-delay:0.1s}
-  .sc-card:nth-child(2){animation-delay:0.2s;border-color:var(--navy);border-width:2px;}
-  .sc-card:nth-child(3){animation-delay:0.3s}
-  .sc-card.feat{background:linear-gradient(135deg,#f0f4f9,#ffffff);}
-  .sc-badge{display:inline-block;background:var(--navy);color:var(--white);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:8px;}
-  .sc-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-  .sc-gain{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:var(--green);}
-  .sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-  .sc-roi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:600;}
-  .sc-payback{font-size:11px;color:var(--muted);margin-top:2px;}
+  .sc-payback{text-align:center;font-size:11px;color:var(--muted);padding-top:12px;border-top:1px solid var(--border);margin-top:auto}
+  .sc-payback strong{color:var(--accent)}
 
-  /* BREAKDOWN */
-  .bdown{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .brow{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--border);font-size:13px;animation:fadeIn 0.4s ease forwards;opacity:0;}
-  .brow:last-child{border-bottom:none;}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .brow:nth-child(1){animation-delay:.05s}.brow:nth-child(2){animation-delay:.1s}.brow:nth-child(3){animation-delay:.15s}
-  .brow:nth-child(4){animation-delay:.2s}.brow:nth-child(5){animation-delay:.25s}.brow:nth-child(6){animation-delay:.3s}
-  .brow:nth-child(7){animation-delay:.35s}.brow:nth-child(8){animation-delay:.4s}.brow:nth-child(9){animation-delay:.45s}
-  .blbl{color:var(--muted);}
-  .bval{font-weight:600;font-family:'Montserrat',sans-serif;}
-  .bval.neg{color:var(--red);}.bval.pos{color:var(--green);}.bval.gld{color:var(--navy);}.bval.blu{color:var(--blue);}
-  .brow.tot{background:rgba(26,47,78,0.03);}
-  .brow.tot .blbl{color:var(--navy);font-weight:600;}
+  .sc-cta{display:block;text-align:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:12px;text-decoration:none;border-radius:0 0 18px 18px;margin-top:16px;transition:opacity .2s}
+  .sc-cta:hover{opacity:.88}
+  .sc-card:not(.feat) .sc-cta{background:rgba(79,142,247,0.1);color:var(--accent);border-top:1px solid var(--border)}
 
-  /* URGENCY */
-  .urgency{background:linear-gradient(135deg,#fff5f5,#fff8f8);border:1.5px solid rgba(192,57,43,0.2);border-radius:6px;padding:22px 24px;display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
-  .urg-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
-  .urg-title{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:var(--red);margin-bottom:6px;}
-  .urg-body{font-size:13px;color:var(--muted);line-height:1.7;}
-  .urg-body strong{color:var(--navy);}
+  .bdown{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+  .brow{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border);font-size:13px}
+  .brow:last-child{border-bottom:none}
+  .brow.tot{background:rgba(245,200,66,0.05);font-weight:700}
+  .blbl{color:var(--text2)}
+  .bval{font-weight:700;color:var(--text)}
+  .bval.neg{color:var(--red)}
+  .bval.pos{color:var(--green)}
+  .bval.gld{color:var(--gold)}
 
-  /* FOOTER */
-  .footnote{font-size:11px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:16px;padding:0 12px;}
-  .print-btn{width:100%;padding:13px;background:transparent;color:var(--navy);border:1.5px solid var(--navy);border-radius:4px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
-  .print-btn:hover{background:rgba(26,47,78,0.05);}
-  .divider{height:1px;background:var(--border);margin:28px 0;}
+  .urgency{background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.04));border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius);padding:24px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px}
+  .urg-icon{font-size:28px;flex-shrink:0}
+  .urg-title{font-size:17px;font-weight:800;margin-bottom:6px;color:var(--red)}
+  .urg-body{font-size:14px;color:var(--text2);line-height:1.6}
 
-  /* SITE FOOTER */
-  .site-footer{background:var(--navy-dark);padding:28px 24px;text-align:center;margin-top:48px;}
-  .site-footer img{height:32px;margin-bottom:12px;opacity:0.8;}
-  .site-footer p{font-size:12px;color:rgba(255,255,255,0.4);}
-  .site-footer a{color:rgba(255,255,255,0.6);}
+  .footnote{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:20px}
+  .print-btn{background:transparent;border:1px solid var(--border);color:var(--text2);font-size:13px;padding:12px 24px;border-radius:9px;cursor:pointer;display:block;margin:0 auto;transition:border-color .2s,color .2s}
+  .print-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-  @media(max-width:640px){
-    .fg2,.fg3{grid-template-columns:1fr;}
-    .stat-grid{grid-template-columns:1fr 1fr;}
-    .sc-grid{grid-template-columns:1fr;}
-    .rating-compare{flex-direction:column;align-items:center;}
-    .hero h1{font-size:26px;}
-  }
+  .site-footer{background:#0a0d14;border-top:1px solid var(--border);padding:20px 24px;text-align:center}
+  .site-footer img{height:28px;margin-bottom:10px;opacity:.7}
+  .site-footer p{font-size:12px;color:var(--muted)}
+  .site-footer a{color:var(--accent);text-decoration:none}
+
   @media print{
-    .topbar,.site-header,.site-footer,.calc-btn,.print-btn,.add-row-btn{display:none;}
-    #results{opacity:1;transform:none;pointer-events:all;}
-    body{background:white;}
+    body{background:#fff;color:#000}
+    .calc-btn,.add-row-btn,.print-btn,.remove-btn,.sc-cta{display:none!important}
+    .card,.sc-card,.bdown,.urgency{box-shadow:none;border:1px solid #ccc}
   }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-  <p>Trusted in online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a> &nbsp;|&nbsp; 1 (888) 505-5023</p>
+  <div class="topbar-left">Trusted in online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a></div>
+  <a href="tel:18885055023" class="topbar-phone">1 (888) 505-5023</a>
 </div>
 
-<!-- HEADER -->
 <header class="site-header">
-  <div class="header-inner">
-    <div class="header-logo">
-      <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'">
-      <span id="logo-fallback" style="display:none" class="header-logo-text">Reputation<span>.ca™</span></span>
-    </div>
-    <div style="text-align:right">
-      <div class="header-tagline">Review Removal ROI Calculator</div>
-      <div class="header-phone">1 (888) 505-5023</div>
-    </div>
+  <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
+  <div class="header-right">
+    <span class="header-badge">Free ROI Analysis Tool</span>
+    <a href="tel:18885055023" class="header-phone">1 (888) 505-5023</a>
   </div>
 </header>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-label">Free ROI Analysis Tool</div>
-  <h1>How Much Are <span>Negative Reviews</span><br>Costing Your Business?</h1>
+  <h1>How Much Are Negative Reviews<br><span>Costing Your Business?</span></h1>
   <p>Enter your business name below and we'll calculate exactly how much revenue you're losing — and how much you could recover with professional review removal.</p>
 </div>
 
-<div class="wrapper">
+<div class="wrap">
 
-  <!-- SECTION 1: BUSINESS SEARCH -->
-  <div class="sec-label">Step 1 — Find Your Business</div>
   <div class="card">
-    <div class="card-title">Business Information — Auto-Populated from Google</div>
-    <div class="fg3">
-
-      <div class="field full">
-        <label>Business Name <span style="color:var(--red);font-size:9px;font-weight:700;letter-spacing:0.06em">POWERED BY GOOGLE PLACES</span></label>
+    <div class="card-head"><div class="step-badge">1</div>Find Your Business</div>
+    <div style="margin-bottom:14px">
+      <div class="form-group">
+        <label>Business Name <span style="font-size:10px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0">POWERED BY GOOGLE PLACES</span></label>
         <div class="search-wrap">
-          <input type="text" id="business-search" placeholder="Start typing your client's business name..." autocomplete="off">
-          <span class="search-icon" id="search-icon">🔍</span>
-        </div>
-        <div class="found-banner" id="found-banner">
-          ✓ &nbsp;<span id="found-text"><strong>Business found.</strong> Star rating, location, market size, currency and search volume have been auto-populated from Google.</span>
+          <input type="text" id="business-search" placeholder="Start typing your business name…" autocomplete="off">
+          <span class="search-icon">🔍</span>
         </div>
       </div>
-
-      <div class="field">
-        <label>Market Size <span class="auto-tag" id="tag-market">✓ AUTO</span></label>
-        <select id="market" onchange="onMarketChange()">
+      <div class="found-msg" id="found-msg">✓ &nbsp;<strong>Business found.</strong> Star rating, location, market size, currency and search volume have been auto-populated from Google.</div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Market Size <span class="auto-tag" id="market-auto">AUTO</span></label>
+        <select id="market">
           <option value="">— Detecting from location —</option>
           <option value="major_metro">Major Metro (1M+)</option>
           <option value="large_city">Large City (500K–1M)</option>
@@ -296,302 +230,278 @@
           <option value="rural">Rural / Under 10K</option>
         </select>
       </div>
-
-      <div class="field">
-        <label>Industry <span class="auto-tag" id="tag-industry">✓ AUTO</span></label>
-        <select id="industry" onchange="onIndustryChange()">
+      <div class="form-group">
+        <label>Industry <span class="auto-tag" id="ind-auto">AUTO</span></label>
+        <select id="industry">
           <option value="">— Detecting from business type —</option>
-          <option value="restaurants">Restaurants & Food Service</option>
+          <option value="restaurants">Restaurants &amp; Food Service</option>
           <option value="home_services">Home Services (Plumbing, HVAC, Roofing)</option>
-          <option value="healthcare">Healthcare & Dental</option>
-          <option value="legal">Legal & Professional Services</option>
+          <option value="healthcare">Healthcare &amp; Dental</option>
+          <option value="legal">Legal &amp; Professional Services</option>
           <option value="retail">Retail (Local Storefront)</option>
-          <option value="auto">Auto Sales & Repair</option>
+          <option value="auto">Auto Sales &amp; Repair</option>
           <option value="realestate">Real Estate</option>
-          <option value="beauty">Beauty & Wellness (Salons, Spas)</option>
-          <option value="hospitality">Hospitality (Hotels, B&Bs)</option>
-          <option value="childcare">Childcare & Education</option>
+          <option value="beauty">Beauty &amp; Wellness (Salons, Spas)</option>
+          <option value="hospitality">Hospitality (Hotels, B&amp;Bs)</option>
+          <option value="childcare">Childcare &amp; Education</option>
           <option value="financial">Financial Services</option>
-          <option value="fitness">Fitness & Gyms</option>
+          <option value="fitness">Fitness &amp; Gyms</option>
           <option value="pet">Pet Services</option>
-          <option value="funeral">Funeral & Estate Services</option>
+          <option value="funeral">Funeral &amp; Estate Services</option>
           <option value="construction">General Contractor / Construction</option>
         </select>
       </div>
-
-      <div class="field">
-        <label>Currency <span class="auto-tag" id="tag-currency">✓ AUTO</span></label>
-        <div class="cur-toggle">
-          <button class="cur-btn active" id="btn-usd" onclick="setCur('USD')">🇺🇸 USD</button>
-          <button class="cur-btn" id="btn-cad" onclick="setCur('CAD')">🇨🇦 CAD</button>
-        </div>
+      <div class="form-group">
+        <label>Currency <span class="auto-tag" id="cur-auto">AUTO</span></label>
+        <select id="currency">
+          <option value="USD">🇺🇸 USD</option>
+          <option value="CAD">🇨🇦 CAD</option>
+        </select>
       </div>
-
-      <div class="field">
-        <label>Current Star Rating <span class="auto-tag" id="tag-stars">✓ AUTO</span></label>
-        <div class="star-row">
-          <span class="star" data-v="1" onclick="setStar(1)">★</span>
-          <span class="star" data-v="2" onclick="setStar(2)">★</span>
-          <span class="star" data-v="3" onclick="setStar(3)">★</span>
-          <span class="star" data-v="4" onclick="setStar(4)">★</span>
-          <span class="star" data-v="5" onclick="setStar(5)">★</span>
-          <span class="star-val" id="star-disp">—</span>
-        </div>
-        <input type="hidden" id="cur-rating" value="0">
+      <div class="form-group">
+        <label>Current Star Rating <span class="auto-tag" id="stars-auto">AUTO</span></label>
+        <select id="cur-rating">
+          <option value="">—</option>
+          <option value="1.0">★ 1.0</option><option value="1.1">★ 1.1</option><option value="1.2">★ 1.2</option><option value="1.3">★ 1.3</option><option value="1.4">★ 1.4</option><option value="1.5">★ 1.5</option>
+          <option value="1.6">★ 1.6</option><option value="1.7">★ 1.7</option><option value="1.8">★ 1.8</option><option value="1.9">★ 1.9</option><option value="2.0">★ 2.0</option>
+          <option value="2.1">★ 2.1</option><option value="2.2">★ 2.2</option><option value="2.3">★ 2.3</option><option value="2.4">★ 2.4</option><option value="2.5">★ 2.5</option>
+          <option value="2.6">★ 2.6</option><option value="2.7">★ 2.7</option><option value="2.8">★ 2.8</option><option value="2.9">★ 2.9</option><option value="3.0">★ 3.0</option>
+          <option value="3.1">★ 3.1</option><option value="3.2">★ 3.2</option><option value="3.3">★ 3.3</option><option value="3.4">★ 3.4</option><option value="3.5">★ 3.5</option>
+          <option value="3.6">★ 3.6</option><option value="3.7">★ 3.7</option><option value="3.8">★ 3.8</option><option value="3.9">★ 3.9</option><option value="4.0">★ 4.0</option>
+          <option value="4.1">★ 4.1</option><option value="4.2">★ 4.2</option><option value="4.3">★ 4.3</option><option value="4.4">★ 4.4</option><option value="4.5">★ 4.5</option>
+          <option value="4.6">★ 4.6</option><option value="4.7">★ 4.7</option><option value="4.8">★ 4.8</option><option value="4.9">★ 4.9</option><option value="5.0">★ 5.0</option>
+        </select>
       </div>
-
-      <div class="field full">
-        <label>Monthly Local Search Volume <span class="est-tag" id="vol-est-tag"></span></label>
-        <input type="number" id="search-vol" placeholder="Auto-estimated — override with your researched number" min="0" oninput="onVolOverride()">
-        <div class="vol-est-bar" id="vol-est-bar" style="display:none">
-          <span class="el">📊 Estimated from market + industry:</span>
-          <span class="ev" id="vol-est-val">—</span>
-          <span class="eh">Edit field above to use your own number</span>
-        </div>
-        <span class="fnote" id="vol-note">Will auto-estimate once business is selected</span>
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Monthly Local Search Volume</label>
+        <input type="number" id="search-vol" placeholder="Will auto-estimate once business is selected">
+        <div class="hint">📊 Estimated from market + industry: <span id="vol-est">—</span> &nbsp;·&nbsp; Edit field above to use your own number</div>
       </div>
-
     </div>
   </div>
 
-  <!-- SECTION 2: BUSINESS NUMBERS -->
-  <div class="sec-label">Step 2 — Business Performance</div>
   <div class="card">
-    <div class="card-title">Financial Benchmarks — Auto-filled from Industry · Override if Known</div>
-    <div class="fg2">
-      <div class="field">
-        <label>Average Transaction Value <span class="auto-tag" id="tag-txn">✓ BENCHMARK</span></label>
-        <div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0"></div>
-        <span class="fnote">What one customer spends on average</span>
+    <div class="card-head"><div class="step-badge">2</div>Business Performance</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Average Transaction Value <span class="auto-tag">BENCHMARK</span></label>
+        <input type="number" id="avg-txn" placeholder="$">
+        <div class="hint">What one customer spends on average</div>
       </div>
-      <div class="field">
-        <label>Customer Lifetime Value <span class="auto-tag" id="tag-ltv">✓ BENCHMARK</span></label>
-        <div class="pfx"><span>$</span><input type="number" id="ltv" placeholder="e.g. 1200" min="0"></div>
-        <span class="fnote">Total value over full relationship</span>
+      <div class="form-group">
+        <label>Customer Lifetime Value <span class="auto-tag">BENCHMARK</span></label>
+        <input type="number" id="ltv" placeholder="$">
+        <div class="hint">Total value over full relationship</div>
       </div>
-      <div class="field">
+      <div class="form-group">
         <label>Monthly Revenue (approx.)</label>
-        <div class="pfx"><span>$</span><input type="number" id="mo-rev" placeholder="Optional" min="0"></div>
+        <input type="number" id="mo-rev" placeholder="$">
       </div>
-      <div class="field">
+      <div class="form-group">
         <label>Monthly Leads / Inquiries</label>
-        <input type="number" id="mo-leads" placeholder="Optional — calls, walk-ins/mo" min="0">
+        <input type="number" id="mo-leads" placeholder="">
       </div>
     </div>
   </div>
 
-  <!-- SECTION 3: REMOVAL PRICING -->
-  <div class="sec-label">Step 3 — Removal Order</div>
   <div class="card">
-    <div class="card-title">Select Review Type for Each Removal — Pricing Auto-Updates by Currency</div>
-    <div class="removal-list" id="removal-list"></div>
+    <div class="card-head"><div class="step-badge">3</div>Removal Order</div>
+    <div class="hint" style="margin-bottom:14px;font-size:12px;color:var(--muted)">Select Review Type for Each Removal — Pricing Auto-Updates by Currency</div>
+    <div id="removal-rows"></div>
     <button class="add-row-btn" onclick="addRow()">＋ Add Another Review to Remove</button>
-    <div class="total-line">
-      <span class="tl">Total Removal Investment</span>
-      <span class="tv" id="total-disp">$0</span>
+    <div class="total-invest">
+      <span class="total-invest-label">Total Removal Investment</span>
+      <span class="total-invest-value" id="total-cost-display">$0</span>
     </div>
+    <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing →</button>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing →</button>
-  <div class="divider"></div>
-
-  <!-- RESULTS -->
   <div id="results">
-    <div class="results-hero">
-      <h2>Every Month You Wait,<br><span class="red" id="hl-loss">$0</span> Walks Out the Door.</h2>
-      <p>Based on Harvard Business School research & industry conversion benchmarks</p>
+
+    <div class="headline-loss">
+      <div class="hl-sub">Every Month You Wait…</div>
+      <div class="hl-num" id="hl-loss">$0</div>
+      <div class="hl-unit">walks out the door</div>
+      <div class="hl-source">Based on Harvard Business School research &amp; industry conversion benchmarks</div>
     </div>
 
-    <div class="stat-grid">
-      <div class="stat-card loss"><div class="stat-num" id="r-mo-loss">$0</div><div class="stat-lbl">Revenue Lost<br>Per Month</div></div>
-      <div class="stat-card loss"><div class="stat-num" id="r-yr-loss">$0</div><div class="stat-lbl">Revenue Lost<br>Per Year</div></div>
-      <div class="stat-card golt"><div class="stat-num" id="r-cust">0</div><div class="stat-lbl">Customers Lost<br>Per Month</div></div>
-      <div class="stat-card blut"><div class="stat-num" id="r-invest">$0</div><div class="stat-lbl">Removal<br>Investment</div></div>
+    <div class="metrics-grid">
+      <div class="metric neg"><div class="m-val" id="r-mo-loss">$0</div><div class="m-lbl">Revenue Lost Per Month</div></div>
+      <div class="metric neg"><div class="m-val" id="r-yr-loss">$0</div><div class="m-lbl">Revenue Lost Per Year</div></div>
+      <div class="metric acc"><div class="m-val" id="r-cust">0</div><div class="m-lbl">Customers Lost Per Month</div></div>
+      <div class="metric gld"><div class="m-val" id="r-invest">$0</div><div class="m-lbl">Removal Investment</div></div>
     </div>
 
-    <div class="sec-label">Star Rating Impact</div>
-    <div class="rating-compare">
-      <div class="rblock"><div class="rstars" id="stars-b">☆☆☆☆☆</div><div class="rnum2" id="rnum-b">0.0★</div><div class="rlbl">Current Rating</div></div>
-      <div class="rarrow">→</div>
-      <div class="rblock"><div class="rstars" id="stars-a">☆☆☆☆☆</div><div class="rnum2" id="rnum-a">0.0★</div><div class="rlbl">Projected After Removals</div></div>
-      <div class="rarrow">→</div>
-      <div class="rlift"><div class="lift-n" id="conv-lift">+0%</div><div class="lift-l">Conversion Rate Lift</div></div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head">Star Rating Impact</div>
+      <div class="rating-impact">
+        <div class="ri-block">
+          <div class="ri-stars" id="stars-b">☆☆☆☆☆</div>
+          <div class="ri-num" id="rnum-b">0.0★</div>
+          <div class="ri-lbl">Current Rating</div>
+        </div>
+        <div class="ri-arrow">→</div>
+        <div class="ri-block">
+          <div class="ri-stars" id="stars-a">☆☆☆☆☆</div>
+          <div class="ri-num" id="rnum-a">0.0★</div>
+          <div class="ri-lbl">Projected After Removals</div>
+        </div>
+        <div class="ri-arrow">→</div>
+        <div class="ri-lift">
+          <div class="ri-lift-n" id="conv-lift">+0%</div>
+          <div class="ri-lift-l">Conversion Rate Lift</div>
+        </div>
+      </div>
     </div>
 
-    <div class="sec-label">Revenue Recovered by Removal Count</div>
-    <div class="sc-grid" id="sc-grid"></div>
+    <!-- RECOVERY SCENARIOS -->
+    <div class="scenarios-section">
+      <div class="scenarios-header">
+        <div class="s-label">Recovery Scenarios</div>
+        <h2>How Many Removals Do You Need?</h2>
+        <p>See exactly how each removal option stacks up against your monthly loss</p>
+      </div>
+      <div class="sc-grid" id="sc-grid"></div>
+    </div>
 
-    <div class="sec-label">Full Calculation Breakdown</div>
-    <div class="bdown" id="bdown"></div>
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:20px">
+      <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border)">
+        <div class="card-head" style="margin-bottom:0">Full Calculation Breakdown</div>
+      </div>
+      <div class="bdown" id="bdown" style="margin-bottom:0;border:none;border-radius:0"></div>
+    </div>
 
     <div class="urgency">
       <div class="urg-icon">⚠️</div>
-      <div><div class="urg-title" id="urg-title">The Clock Is Ticking</div><div class="urg-body" id="urg-body"></div></div>
+      <div>
+        <div class="urg-title" id="urg-title">The Clock Is Ticking</div>
+        <div class="urg-body" id="urg-body"></div>
+      </div>
     </div>
 
     <p class="footnote">* Revenue impact estimates based on: Harvard Business School (2011) — 1-star increase = 5–9% revenue lift. BrightLocal Consumer Review Survey — 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0★ see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.</p>
     <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
   </div>
 
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
   <p>© Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
 </footer>
 
-<!-- Google Places API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-
 <script>
-const IND = {
-  restaurants:   {conv:0.065,avg:45,   ltv:520,   name:"Restaurants & Food"},
-  home_services: {conv:0.055,avg:380,  ltv:1800,  name:"Home Services"},
-  healthcare:    {conv:0.048,avg:220,  ltv:2400,  name:"Healthcare & Dental"},
-  legal:         {conv:0.038,avg:1800, ltv:5200,  name:"Legal & Professional"},
-  retail:        {conv:0.062,avg:85,   ltv:620,   name:"Retail"},
-  auto:          {conv:0.042,avg:420,  ltv:2200,  name:"Auto Sales & Repair"},
-  realestate:    {conv:0.028,avg:8500, ltv:12000, name:"Real Estate"},
-  beauty:        {conv:0.071,avg:95,   ltv:1100,  name:"Beauty & Wellness"},
-  hospitality:   {conv:0.058,avg:180,  ltv:900,   name:"Hospitality"},
-  childcare:     {conv:0.044,avg:1200, ltv:14000, name:"Childcare & Education"},
-  financial:     {conv:0.032,avg:950,  ltv:8500,  name:"Financial Services"},
-  fitness:       {conv:0.066,avg:65,   ltv:780,   name:"Fitness & Gyms"},
-  pet:           {conv:0.072,avg:75,   ltv:850,   name:"Pet Services"},
-  funeral:       {conv:0.051,avg:4200, ltv:4200,  name:"Funeral & Estate"},
-  construction:  {conv:0.039,avg:7500, ltv:15000, name:"Construction"},
+const IND={
+  restaurants:  {conv:0.065,avg:45,   ltv:520,   name:"Restaurants & Food"},
+  home_services:{conv:0.055,avg:380,  ltv:1800,  name:"Home Services"},
+  healthcare:   {conv:0.048,avg:220,  ltv:2400,  name:"Healthcare & Dental"},
+  legal:        {conv:0.038,avg:1800, ltv:5200,  name:"Legal & Professional"},
+  retail:       {conv:0.062,avg:85,   ltv:620,   name:"Retail"},
+  auto:         {conv:0.042,avg:420,  ltv:2200,  name:"Auto Sales & Repair"},
+  realestate:   {conv:0.028,avg:8500, ltv:12000, name:"Real Estate"},
+  beauty:       {conv:0.071,avg:95,   ltv:1100,  name:"Beauty & Wellness"},
+  hospitality:  {conv:0.058,avg:180,  ltv:900,   name:"Hospitality"},
+  childcare:    {conv:0.044,avg:1200, ltv:14000, name:"Childcare & Education"},
+  financial:    {conv:0.032,avg:950,  ltv:8500,  name:"Financial Services"},
+  fitness:      {conv:0.066,avg:65,   ltv:780,   name:"Fitness & Gyms"},
+  pet:          {conv:0.072,avg:75,   ltv:850,   name:"Pet Services"},
+  funeral:      {conv:0.051,avg:4200, ltv:4200,  name:"Funeral & Estate"},
+  construction: {conv:0.039,avg:7500, ltv:15000, name:"Construction"},
 };
-const VOL_MATRIX = {
-  major_metro:  {restaurants:22000,home_services:14000,healthcare:12000,legal:8500,retail:18000,auto:11000,realestate:9500,beauty:16000,hospitality:13000,childcare:7000,financial:6500,fitness:14000,pet:9000,funeral:2200,construction:8000,default:10000},
-  large_city:   {restaurants:12000,home_services:7500,healthcare:6500,legal:4500,retail:9500,auto:6000,realestate:5500,beauty:8500,hospitality:7000,childcare:3800,financial:3500,fitness:7500,pet:5000,funeral:1200,construction:4500,default:5500},
-  mid_city:     {restaurants:5500,home_services:3500,healthcare:3000,legal:2000,retail:4500,auto:2800,realestate:2500,beauty:4000,hospitality:3200,childcare:1800,financial:1600,fitness:3500,pet:2200,funeral:600,construction:2000,default:2500},
-  small_city:   {restaurants:2500,home_services:1600,healthcare:1400,legal:900,retail:2000,auto:1300,realestate:1200,beauty:1800,hospitality:1500,childcare:800,financial:750,fitness:1600,pet:1000,funeral:300,construction:900,default:1200},
-  small_town:   {restaurants:900,home_services:600,healthcare:500,legal:350,retail:750,auto:480,realestate:450,beauty:650,hospitality:550,childcare:300,financial:280,fitness:600,pet:380,funeral:120,construction:350,default:450},
-  rural:        {restaurants:280,home_services:200,healthcare:160,legal:110,retail:240,auto:150,realestate:140,beauty:200,hospitality:170,childcare:90,financial:80,fitness:180,pet:120,funeral:40,construction:110,default:140},
-};
-const TYPE_TO_IND = {
-  restaurant:'restaurants',food:'restaurants',bakery:'restaurants',bar:'restaurants',cafe:'restaurants',meal_delivery:'restaurants',meal_takeaway:'restaurants',
-  plumber:'home_services',electrician:'home_services',roofing_contractor:'home_services',general_contractor:'construction',painter:'home_services',locksmith:'home_services',moving_company:'home_services',
-  doctor:'healthcare',dentist:'healthcare',hospital:'healthcare',pharmacy:'healthcare',physiotherapist:'healthcare',optician:'healthcare',
-  lawyer:'legal',accounting:'financial',insurance_agency:'financial',bank:'financial',finance:'financial',
-  real_estate_agency:'realestate',
-  car_dealer:'auto',car_repair:'auto',car_wash:'auto',
-  beauty_salon:'beauty',hair_care:'beauty',spa:'beauty',nail_salon:'beauty',
-  gym:'fitness',
-  lodging:'hospitality',
-  school:'childcare',primary_school:'childcare',
-  pet_store:'pet',veterinary_care:'pet',
-  funeral_home:'funeral',
-  clothing_store:'retail',shoe_store:'retail',grocery_or_supermarket:'retail',convenience_store:'retail',department_store:'retail',electronics_store:'retail',furniture_store:'retail',hardware_store:'retail',florist:'retail',
-};
-const CITY_POP = {
-  toronto:6200000,montreal:4200000,vancouver:2600000,calgary:1600000,edmonton:1500000,ottawa:1400000,
-  'new york':20000000,'los angeles':13000000,chicago:9500000,houston:7200000,phoenix:5000000,
-  philadelphia:6200000,dallas:7700000,seattle:4000000,miami:6200000,atlanta:6100000,boston:4900000,
-  denver:2900000,minneapolis:3700000,portland:2500000,'las vegas':2300000,
-  winnipeg:860000,hamilton:800000,'quebec city':800000,kitchener:600000,london:550000,victoria:400000,
-  halifax:450000,oshawa:380000,windsor:330000,saskatoon:320000,regina:250000,barrie:210000,
-  kelowna:200000,guelph:160000,kingston:170000,sherbrooke:170000,abbotsford:180000,sudbury:165000,
-  mississauga:750000,brampton:650000,surrey:550000,burnaby:250000,richmond:220000,
-  markham:340000,vaughan:320000,oakville:210000,burlington:190000,
-  tucson:1100000,fresno:1000000,sacramento:2400000,'kansas city':2200000,omaha:950000,raleigh:1400000,
-};
-const PRICE = {
-  USD:{standard:800,discounted:500,sym:'$',code:'USD'},
-  CAD:{standard:1100,discounted:700,sym:'$',code:'CAD'},
+const VOL_MATRIX={
+  major_metro:{restaurants:22000,home_services:14000,healthcare:12000,legal:8500,retail:18000,auto:11000,realestate:9500,beauty:16000,hospitality:13000,childcare:7000,financial:6500,fitness:14000,pet:9000,funeral:2200,construction:8000,default:10000},
+  large_city: {restaurants:12000,home_services:7500,healthcare:6500,legal:4500,retail:9500,auto:6000,realestate:5500,beauty:8500,hospitality:7000,childcare:3800,financial:3500,fitness:7500,pet:5000,funeral:1200,construction:4500,default:5500},
+  mid_city:   {restaurants:5500,home_services:3500,healthcare:3000,legal:2000,retail:4500,auto:2800,realestate:2500,beauty:4000,hospitality:3200,childcare:1800,financial:1600,fitness:3500,pet:2200,funeral:600,construction:2000,default:2500},
+  small_city: {restaurants:2500,home_services:1600,healthcare:1400,legal:900,retail:2000,auto:1300,realestate:1200,beauty:1800,hospitality:1500,childcare:800,financial:750,fitness:1600,pet:1000,funeral:300,construction:900,default:1200},
+  small_town: {restaurants:900,home_services:600,healthcare:500,legal:350,retail:750,auto:480,realestate:450,beauty:650,hospitality:550,childcare:300,financial:280,fitness:600,pet:380,funeral:120,construction:350,default:450},
+  rural:      {restaurants:280,home_services:190,healthcare:160,legal:110,retail:230,auto:150,realestate:140,beauty:200,hospitality:170,childcare:90,financial:85,fitness:180,pet:110,funeral:38,construction:105,default:140},
 };
 
-let cur='USD', stars=0, rows=[], nxt=1, estVol=0, userOverrodeVol=false;
+const PRICES_USD={google:299,yelp:249,facebook:199,tripadvisor:279,bbb:229,other:179};
+const PRICES_CAD={google:399,yelp:329,facebook:269,tripadvisor:369,bbb:299,other:239};
+let rows=[],rowCount=0,curCurrency='USD';
+function p(){return curCurrency==='CAD'?PRICES_CAD:PRICES_USD;}
+function sym(){return curCurrency==='CAD'?'CA$':'$';}
+function fmt(n){return(n<0?'-':'')+sym()+Math.abs(Math.round(n)).toLocaleString();}
+function fmtF(n){return fmt(n);}
 
-function initPlaces(){
-  const inp=document.getElementById('business-search');
-  const ac=new google.maps.places.Autocomplete(inp,{types:['establishment'],fields:['name','rating','formatted_address','address_components','types']});
-  ac.addListener('place_changed',()=>{
-    const place=ac.getPlace();
-    if(!place||!place.name) return;
-    if(place.rating){
-      document.getElementById('cur-rating').value=place.rating;
-      const r=Math.round(place.rating);
-      document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=r));
-      document.getElementById('star-disp').textContent=place.rating.toFixed(1)+' ★';
-      showTag('tag-stars');
-    }
-    let country='',city='';
-    if(place.address_components){
-      place.address_components.forEach(c=>{
-        if(c.types.includes('country')) country=c.short_name;
-        if(c.types.includes('locality')||c.types.includes('sublocality')) city=c.long_name.toLowerCase();
-      });
-    }
-    if(country==='CA'){setCur('CAD');showTag('tag-currency');}
-    else if(country==='US'){setCur('USD');showTag('tag-currency');}
-    const pop=CITY_POP[city]||CITY_POP[city.split(' ')[0]]||0;
-    let mkt=pop>=1000000?'major_metro':pop>=500000?'large_city':pop>=100000?'mid_city':pop>=50000?'small_city':pop>=10000?'small_town':pop>0?'rural':'mid_city';
-    document.getElementById('market').value=mkt;
-    document.getElementById('market').classList.add('auto-filled');
-    showTag('tag-market');
-    let ind='';
-    if(place.types){for(const t of place.types){if(TYPE_TO_IND[t]){ind=TYPE_TO_IND[t];break;}}}
-    if(ind){document.getElementById('industry').value=ind;document.getElementById('industry').classList.add('auto-filled');showTag('tag-industry');applyBenchmarks(ind);}
-    estimateVol(mkt,ind||document.getElementById('industry').value);
-    document.getElementById('found-banner').classList.add('show');
-    document.getElementById('search-icon').textContent='✓';
-    document.getElementById('search-icon').style.color='var(--green)';
-  });
+function addRow(){
+  rowCount++;rows.push({id:rowCount,type:'google'});renderRows();
 }
+function removeRow(id){rows=rows.filter(r=>r.id!==id);renderRows();}
+function changeRowType(id,type){const r=rows.find(r=>r.id===id);if(r)r.type=type;renderRows();}
 
-function estimateVol(mkt,ind){
-  if(!mkt) return;
-  const m=VOL_MATRIX[mkt]; if(!m) return;
-  estVol=m[ind]||m['default'];
-  userOverrodeVol=false;
-  document.getElementById('vol-est-bar').style.display='flex';
-  document.getElementById('vol-est-val').textContent=estVol.toLocaleString()+' searches/mo';
-  document.getElementById('vol-note').textContent='Auto-estimated — override with your researched number';
-  document.getElementById('vol-note').style.color='var(--red)';
-  document.getElementById('vol-est-tag').textContent='★ ESTIMATED';
-  document.getElementById('search-vol').value=estVol;
-  document.getElementById('search-vol').classList.add('auto-filled');
-}
-function onVolOverride(){userOverrodeVol=true;document.getElementById('search-vol').classList.remove('auto-filled');document.getElementById('vol-est-tag').textContent='✎ OVERRIDDEN';document.getElementById('vol-note').textContent='Using your researched number';document.getElementById('vol-note').style.color='var(--green)';}
-function onMarketChange(){if(!userOverrodeVol){const m=document.getElementById('market').value,i=document.getElementById('industry').value;if(m) estimateVol(m,i);}}
-function onIndustryChange(){const i=document.getElementById('industry').value;applyBenchmarks(i);if(!userOverrodeVol){const m=document.getElementById('market').value;if(m&&i) estimateVol(m,i);}}
-function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
-function showTag(id){const el=document.getElementById(id);if(el) el.classList.add('show');}
-function setCur(c){cur=c;document.getElementById('btn-usd').classList.toggle('active',c==='USD');document.getElementById('btn-cad').classList.toggle('active',c==='CAD');renderRows();}
-function setStar(v){stars=v;document.getElementById('cur-rating').value=v;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));document.getElementById('star-disp').textContent=v+'.0 ★';}
-function addRow(t='standard'){rows.push({id:nxt++,type:t});renderRows();}
-function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();}
-function changeType(id,t){const r=rows.find(r=>r.id===id);if(r){r.type=t;renderRows();}}
 function renderRows(){
-  const p=PRICE[cur],list=document.getElementById('removal-list');
-  list.innerHTML='';let total=0;
+  const pr=p(),c=document.getElementById('removal-rows');c.innerHTML='';
   rows.forEach((r,i)=>{
-    const price=p[r.type];total+=price;
     const d=document.createElement('div');d.className='removal-row';
-    d.innerHTML=`<div class="rnum">${i+1}</div><select onchange="changeType(${r.id},this.value)"><option value="standard" ${r.type==='standard'?'selected':''}>Standard Review Removal — ${p.sym}${p.standard.toLocaleString()} ${p.code}</option><option value="discounted" ${r.type==='discounted'?'selected':''}>New (≤2 wks) or Has Photo — ${p.sym}${p.discounted.toLocaleString()} ${p.code}</option></select><div class="rprice-del"><span class="rprice">${p.sym}${price.toLocaleString()} ${p.code}</span><button class="del-btn" onclick="delRow(${r.id})">×</button></div>`;
-    list.appendChild(d);
+    d.innerHTML=`<div class="row-num">${i+1}</div>
+    <select onchange="changeRowType(${r.id},this.value)">
+      <option value="google"      ${r.type==='google'?'selected':''}>Google Review · ${sym()}${pr.google}</option>
+      <option value="yelp"        ${r.type==='yelp'?'selected':''}>Yelp Review · ${sym()}${pr.yelp}</option>
+      <option value="facebook"    ${r.type==='facebook'?'selected':''}>Facebook Review · ${sym()}${pr.facebook}</option>
+      <option value="tripadvisor" ${r.type==='tripadvisor'?'selected':''}>TripAdvisor Review · ${sym()}${pr.tripadvisor}</option>
+      <option value="bbb"         ${r.type==='bbb'?'selected':''}>BBB Review · ${sym()}${pr.bbb}</option>
+      <option value="other"       ${r.type==='other'?'selected':''}>Other Platform · ${sym()}${pr.other}</option>
+    </select>
+    <div class="row-price">${sym()}${pr[r.type]}</div>
+    <div class="remove-btn" onclick="removeRow(${r.id})">×</div>`;
+    c.appendChild(d);
   });
-  document.getElementById('total-disp').textContent=rows.length?`${p.sym}${total.toLocaleString()} ${p.code}`:`${p.sym}0`;
+  document.getElementById('total-cost-display').textContent=fmt(rows.reduce((s,r)=>s+p()[r.type],0));
 }
 addRow();
 
-function fmt(n){const p=PRICE[cur];if(n>=1000000) return p.sym+(n/1000000).toFixed(1)+'M '+p.code;if(n>=1000) return p.sym+Math.round(n/1000)+'K '+p.code;return p.sym+Math.round(n).toLocaleString()+' '+p.code;}
-function fmtF(n){return PRICE[cur].sym+Math.round(n).toLocaleString()+' '+PRICE[cur].code;}
-function starsHtml(r){let s='';for(let i=1;i<=5;i++) s+=r>=i?'★':(r>=i-0.5?'⯨':'☆');return s;}
-function projRating(curR,neg,removed){const est=40,newCount=est-removed;if(newCount<=0) return 5.0;return Math.round(Math.min(5.0,(Math.round(curR*est)+removed)/newCount)*10)/10;}
-function penalty(rating,negCount){let sp=rating<4.0?0.18+(4.0-rating)*0.10:(rating<4.5?0.05:0);return Math.min(sp+negCount*0.07,0.78);}
+document.getElementById('currency').addEventListener('change',function(){curCurrency=this.value;renderRows();updateVolEstimate();});
+
+function penalty(rating,negCount){
+  let p=0;
+  if(rating<4.0)p+=0.18+(4.0-rating)*0.10;
+  else if(rating<4.5)p+=0.05;
+  if(negCount>0)p+=negCount*0.07;
+  return Math.min(p,0.78);
+}
+function projRating(curR,total,removing){
+  const rem=Math.min(removing,total),kept=total-rem;
+  return Math.min(5.0,parseFloat(curR)+(rem*0.12)-(kept*0.03));
+}
+function starsHtml(r){let s='';for(let i=1;i<=5;i++)s+=i<=Math.round(r)?'★':'☆';return s;}
+
+function updateVolEstimate(){
+  const mkt=document.getElementById('market').value,ind=document.getElementById('industry').value;
+  if(!mkt||!ind)return;
+  const vm=VOL_MATRIX[mkt];if(!vm)return;
+  const v=vm[ind]||vm.default;
+  document.getElementById('vol-est').textContent=v.toLocaleString();
+  const sv=document.getElementById('search-vol');
+  if(!sv.dataset.userEdited)sv.value=v;
+}
+document.getElementById('search-vol').addEventListener('input',function(){this.dataset.userEdited='1';});
+document.getElementById('market').addEventListener('change',updateVolEstimate);
+document.getElementById('industry').addEventListener('change',function(){
+  const ind=IND[this.value];
+  if(ind){
+    const at=document.getElementById('avg-txn'),lv=document.getElementById('ltv');
+    if(!at.dataset.userEdited)at.value=ind.avg;
+    if(!lv.dataset.userEdited)lv.value=ind.ltv;
+  }
+  updateVolEstimate();
+});
+document.getElementById('avg-txn').addEventListener('input',function(){this.dataset.userEdited='1';});
+document.getElementById('ltv').addEventListener('input',function(){this.dataset.userEdited='1';});
 
 function calculate(){
-  const indKey=document.getElementById('industry').value;
-  const searchVol=parseFloat(document.getElementById('search-vol').value)||0;
-  const curR=parseFloat(document.getElementById('cur-rating').value)||0;
-  const avgTxn=parseFloat(document.getElementById('avg-txn').value)||0;
+  const curR=parseFloat(document.getElementById('cur-rating').value)||4.0;
+  const indKey=document.getElementById('industry').value||'restaurants';
+  const ind=IND[indKey]||IND.restaurants;
+  const searchVol=parseFloat(document.getElementById('search-vol').value)||(()=>{const mkt=document.getElementById('market').value;const vm=VOL_MATRIX[mkt]||VOL_MATRIX.mid_city;return vm[indKey]||vm.default;})();
+  const avgTxn=parseFloat(document.getElementById('avg-txn').value)||ind.avg;
   const moLeads=parseFloat(document.getElementById('mo-leads').value)||0;
-  if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n• Industry\n• Search Volume\n• Star Rating\n• Average Transaction Value\n• At least one removal');return;}
-  const ind=IND[indKey],p=PRICE[cur],negCount=rows.length;
-  const totalCost=rows.reduce((s,r)=>s+p[r.type],0);
+  const negCount=rows.length;
+  const totalCost=rows.reduce((s,r)=>s+p()[r.type],0);
+
   const baseConv=ind.conv,curConv=baseConv*(1-penalty(curR,negCount));
   const searchLeads=searchVol*0.045,totalLeads=Math.max(moLeads,searchLeads);
   const curRevMo=totalLeads*curConv*avgTxn,idealRevMo=totalLeads*baseConv*avgTxn;
@@ -600,6 +510,7 @@ function calculate(){
   const newR=projRating(curR,negCount,negCount);
   const newConv=baseConv*(1-penalty(newR,0));
   const convLift=((newConv-curConv)/curConv*100).toFixed(1);
+
   const counts=negCount===1?[1]:negCount===2?[1,2]:[1,Math.ceil(negCount/2),negCount];
   const scenarios=counts.map(n=>{
     const nr=projRating(curR,negCount,n);
@@ -607,11 +518,13 @@ function calculate(){
     const sp2=nr<4.0?0.18+(4.0-nr)*0.10:(nr<4.5?0.05:0);
     const sc=baseConv*(1-Math.min(sp2+remRp,0.78));
     const gain=(totalLeads*sc*avgTxn)-curRevMo,annGain=gain*12;
-    const cost=rows.slice(0,n).reduce((s,r)=>s+p[r.type],0);
+    const cost=rows.slice(0,n).reduce((s,r)=>s+p()[r.type],0);
     const roi=cost>0?((annGain/cost)*100).toFixed(0):0;
     const payback=gain>0?Math.round((cost/gain)*30):null;
-    return{n,gain,annGain,cost,roi,payback};
+    const recovPct=moLoss>0?Math.min(100,Math.round((gain/moLoss)*100)):0;
+    return{n,gain,annGain,cost,roi,payback,recovPct};
   });
+
   document.getElementById('hl-loss').textContent=fmt(moLoss);
   document.getElementById('r-mo-loss').textContent=fmtF(moLoss);
   document.getElementById('r-yr-loss').textContent=fmtF(yrLoss);
@@ -622,12 +535,43 @@ function calculate(){
   document.getElementById('stars-a').textContent=starsHtml(newR);
   document.getElementById('rnum-a').textContent=newR.toFixed(1)+'★';
   document.getElementById('conv-lift').textContent='+'+convLift+'%';
+
   const sg=document.getElementById('sc-grid');sg.innerHTML='';
   const mi=Math.floor(scenarios.length/2);
+
   scenarios.forEach((s,i)=>{
     const feat=i===mi&&scenarios.length>1;
-    sg.innerHTML+=`<div class="sc-card ${feat?'feat':''}"><${feat?'div class="sc-badge">Recommended</div><':''}div class="sc-title">${s.n} Removal${s.n>1?'s':''} · ${fmtF(s.cost)}</div><div class="sc-gain">${fmt(s.gain)}<span style="font-size:11px;color:var(--muted)">/mo</span></div><div class="sc-sub">${fmt(s.annGain)} recovered / year</div><div class="sc-roi">📈 ${s.roi}% annual ROI</div>${s.payback?`<div class="sc-payback">Break-even in ~${s.payback} days</div>`:''}</div>`;
+    const card=document.createElement('div');
+    card.className='sc-card'+(feat?' feat':'');
+    card.innerHTML=`
+      ${feat?'<div class="sc-badge">★ Recommended</div>':''}
+      <div class="sc-body">
+        <div class="sc-roi-hero">
+          <div class="sc-roi-num">${s.roi}%</div>
+          <div class="sc-roi-label">Annual ROI</div>
+        </div>
+        <div class="sc-title-row">
+          <div class="sc-removals">${s.n} Removal${s.n>1?'s':''}</div>
+          <div class="sc-cost">${fmtF(s.cost)}</div>
+        </div>
+        <div class="sc-stats">
+          <div class="sc-stat"><span class="sc-stat-label">Monthly recovery</span><span class="sc-stat-value pos">${fmt(s.gain)}/mo</span></div>
+          <div class="sc-stat"><span class="sc-stat-label">Annual recovery</span><span class="sc-stat-value pos">${fmtF(s.annGain)}</span></div>
+        </div>
+        <div class="sc-recov-bar-wrap">
+          <div class="sc-recov-bar-label"><span>Loss recovered</span><span>${s.recovPct}%</span></div>
+          <div class="sc-recov-bar-track"><div class="sc-recov-bar-fill" style="width:0%"></div></div>
+        </div>
+        ${s.payback?`<div class="sc-payback">Break-even in <strong>~${s.payback} days</strong></div>`:''}
+      </div>
+      <a href="tel:18885055023" class="sc-cta">${feat?'Get Started →':'Learn More →'}</a>`;
+    sg.appendChild(card);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const fill=card.querySelector('.sc-recov-bar-fill');
+      if(fill)fill.style.width=Math.min(100,s.recovPct)+'%';
+    }));
   });
+
   const bd=document.getElementById('bdown');
   bd.innerHTML=[
     {l:'Monthly Local Search Volume',v:Math.round(searchVol).toLocaleString(),c:''},
@@ -640,12 +584,61 @@ function calculate(){
     {l:'Revenue Lost Per Year',v:fmtF(yrLoss),c:'neg'},
     {l:'Total Removal Investment',v:fmtF(totalCost),c:'gld',tot:true},
   ].map(r=>`<div class="brow ${r.tot?'tot':''}"><span class="blbl">${r.l}</span><span class="bval ${r.c}">${r.v}</span></div>`).join('');
+
   const name=document.getElementById('business-search').value.split(',')[0]||'Your business';
   const best=scenarios[scenarios.length-1];
   document.getElementById('urg-title').textContent=`${name} is losing ${fmt(moLoss)} every single month.`;
-  document.getElementById('urg-body').innerHTML=`That's <strong>${fmtF(yrLoss)} per year</strong> leaving on the table — not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> — a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in just <strong>~${best.payback} days</strong>`:''}.`;
-  const res=document.getElementById('results');res.classList.add('visible');
-  setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  document.getElementById('urg-body').innerHTML=`That's <strong>${fmtF(yrLoss)} per year</strong> leaving on the table — not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> — a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in approximately ${best.payback} days`:''}. Every month of delay is another ${fmt(moLoss)} gone.`;
+
+  const res=document.getElementById('results');
+  res.style.display='block';
+  res.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function initPlaces(){
+  const input=document.getElementById('business-search');
+  const ac=new google.maps.places.Autocomplete(input,{types:['establishment']});
+  ac.addListener('place_changed',()=>{
+    const place=ac.getPlace();if(!place.geometry)return;
+    if(place.rating){
+      const sel=document.getElementById('cur-rating');
+      const v=Math.round(place.rating*10)/10;
+      const opt=[...sel.options].find(o=>parseFloat(o.value)===v);
+      if(opt){sel.value=opt.value;document.getElementById('stars-auto').textContent='✓ AUTO';}
+    }
+    const ac2=place.address_components||[];
+    const country=ac2.find(c=>c.types.includes('country'));
+    if(country){
+      const cur=document.getElementById('currency');
+      cur.value=country.short_name==='CA'?'CAD':'USD';
+      curCurrency=cur.value;renderRows();document.getElementById('cur-auto').textContent='✓ AUTO';
+    }
+    const locality=ac2.find(c=>c.types.includes('locality'));
+    if(locality){const mkt=document.getElementById('market');if(!mkt.value){mkt.value='mid_city';document.getElementById('market-auto').textContent='✓ AUTO';}}
+    const types=place.types||[];
+    const indSel=document.getElementById('industry');
+    let det='';
+    if(types.some(t=>['restaurant','food','bakery','cafe','bar','meal_delivery','meal_takeaway'].includes(t)))det='restaurants';
+    else if(types.some(t=>['plumber','electrician','roofing_contractor','general_contractor'].includes(t)))det='home_services';
+    else if(types.some(t=>['doctor','dentist','hospital','health','pharmacy','physiotherapist'].includes(t)))det='healthcare';
+    else if(types.some(t=>['lawyer','accounting'].includes(t)))det='legal';
+    else if(types.some(t=>['car_dealer','car_repair','car_wash'].includes(t)))det='auto';
+    else if(types.some(t=>['real_estate_agency'].includes(t)))det='realestate';
+    else if(types.some(t=>['beauty_salon','hair_care','spa','nail_salon'].includes(t)))det='beauty';
+    else if(types.some(t=>['lodging','hotel'].includes(t)))det='hospitality';
+    else if(types.some(t=>['gym','fitness_center'].includes(t)))det='fitness';
+    else if(types.some(t=>['clothing_store','shoe_store','store'].includes(t)))det='retail';
+    else if(types.some(t=>['pet_store','veterinary_care'].includes(t)))det='pet';
+    if(det){
+      indSel.value=det;document.getElementById('ind-auto').textContent='✓ AUTO';
+      const ind=IND[det];if(ind){
+        const at=document.getElementById('avg-txn'),lv=document.getElementById('ltv');
+        if(!at.dataset.userEdited)at.value=ind.avg;if(!lv.dataset.userEdited)lv.value=ind.ltv;
+      }
+    }
+    updateVolEstimate();
+    document.getElementById('found-msg').style.display='block';
+  });
 }
 </script>
 </body>
