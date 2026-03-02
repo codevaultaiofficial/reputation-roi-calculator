@@ -7,33 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:#1a2f4e;
-    --navy-dark:#112038;
-    --navy-light:#233d63;
-    --red:#c0392b;
-    --red-light:#e74c3c;
-    --red-dim:rgba(192,57,43,0.1);
-    --white:#ffffff;
-    --off-white:#f8f9fc;
-    --light-grey:#eef1f6;
-    --border:#dde3ed;
-    --text:#1a2f4e;
-    --muted:#6b7a92;
-    --green:#27ae60;
-    --green-dim:rgba(39,174,96,0.1);
-    --blue:#2980b9;
-    --input-bg:#ffffff;
-    --card-bg:#ffffff;
+    --navy:#1a2f4e; --navy-dark:#112038; --navy-light:#233d63; --red:#c0392b; --red-light:#e74c3c;
+    --red-dim:rgba(192,57,43,0.1); --white:#ffffff; --off-white:#f8f9fc; --light-grey:#eef1f6;
+    --border:#dde3ed; --text:#1a2f4e; --muted:#6b7a92; --green:#27ae60; --green-dim:rgba(39,174,96,0.1);
+    --blue:#2980b9; --input-bg:#ffffff; --card-bg:#ffffff;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--off-white);color:var(--text);font-family:'Open Sans',sans-serif;min-height:100vh;}
-
-  /* TOP BAR */
   .topbar{background:var(--navy-dark);padding:10px 0;text-align:center;}
   .topbar p{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.05em;}
   .topbar a{color:var(--white);font-weight:600;}
-
-  /* HEADER */
   .site-header{background:var(--navy);padding:0;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
   .header-inner{max-width:1000px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
   .header-logo img{height:40px;width:auto;}
@@ -41,37 +24,72 @@
   .header-logo-text span{color:#e8b84b;}
   .header-tagline{font-size:12px;color:rgba(255,255,255,0.65);letter-spacing:0.08em;text-transform:uppercase;text-align:right;}
   .header-phone{font-size:14px;color:var(--white);font-weight:600;}
-
-  /* HERO BANNER */
   .hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;}
-  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(192,57,43,0.08);pointer-events:none;}
-  .hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none;}
   .hero-label{display:inline-block;background:var(--red);color:var(--white);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:16px;}
   .hero h1{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:800;color:var(--white);line-height:1.15;margin-bottom:12px;}
   .hero h1 span{color:#e8b84b;}
   .hero p{font-size:15px;color:rgba(255,255,255,0.72);max-width:560px;margin:0 auto;line-height:1.7;}
-
-  /* WRAPPER */
   .wrapper{max-width:900px;margin:0 auto;padding:36px 24px 72px;}
-
-  /* SECTION LABEL */
   .sec-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
   .sec-label::before{content:'';width:4px;height:16px;background:var(--red);border-radius:2px;flex-shrink:0;}
   .sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
-
-  /* CARD */
   .card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:28px;margin-bottom:20px;box-shadow:0 2px 8px rgba(26,47,78,0.06);}
   .card-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
-
-  /* FORM */
   .fg2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
   .full{grid-column:1/-1;}
   .field{display:flex;flex-direction:column;gap:6px;}
   label{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
-  input[type=text],input[type=number],select{background:var(--input-bg);border:1.5px solid var(--border);border-radius:4px;color:var(--text);font-family:'Open Sans',sans-serif;font-size:14px;padding:10px 13px;outline:none;width:100%;-webkit-appearance:none;transition:border-color 0.2s,box-shadow 0.2s;}
+  input[type=text],input[type=number],select{background:var(--input-bg);border:1.5px solid var(--border);border-radius:4px;color:var(--text);font-family:'Open Sans',sans-serif;font-size:14px;padding:10px 13px;outline:none;width:100%;transition:border-color 0.2s,box-shadow 0.2s;}
   input:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,47,78,0.08);}
-  select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a92' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-  select option{background:white;color:var(--text);}
-  .pfx{position:relative;}
-  .pfx span
+  .search-wrap{position:relative;}
+  .search-wrap input{padding-right:44px;font-size:15px;padding:12px 44px 12px 14px;border-radius:4px;}
+  .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none;}
+  .found-banner{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.25);border-radius:4px;margin-top:8px;opacity:0;transition:opacity 0.5s;font-size:12px;color:var(--green);}
+  .found-banner.show{opacity:1;}
+  .star-row{display:flex;gap:4px;align-items:center;padding:6px 0;}
+  .star{font-size:26px;cursor:pointer;color:var(--border);transition:color 0.15s;user-select:none;}
+  .star.on{color:#f39c12;}
+  .star-val{margin-left:8px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--navy);min-width:50px;}
+  .calc-btn{width:100%;padding:17px;background:var(--red);color:var(--white);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-top:6px;box-shadow:0 4px 14px rgba(192,57,43,0.3);}
+  #results{opacity:0;transform:translateY(32px);transition:opacity 0.6s,transform 0.6s;pointer-events:none;margin-top:24px;}
+  #results.visible{opacity:1;transform:translateY(0);pointer-events:all;}
+  .results-hero{background:linear-gradient(135deg,var(--navy-dark),var(--navy));border-radius:6px;padding:36px 32px;text-align:center;margin-bottom:20px;}
+  .results-hero h2{font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:8px;}
+  .results-hero h2 .gold{color:#e8b84b;}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 14px;text-align:center;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
+  .stat-num{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;line-height:1;margin-bottom:6px;color:var(--red);}
+  .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;line-height:1.5;font-weight:600;}
+  .site-footer{background:var(--navy-dark);padding:28px 24px;text-align:center;margin-top:48px;}
+  .site-footer p{font-size:12px;color:rgba(255,255,255,0.4);}
+</style>
+</head>
+<body>
+<div class="topbar"><p>Trusted online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a></p></div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo-text">Reputation<span>.ca™</span></div>
+    <div class="header-tagline">ROI Calculator</div>
+  </div>
+</header>
+<div class="hero"><div class="hero-label">Analysis Tool</div><h1>How Much Are <span>Negative Reviews</span><br>Costing You?</h1></div>
+<div class="wrapper">
+  <div class="sec-label">Step 1 — Business Info</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="field full">
+        <label>Business Name</label>
+        <div class="search-wrap"><input type="text" id="business-search" placeholder="Type business name..." autocomplete="off"><span class="search-icon">🔍</span></div>
+        <div class="found-banner" id="found-banner">✓ Business details auto-populated.</div>
+      </div>
+      <div class="field"><label>Current Rating</label><div class="star-row"><span class="star" data-v="1">★</span><span class="star" data-v="2">★</span><span class="star" data-v="3">★</span><span class="star" data-v="4">★</span><span class="star" data-v="5">★</span><span class="star-val" id="star-disp">0.0 ★</span></div></div>
+      <div class="field"><label>Avg. Customer Value</label><input type="number" id="avg-val" value="500"></div>
+      <div class="field"><label>Monthly Leads</label><input type="number" id="mo-leads" value="100"></div>
+    </div>
+  </div>
+  <button class="calc-btn" onclick="calculate()">Calculate Loss →</button>
+  <div id="results">
+    <div class="results-hero"><h2>Estimated Monthly Loss: <span class="gold" id="loss-val">$0</span></h2></div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num
