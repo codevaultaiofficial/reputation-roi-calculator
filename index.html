@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,10 +239,12 @@
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <p>Trusted in online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a> &nbsp;|&nbsp; 1 (888) 505-5023</p>
 </div>
 
+<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
     <div class="header-logo">
@@ -255,6 +258,7 @@
   </div>
 </header>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-label">Free ROI Analysis Tool</div>
   <h1>How Much Are <span>Negative Reviews</span><br>Costing Your Business?</h1>
@@ -263,6 +267,7 @@
 
 <div class="wrapper">
 
+  <!-- SECTION 1: BUSINESS SEARCH -->
   <div class="sec-label">Step 1 — Find Your Business</div>
   <div class="card">
     <div class="card-title">Business Information — Auto-Populated from Google</div>
@@ -349,6 +354,7 @@
     </div>
   </div>
 
+  <!-- SECTION 2: BUSINESS NUMBERS -->
   <div class="sec-label">Step 2 — Business Performance</div>
   <div class="card">
     <div class="card-title">Financial Benchmarks — Auto-filled from Industry · Override if Known</div>
@@ -363,9 +369,18 @@
         <div class="pfx"><span>$</span><input type="number" id="ltv" placeholder="e.g. 1200" min="0"></div>
         <span class="fnote">Total value over full relationship</span>
       </div>
+      <div class="field">
+        <label>Monthly Revenue (approx.)</label>
+        <div class="pfx"><span>$</span><input type="number" id="mo-rev" placeholder="Optional" min="0"></div>
+      </div>
+      <div class="field">
+        <label>Monthly Leads / Inquiries</label>
+        <input type="number" id="mo-leads" placeholder="Optional — calls, walk-ins/mo" min="0">
+      </div>
     </div>
   </div>
 
+  <!-- SECTION 3: REMOVAL PRICING -->
   <div class="sec-label">Step 3 — Removal Order</div>
   <div class="card">
     <div class="card-title">Select Review Type for Each Removal — Pricing Auto-Updates by Currency</div>
@@ -380,6 +395,7 @@
   <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing →</button>
   <div class="divider"></div>
 
+  <!-- RESULTS -->
   <div id="results">
     <div class="results-hero">
       <h2>Every Month You Wait,<br><span class="red" id="hl-loss">$0</span> Walks Out the Door.</h2>
@@ -419,12 +435,14 @@
 
 </div>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
   <p>© Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
 </footer>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places&callback=initPlaces" async defer></script>
+<!-- Google Places API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
 
 <script>
 const IND = {
@@ -570,11 +588,12 @@ function calculate(){
   const searchVol=parseFloat(document.getElementById('search-vol').value)||0;
   const curR=parseFloat(document.getElementById('cur-rating').value)||0;
   const avgTxn=parseFloat(document.getElementById('avg-txn').value)||0;
+  const moLeads=parseFloat(document.getElementById('mo-leads').value)||0;
   if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n• Industry\n• Search Volume\n• Star Rating\n• Average Transaction Value\n• At least one removal');return;}
   const ind=IND[indKey],p=PRICE[cur],negCount=rows.length;
   const totalCost=rows.reduce((s,r)=>s+p[r.type],0);
   const baseConv=ind.conv,curConv=baseConv*(1-penalty(curR,negCount));
-  const searchLeads=searchVol*0.045,totalLeads=searchLeads;
+  const searchLeads=searchVol*0.045,totalLeads=Math.max(moLeads,searchLeads);
   const curRevMo=totalLeads*curConv*avgTxn,idealRevMo=totalLeads*baseConv*avgTxn;
   const moLoss=idealRevMo-curRevMo,yrLoss=moLoss*12;
   const custLost=Math.max(0,Math.round(totalLeads*(baseConv-curConv)));
