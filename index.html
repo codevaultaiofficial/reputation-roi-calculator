@@ -4,585 +4,882 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Review Removal ROI Calculator — Reputation.ca</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
 <style>
-  :root {
-    --navy:#1a2f4e;
-    --navy-dark:#112038;
-    --navy-light:#233d63;
-    --red:#c0392b;
-    --red-light:#e74c3c;
-    --red-dim:rgba(192,57,43,0.1);
-    --white:#ffffff;
-    --off-white:#f8f9fc;
-    --light-grey:#eef1f6;
-    --border:#dde3ed;
-    --text:#1a2f4e;
-    --muted:#6b7a92;
-    --green:#27ae60;
-    --green-dim:rgba(39,174,96,0.1);
-    --blue:#2980b9;
-    --input-bg:#ffffff;
-    --card-bg:#ffffff;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--off-white);color:var(--text);font-family:'Open Sans',sans-serif;min-height:100vh;}
-  .topbar{background:var(--navy-dark);padding:10px 0;text-align:center;}
-  .topbar p{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.05em;}
-  .topbar a{color:var(--white);font-weight:600;}
-  .site-header{background:var(--navy);padding:0;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
-  .header-inner{max-width:1000px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  .header-logo img{height:40px;width:auto;}
-  .header-logo-text{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--white);letter-spacing:-0.02em;}
-  .header-logo-text span{color:#e8b84b;}
-  .header-tagline{font-size:12px;color:rgba(255,255,255,0.65);letter-spacing:0.08em;text-transform:uppercase;text-align:right;}
-  .header-phone{font-size:14px;color:var(--white);font-weight:600;}
-  .hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;}
-  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(192,57,43,0.08);pointer-events:none;}
-  .hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none;}
-  .hero-label{display:inline-block;background:var(--red);color:var(--white);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:16px;}
-  .hero h1{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:800;color:var(--white);line-height:1.15;margin-bottom:12px;}
-  .hero h1 span{color:#e8b84b;}
-  .hero p{font-size:15px;color:rgba(255,255,255,0.72);max-width:560px;margin:0 auto;line-height:1.7;}
-  .wrapper{max-width:900px;margin:0 auto;padding:36px 24px 72px;}
-  .sec-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-  .sec-label::before{content:'';width:4px;height:16px;background:var(--red);border-radius:2px;flex-shrink:0;}
-  .sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:28px;margin-bottom:20px;box-shadow:0 2px 8px rgba(26,47,78,0.06);}
-  .card-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
-  .fg2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
-  .full{grid-column:1/-1;}
-  .field{display:flex;flex-direction:column;gap:6px;}
-  label{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
-  input[type=text],input[type=number],select{background:var(--input-bg);border:1.5px solid var(--border);border-radius:4px;color:var(--text);font-family:'Open Sans',sans-serif;font-size:14px;padding:10px 13px;outline:none;width:100%;-webkit-appearance:none;transition:border-color 0.2s,box-shadow 0.2s;}
-  input:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,47,78,0.08);}
-  select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a92' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-  select option{background:white;color:var(--text);}
-  .pfx{position:relative;}
-  .pfx span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;font-weight:600;}
-  .pfx input{padding-left:26px;}
-  .fnote{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;}
-  .auto-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;letter-spacing:0.08em;background:var(--green-dim);color:var(--green);padding:2px 6px;border-radius:2px;margin-left:6px;opacity:0;transition:opacity 0.4s;}
-  .auto-tag.show{opacity:1;}
-  .est-tag{font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.06em;margin-left:6px;}
-  .search-wrap{position:relative;}
-  .search-wrap input{padding:12px 44px 12px 14px;font-size:15px;border-radius:4px;}
-  .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none;}
-  .found-banner{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.25);border-radius:4px;margin-top:8px;opacity:0;transition:opacity 0.5s;font-size:12px;color:var(--green);}
-  .found-banner.show{opacity:1;}
-  .found-banner strong{color:var(--text);}
-  .pac-container{background:#fff!important;border:1.5px solid var(--border)!important;border-radius:6px!important;font-family:'Open Sans',sans-serif!important;box-shadow:0 8px 32px rgba(26,47,78,0.12)!important;margin-top:4px!important;}
-  .pac-item{color:var(--muted)!important;padding:10px 14px!important;border-top:1px solid var(--border)!important;cursor:pointer!important;font-size:13px!important;}
-  .pac-item:hover,.pac-item-selected{background:var(--light-grey)!important;}
-  .pac-item-query{color:var(--navy)!important;font-size:14px!important;font-weight:600!important;}
-  .pac-icon{display:none!important;}
-  .pac-matched{color:var(--red)!important;font-weight:700!important;}
-  .star-row{display:flex;gap:4px;align-items:center;padding:6px 0;}
-  .star{font-size:26px;cursor:pointer;color:var(--border);transition:color 0.15s,transform 0.15s;user-select:none;}
-  .star.on{color:#f39c12;}
-  .star:hover{transform:scale(1.15);}
-  .star-val{margin-left:8px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--navy);min-width:50px;}
-  .cur-toggle{display:flex;border:1.5px solid var(--border);border-radius:4px;overflow:hidden;width:fit-content;margin-top:2px;}
-  .cur-btn{padding:9px 20px;background:var(--white);color:var(--muted);border:none;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:background 0.2s,color 0.2s;}
-  .cur-btn.active{background:var(--navy);color:var(--white);}
-  .vol-est-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(26,47,78,0.04);border:1px solid var(--border);border-radius:4px;margin-top:6px;font-size:11px;flex-wrap:wrap;gap:6px;}
-  .vol-est-bar .el{color:var(--muted);}
-  .vol-est-bar .ev{color:var(--navy);font-weight:700;font-family:'Montserrat',sans-serif;font-size:14px;}
-  .vol-est-bar .eh{color:var(--muted);font-size:10px;font-style:italic;}
-  .removal-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
-  .removal-row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;background:var(--off-white);border:1.5px solid var(--border);border-radius:4px;padding:8px 12px;animation:fadeUp 0.2s ease forwards;}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-  .rnum{width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--white);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .removal-row select{padding:7px 28px 7px 10px;font-size:12px;border-color:var(--border);}
-  .rprice-del{display:flex;align-items:center;gap:8px;}
-  .rprice{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap;}
-  .del-btn{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;transition:color 0.2s;line-height:1;padding:0 2px;}
-  .del-btn:hover{color:var(--red);}
-  .add-row-btn{display:flex;align-items:center;gap:8px;padding:9px 14px;background:none;border:1.5px dashed var(--border);border-radius:4px;color:var(--muted);font-family:'Open Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;width:100%;margin-top:4px;}
-  .add-row-btn:hover{border-color:var(--navy);color:var(--navy);background:rgba(26,47,78,0.03);}
-  .total-line{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:1px solid var(--border);margin-top:12px;}
-  .total-line .tl{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
-  .total-line .tv{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--navy);}
-  .auto-filled{border-color:rgba(39,174,96,0.4)!important;background:rgba(39,174,96,0.03)!important;}
-  .calc-btn{width:100%;padding:17px;background:var(--red);color:var(--white);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;margin-top:6px;box-shadow:0 4px 14px rgba(192,57,43,0.3);}
-  .calc-btn:hover{background:var(--red-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,57,43,0.35);}
-  #results{opacity:0;transform:translateY(32px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;}
-  #results.visible{opacity:1;transform:translateY(0);pointer-events:all;}
-  .results-hero{background:linear-gradient(135deg,var(--navy-dark),var(--navy));border-radius:6px;padding:36px 32px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden;}
-  .results-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(192,57,43,0.12);pointer-events:none;}
-  .results-hero h2{font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:8px;}
-  .results-hero h2 .red{color:#e8b84b;}
-  .results-hero p{font-size:13px;color:rgba(255,255,255,0.6);}
-  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 14px;text-align:center;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-  .stat-card.loss::before{background:var(--red);}
-  .stat-card.golt::before{background:#f39c12;}
-  .stat-card.gain::before{background:var(--green);}
-  .stat-card.blut::before{background:var(--blue);}
-  .stat-num{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;line-height:1;margin-bottom:6px;}
-  .stat-card.loss .stat-num{color:var(--red);}
-  .stat-card.golt .stat-num{color:#f39c12;}
-  .stat-card.gain .stat-num{color:var(--green);}
-  .stat-card.blut .stat-num{color:var(--blue);}
-  .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;line-height:1.5;font-weight:600;}
-  .rating-compare{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:22px 28px;display:flex;align-items:center;justify-content:space-around;margin-bottom:20px;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .rblock{text-align:center;}
-  .rblock .rstars{font-size:22px;line-height:1;margin-bottom:4px;}
-  .rblock .rnum2{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:var(--navy);}
-  .rblock .rlbl{font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;font-weight:600;}
-  .rarrow{font-size:24px;color:var(--green);}
-  .rlift .lift-n{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--green);}
-  .rlift .lift-l{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
-  .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-  .sc-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 16px;text-align:center;animation:fadeUp 0.4s ease forwards;opacity:0;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .sc-card:nth-child(1){animation-delay:0.1s}
-  .sc-card:nth-child(2){animation-delay:0.2s;border-color:var(--navy);border-width:2px;}
-  .sc-card:nth-child(3){animation-delay:0.3s}
-  .sc-card.feat{background:linear-gradient(135deg,#f0f4f9,#ffffff);}
-  .sc-badge{display:inline-block;background:var(--navy);color:var(--white);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:8px;}
-  .sc-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-  .sc-gain{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:var(--green);}
-  .sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-  .sc-roi{font-size:12px;color:var(--blue);margin-top:6px;font-weight:600;}
-  .sc-payback{font-size:11px;color:var(--muted);margin-top:2px;}
-  .bdown{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;box-shadow:0 2px 8px rgba(26,47,78,0.05);}
-  .brow{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--border);font-size:13px;animation:fadeIn 0.4s ease forwards;opacity:0;}
-  .brow:last-child{border-bottom:none;}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .brow:nth-child(1){animation-delay:.05s}.brow:nth-child(2){animation-delay:.1s}.brow:nth-child(3){animation-delay:.15s}
-  .brow:nth-child(4){animation-delay:.2s}.brow:nth-child(5){animation-delay:.25s}.brow:nth-child(6){animation-delay:.3s}
-  .brow:nth-child(7){animation-delay:.35s}.brow:nth-child(8){animation-delay:.4s}.brow:nth-child(9){animation-delay:.45s}
-  .blbl{color:var(--muted);}
-  .bval{font-weight:600;font-family:'Montserrat',sans-serif;}
-  .bval.neg{color:var(--red);}.bval.pos{color:var(--green);}.bval.gld{color:var(--navy);}.bval.blu{color:var(--blue);}
-  .brow.tot{background:rgba(26,47,78,0.03);}
-  .brow.tot .blbl{color:var(--navy);font-weight:600;}
-  .urgency{background:linear-gradient(135deg,#fff5f5,#fff8f8);border:1.5px solid rgba(192,57,43,0.2);border-radius:6px;padding:22px 24px;display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
-  .urg-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
-  .urg-title{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:var(--red);margin-bottom:6px;}
-  .urg-body{font-size:13px;color:var(--muted);line-height:1.7;}
-  .urg-body strong{color:var(--navy);}
-  .footnote{font-size:11px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:16px;padding:0 12px;}
-  .print-btn{width:100%;padding:13px;background:transparent;color:var(--navy);border:1.5px solid var(--navy);border-radius:4px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
-  .print-btn:hover{background:rgba(26,47,78,0.05);}
-  .divider{height:1px;background:var(--border);margin:28px 0;}
-  .site-footer{background:var(--navy-dark);padding:28px 24px;text-align:center;margin-top:48px;}
-  .site-footer img{height:32px;margin-bottom:12px;opacity:0.8;}
-  .site-footer p{font-size:12px;color:rgba(255,255,255,0.4);}
-  .site-footer a{color:rgba(255,255,255,0.6);}
-  @media(max-width:640px){
-    .fg2,.fg3{grid-template-columns:1fr;}
-    .stat-grid{grid-template-columns:1fr 1fr;}
-    .sc-grid{grid-template-columns:1fr;}
-    .rating-compare{flex-direction:column;align-items:center;}
-    .hero h1{font-size:26px;}
-  }
-  @media print{
-    .topbar,.site-header,.site-footer,.calc-btn,.print-btn,.add-row-btn{display:none;}
-    #results{opacity:1;transform:none;pointer-events:all;}
-    body{background:white;}
-  }
+:root{
+  --navy:#1B2A4A;--navy-dark:#131F38;--navy-mid:#1E3057;--navy-light:#243662;
+  --red:#C0272D;--red-dark:#A01F24;--red-light:#D93030;
+  --text:#FFFFFF;--text-muted:#8FA3C8;--text-dim:#4A6090;
+  --border:rgba(255,255,255,0.1);--border-s:rgba(255,255,255,0.2);
+  --green:#2ECC71;--gold:#FFB800;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--navy-dark);color:var(--text);font-family:'Open Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(192,39,45,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+/* HEADER */
+.site-header{background:var(--navy);border-bottom:3px solid var(--red);position:relative;z-index:10;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
+.header-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:74px;}
+.header-right{display:flex;align-items:center;gap:16px;}
+.header-phone{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:#fff;text-decoration:none;letter-spacing:0.02em;}
+.header-phone:hover{color:#ff8080;}
+.header-btn{background:var(--red);color:#fff;padding:9px 18px;border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:background .2s;}
+.header-btn:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%);padding:52px 24px 44px;text-align:center;position:relative;z-index:1;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--red),transparent);opacity:0.5;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(192,39,45,0.15);border:1px solid rgba(192,39,45,0.35);color:#ff9090;padding:5px 14px;border-radius:2px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;}
+.hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(24px,5vw,44px);font-weight:900;line-height:1.15;margin-bottom:14px;letter-spacing:-0.01em;}
+.hero h1 span{color:var(--red-light);}
+.hero-sub{font-size:16px;color:var(--text-muted);max-width:520px;margin:0 auto 22px;line-height:1.65;font-weight:300;}
+.trust-bar{display:inline-flex;align-items:center;gap:16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:3px;padding:10px 20px;font-size:12px;color:var(--text-muted);flex-wrap:wrap;justify-content:center;}
+.trust-bar strong{color:#fff;font-family:'Montserrat',sans-serif;}
+.trust-bar .sep{color:var(--text-dim);}
+
+/* URGENCY */
+.urgency{background:rgba(192,39,45,0.1);border-top:1px solid rgba(192,39,45,0.2);border-bottom:1px solid rgba(192,39,45,0.2);padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:#ff9090;position:relative;z-index:1;}
+.pdot{width:7px;height:7px;background:var(--red-light);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,39,45,0.5);}50%{box-shadow:0 0 0 7px rgba(192,39,45,0);}}
+
+/* CURRENCY TOGGLE */
+.cur-bar{max-width:960px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;justify-content:flex-end;gap:12px;position:relative;z-index:1;}
+.cur-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+.cur-switch{display:flex;background:var(--navy);border:1px solid var(--border-s);border-radius:4px;overflow:hidden;}
+.cur-btn{padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:all .2s;letter-spacing:0.04em;}
+.cur-btn.on{background:var(--red);color:#fff;}
+.cur-btn:hover:not(.on){background:rgba(255,255,255,0.07);color:#fff;}
+.rate-note{font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;}
+
+/* PAGE WRAP */
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:22px 24px 80px;}
+
+/* SECTIONS */
+.sec{background:var(--navy);border:1px solid var(--border);border-radius:6px;margin-bottom:18px;overflow:hidden;animation:fadeUp .5s ease both;}
+.sec-hd{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:13px;background:var(--navy-mid);}
+.badge{width:28px;height:28px;background:var(--red);color:#fff;border-radius:50%;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;letter-spacing:0.02em;}
+.sec-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.sec-body{padding:24px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:640px){.g2{grid-template-columns:1fr;}}
+
+/* FIELDS */
+.field{display:flex;flex-direction:column;gap:5px;}
+label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);}
+.atag{display:inline-block;font-size:8px;background:rgba(192,39,45,0.2);color:#ff9090;padding:1px 6px;border-radius:2px;margin-left:5px;letter-spacing:0.06em;font-weight:700;vertical-align:middle;}
+input[type=text],input[type=number],select{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.11);color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;padding:10px 13px;border-radius:4px;transition:border-color .2s,box-shadow .2s;outline:none;width:100%;appearance:none;}
+input:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,39,45,0.15);}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238FA3C8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+select option{background:var(--navy-mid);}
+.ipfx{position:relative;}
+.ipfx .sym{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--red-light);font-size:14px;font-weight:600;pointer-events:none;font-family:'Montserrat',sans-serif;}
+.ipfx input{padding-left:26px;}
+.hint{font-size:11px;color:var(--text-dim);margin-top:3px;}
+
+/* BUSINESS SEARCH */
+.biz-search-wrap{margin-bottom:22px;text-align:center;}
+.biz-search-inner{max-width:560px;margin:0 auto;}
+.biz-search-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:6px;}
+.biz-search-box{position:relative;}
+.biz-search-box .search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;z-index:1;}
+#bizName{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.2);color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;padding:12px 14px 12px 44px;border-radius:4px;width:100%;outline:none;transition:border-color .2s,box-shadow .2s;}
+#bizName:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,39,45,0.18);}
+#bizName::placeholder{color:var(--text-dim);}
+.biz-confirmed{display:none;margin-top:10px;padding:11px 15px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.25);border-radius:4px;font-size:13px;color:#5ddda0;align-items:flex-start;gap:10px;text-align:left;}
+.biz-confirmed.show{display:flex;}
+.biz-check{font-size:18px;flex-shrink:0;margin-top:1px;}
+.biz-name-disp{font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:14px;margin-bottom:2px;}
+.biz-meta{font-size:12px;color:var(--text-muted);}
+/* Google autocomplete dropdown styling */
+.pac-container{background:var(--navy-mid)!important;border:1px solid rgba(255,255,255,0.2)!important;border-radius:4px!important;box-shadow:0 8px 32px rgba(0,0,0,0.6)!important;font-family:'Open Sans',sans-serif!important;margin-top:4px!important;}
+.pac-item{padding:10px 14px!important;color:var(--text-muted)!important;border-top:1px solid rgba(255,255,255,0.05)!important;cursor:pointer!important;font-size:13px!important;}
+.pac-item:hover,.pac-item-selected{background:rgba(192,39,45,0.15)!important;}
+.pac-item-query{color:#fff!important;font-weight:600!important;}
+.pac-matched{color:var(--red-light)!important;}
+.pac-icon{display:none!important;}
+
+/* STAR SLIDER */
+.star-wrap{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:16px 18px;}
+.star-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.star-num{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;}
+.star-num span{font-size:14px;color:var(--text-muted);font-family:'Open Sans',sans-serif;font-weight:300;}
+.sv{display:flex;gap:2px;}
+.sv .s{font-size:22px;transition:all .15s;}
+input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:none;border-radius:2px;cursor:pointer;accent-color:var(--red);appearance:auto;padding:0;}
+.rlabels{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;color:var(--text-dim);font-family:'Montserrat',sans-serif;font-weight:600;}
+.talert{margin-top:10px;padding:9px 13px;border-radius:3px;font-size:13px;display:none;align-items:center;gap:8px;}
+.talert.show{display:flex;}
+.talert.danger{background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.3);color:#ff9090;}
+.talert.warn{background:rgba(230,126,34,0.08);border:1px solid rgba(230,126,34,0.25);color:#ffb060;}
+.talert.good{background:rgba(46,204,113,0.07);border:1px solid rgba(46,204,113,0.2);color:#5ddda0;}
+
+/* PRICING CALLOUT */
+.pcallout{background:linear-gradient(135deg,rgba(192,39,45,0.08),rgba(192,39,45,0.03));border:1px solid rgba(192,39,45,0.25);border-radius:4px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:13px;}
+.pcallout-ico{font-size:18px;flex-shrink:0;margin-top:2px;}
+.pcallout h4{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#fff;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.tiers{display:flex;gap:10px;flex-wrap:wrap;}
+.tier-pill{background:rgba(192,39,45,0.15);border:1px solid rgba(192,39,45,0.3);border-radius:3px;padding:5px 12px;font-size:12px;color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;}
+.tier-pill span{color:#ffb0b0;font-size:11px;}
+
+/* REMOVAL ITEMS */
+.ritem{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;padding:15px 17px;margin-bottom:11px;display:grid;grid-template-columns:1fr 1fr auto auto;gap:11px;align-items:end;animation:fadeUp .3s ease both;}
+@media(max-width:640px){.ritem{grid-template-columns:1fr 1fr;}}
+.pdisplay{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:10px 12px;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:var(--gold);text-align:center;white-space:nowrap;}
+.btn-rm{width:38px;height:38px;background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.25);color:#ff8080;border-radius:4px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.btn-rm:hover{background:rgba(192,39,45,0.25);}
+.btn-add{background:transparent;border:1px dashed rgba(255,255,255,0.2);color:var(--text-muted);padding:10px 20px;border-radius:4px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:8px;width:100%;justify-content:center;margin-top:4px;letter-spacing:0.04em;}
+.btn-add:hover{border-color:var(--red);color:#fff;background:rgba(192,39,45,0.07);}
+.inv-total{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(192,39,45,0.07);border:1px solid rgba(192,39,45,0.25);border-radius:4px;margin-top:15px;}
+.inv-lbl{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);}
+.inv-val{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;color:var(--gold);}
+
+/* CALC BTN */
+.calc-btn{width:100%;padding:18px;background:var(--red);border:none;border-radius:4px;color:#fff;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:0.06em;text-transform:uppercase;margin-top:8px;}
+.calc-btn:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 28px rgba(192,39,45,0.4);}
+
+/* RESULTS */
+.results{display:none;}
+.results.show{display:block;animation:fadeUp .6s ease both;}
+
+/* ROI HERO */
+.roi-hero{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border:1px solid rgba(255,255,255,0.15);border-top:3px solid var(--red);border-radius:6px;padding:40px 36px;margin-bottom:18px;text-align:center;position:relative;overflow:hidden;}
+.roi-hero::before{content:'';position:absolute;top:-60%;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(192,39,45,0.09),transparent 70%);pointer-events:none;}
+.roi-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.3);color:var(--green);padding:6px 16px;border-radius:20px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:16px;}
+.roi-num{font-family:'Montserrat',sans-serif;font-size:clamp(54px,11vw,100px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px;letter-spacing:-0.02em;}
+.roi-lbl{font-size:15px;color:var(--text-muted);margin-bottom:22px;}
+.roi-eq{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text-muted);background:var(--navy-dark);padding:10px 20px;border-radius:30px;border:1px solid var(--border);flex-wrap:wrap;justify-content:center;}
+.roi-eq .v{color:var(--gold);font-weight:700;}
+.roi-eq .vg{color:var(--green);font-weight:700;}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px;}
+@media(max-width:700px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+.kpi{background:var(--navy);border:1px solid var(--border);border-radius:5px;padding:19px 15px;text-align:center;}
+.kpi.danger{border-color:rgba(192,39,45,0.35);background:rgba(192,39,45,0.05);}
+.kpi.pos{border-color:rgba(46,204,113,0.3);background:rgba(46,204,113,0.04);}
+.kpi-ico{font-size:20px;margin-bottom:7px;}
+.kpi-val{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:900;line-height:1;margin-bottom:5px;color:var(--gold);}
+.kpi.danger .kpi-val{color:#ff6060;}
+.kpi.pos .kpi-val{color:var(--green);}
+.kpi-lbl{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;line-height:1.4;}
+
+/* STAR COMPARE */
+.sc{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:26px;margin-bottom:18px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;text-align:center;}
+@media(max-width:600px){.sc{grid-template-columns:1fr;}}
+.sb .lbl{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);margin-bottom:9px;}
+.sb .rn{font-family:'Montserrat',sans-serif;font-size:42px;font-weight:900;line-height:1;margin-bottom:5px;}
+.sb.before .rn{color:#ff6060;}
+.sb.after .rn{color:var(--green);}
+.sb .sr{font-size:18px;letter-spacing:1px;}
+.arrowbox{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.clift{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.25);color:var(--green);padding:4px 10px;border-radius:3px;white-space:nowrap;}
+.abig{font-size:28px;color:var(--gold);}
+.tc-msg{padding:8px 13px;border-radius:3px;font-size:12px;font-family:'Montserrat',sans-serif;font-weight:700;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#5ddda0;text-align:center;}
+
+/* TICKER */
+.ticker{display:inline-flex;align-items:center;gap:10px;background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.25);border-radius:4px;padding:10px 18px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#ffb0b0;margin-bottom:18px;}
+
+/* BREAKDOWN */
+.bkd{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:18px;}
+.bkd h3{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
+.brow:last-child{border-bottom:none;}
+.brow .d{color:var(--text-muted);}
+.brow .v{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;}
+.brow .v.r{color:#ff6060;}.brow .v.g{color:var(--green);}.brow .v.gold{color:var(--gold);}
+.brow.tot{padding-top:13px;border-top:2px solid rgba(255,255,255,0.1);font-weight:600;font-size:14px;margin-top:3px;}
+
+/* CHART */
+.chart{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:18px;}
+.chart h3{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#fff;margin-bottom:18px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+.cbars{display:flex;gap:8px;align-items:flex-end;height:155px;}
+.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;}
+.bfill{width:100%;border-radius:3px 3px 0 0;transition:height .8s cubic-bezier(.34,1.56,.64,1);min-height:3px;}
+.bfill.bi{background:rgba(192,39,45,0.5);border:1px solid rgba(192,39,45,0.6);}
+.bfill.br{background:linear-gradient(180deg,#ffd060,var(--gold));}
+.bfill.bl{background:rgba(255,80,80,0.35);border:1px solid rgba(255,80,80,0.5);}
+.btop{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;white-space:nowrap;}
+.bbot{font-family:'Montserrat',sans-serif;font-size:9px;color:var(--text-dim);text-align:center;letter-spacing:0.03em;}
+
+/* PROOF */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:18px;}
+@media(max-width:600px){.proof-grid{grid-template-columns:1fr;}}
+.pcard{background:var(--navy);border:1px solid var(--border);border-radius:5px;padding:17px 19px;}
+.pstat{font-family:'Montserrat',sans-serif;font-size:32px;color:var(--red-light);font-weight:900;line-height:1;margin-bottom:6px;}
+.pdesc{font-size:13px;color:var(--text-muted);line-height:1.5;}
+.psrc{font-family:'Montserrat',sans-serif;font-size:10px;color:var(--text-dim);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border:1px solid var(--border-s);border-top:3px solid var(--red);border-radius:6px;padding:36px;text-align:center;}
+.cta h2{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;margin-bottom:10px;letter-spacing:-.01em;}
+.cta p{font-size:15px;color:var(--text-muted);margin-bottom:22px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+.cta-btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
+.btn-p{background:var(--red);color:#fff;padding:13px 26px;border-radius:4px;border:none;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;text-transform:uppercase;letter-spacing:0.07em;}
+.btn-p:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(192,39,45,0.4);}
+.btn-s{background:transparent;color:#fff;padding:13px 26px;border-radius:4px;border:1px solid var(--border-s);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;text-transform:uppercase;letter-spacing:0.07em;}
+.btn-s:hover{background:rgba(255,255,255,0.07);}
+
+.footnote{font-size:11px;color:var(--text-dim);margin-top:30px;line-height:1.75;text-align:center;padding:0 16px;}
+.site-footer{background:var(--navy);border-top:1px solid var(--border);padding:18px 24px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text-dim);position:relative;z-index:1;}
+.site-footer a{color:var(--text-muted);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.ca{animation:countUp .45s cubic-bezier(.34,1.56,.64,1) both;}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <p>Trusted in online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a> &nbsp;|&nbsp; 1 (888) 505-5023</p>
-</div>
-
+<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-logo">
-      <a href="https://www.reputation.ca" target="_blank" style="text-decoration:none;display:flex;align-items:center;gap:10px;">
-        <svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="14" y="8" width="26" height="26" rx="3" fill="#1a2f4e" stroke="#2a4060" stroke-width="1"/>
-          <rect x="4" y="2" width="26" height="26" rx="3" fill="#cc2a1e"/>
-          <polyline points="7,15 11,15 13,9 16,21 18,13 20,17 23,17 25,15 27,15" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <span style="font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:#ffffff;letter-spacing:0.04em;text-transform:uppercase;">REPUTATION.CA</span>
-      </a>
-    </div>
-    <div style="text-align:right">
-      <div class="header-tagline">Review Removal ROI Calculator</div>
-      <div class="header-phone">1 (888) 505-5023</div>
+    <svg viewBox="0 0 280 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:48px;width:auto;">
+      <rect x="0"  y="0"  width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="25" y="0"  width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="0"  y="25" width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="25" y="25" width="22" height="22" rx="3" fill="white" opacity="0.18"/>
+      <rect x="4"  y="5"  width="14" height="5" rx="1.5" fill="white"/>
+      <rect x="4"  y="13" width="9"  height="5" rx="1.5" fill="white"/>
+      <rect x="15" y="13" width="7"  height="5" rx="1.5" fill="white" opacity="0.55"/>
+      <rect x="30" y="5"  width="12" height="12" rx="2" fill="white" opacity="0.9"/>
+      <rect x="4"  y="30" width="12" height="12" rx="2" fill="white" opacity="0.9"/>
+      <text x="56" y="31" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="21" fill="white" letter-spacing="0.3">REPUTATION.CA</text>
+      <text x="56" y="45" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="8.5" fill="#8FA3C8" letter-spacing="2.2">ONLINE REPUTATION MANAGEMENT</text>
+    </svg>
+    <div class="header-right">
+      <a href="tel:18885055023" class="header-phone">📞 1 (888) 505-5023</a>
+      <a href="https://www.reputation.ca/contact/" target="_blank" class="header-btn">Free Consultation</a>
     </div>
   </div>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-label">Free ROI Analysis Tool</div>
+  <div class="eyebrow">⚡ Free ROI Analysis Tool</div>
   <h1>How Much Are <span>Negative Reviews</span><br>Costing Your Business?</h1>
-  <p>Enter your business name below and we'll calculate exactly how much revenue you're losing — and how much you could recover with professional review removal.</p>
+  <p class="hero-sub">Enter your details for a precise calculation of your monthly revenue loss — and the exact ROI of professional review removal.</p>
+  <div class="trust-bar">
+    <strong>Trusted Since 2011</strong><span class="sep">·</span>
+    <span>4.8★ Google Rating</span><span class="sep">·</span>
+    <strong>Toronto, ON</strong><span class="sep">·</span>
+    <span>1 (888) 505-5023</span>
+  </div>
 </div>
 
-<div class="wrapper">
+<div class="urgency">
+  <div class="pdot"></div>
+  <span>Every day without action, competitors with cleaner reviews are capturing the customers you're losing. Quantify exactly how much below.</span>
+</div>
 
-  <div class="sec-label">Step 1 — Find Your Business</div>
-  <div class="card">
-    <div class="card-title">Business Information — Auto-Populated from Google</div>
-    <div class="fg3">
-      <div class="field full">
-        <label>Business Name <span style="color:var(--red);font-size:9px;font-weight:700;letter-spacing:0.06em">POWERED BY GOOGLE PLACES</span></label>
-        <div class="search-wrap">
-          <input type="text" id="business-search" placeholder="Start typing your client's business name..." autocomplete="off">
-          <span class="search-icon" id="search-icon">🔍</span>
-        </div>
-        <div class="found-banner" id="found-banner">
-          ✓ &nbsp;<span><strong>Business found.</strong> Star rating, location, market size, currency and search volume have been auto-populated from Google.</span>
+<!-- CURRENCY TOGGLE -->
+<div class="cur-bar">
+  <span class="cur-label">Currency:</span>
+  <div class="cur-switch">
+    <button class="cur-btn on" id="btnUSD" onclick="setCur('USD')">🇺🇸 USD</button>
+    <button class="cur-btn"    id="btnCAD" onclick="setCur('CAD')">🇨🇦 CAD</button>
+  </div>
+  <span class="rate-note" id="rateNote">Prices shown in USD</span>
+</div>
+
+<div class="wrap">
+
+  <!-- STEP 1 -->
+  <div class="sec">
+    <div class="sec-hd">
+      <div class="badge">1</div>
+      <div><div class="sec-title">Business Profile</div><div class="sec-sub">Industry, market size &amp; current reputation standing</div></div>
+    </div>
+    <div class="sec-body">
+
+      <!-- BUSINESS NAME SEARCH — centered, above dropdowns -->
+      <div class="biz-search-wrap">
+        <div class="biz-search-inner">
+          <span class="biz-search-label">Business Name <span class="atag">POWERED BY GOOGLE</span></span>
+          <div class="biz-search-box">
+            <span class="search-ico">🔍</span>
+            <input type="text" id="bizName" placeholder="Start typing your business name…" autocomplete="off">
+          </div>
+          <div class="biz-confirmed" id="bizConfirmed">
+            <span class="biz-check">✓</span>
+            <div>
+              <div class="biz-name-disp" id="bizNameDisp"></div>
+              <div class="biz-meta" id="bizMeta"></div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="g2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Industry</label>
+          <select id="industry" onchange="onInd()">
+            <option value="">— Select Industry —</option>
+            <optgroup label="Food &amp; Hospitality">
+              <option value="restaurant">Restaurants &amp; Food Service</option>
+              <option value="hospitality">Hotels &amp; Hospitality</option>
+              <option value="catering">Catering &amp; Events</option>
+            </optgroup>
+            <optgroup label="Home &amp; Trade Services">
+              <option value="home_services">Plumbing, HVAC, Roofing</option>
+              <option value="contractor">General Contractor / Construction</option>
+              <option value="cleaning">Cleaning &amp; Maintenance</option>
+              <option value="landscaping">Landscaping &amp; Lawn Care</option>
+            </optgroup>
+            <optgroup label="Healthcare">
+              <option value="healthcare">Medical Clinics</option>
+              <option value="dental">Dental Practices</option>
+              <option value="mental_health">Mental Health &amp; Therapy</option>
+              <option value="chiro">Chiropractic &amp; Physiotherapy</option>
+              <option value="optometry">Optometry &amp; Eye Care</option>
+              <option value="pharmacy">Pharmacy</option>
+            </optgroup>
+            <optgroup label="Professional Services">
+              <option value="legal">Legal &amp; Law Firms</option>
+              <option value="financial">Financial Services &amp; Accounting</option>
+              <option value="insurance">Insurance</option>
+              <option value="consulting">Business Consulting</option>
+              <option value="marketing_agency">Marketing &amp; Creative Agency</option>
+              <option value="it_services">IT &amp; Tech Services</option>
+            </optgroup>
+            <optgroup label="Retail &amp; Auto">
+              <option value="retail">Retail (Local Storefront)</option>
+              <option value="ecommerce">E-Commerce</option>
+              <option value="auto">Auto Sales &amp; Dealerships</option>
+              <option value="auto_repair">Auto Repair &amp; Service</option>
+            </optgroup>
+            <optgroup label="Real Estate &amp; Property">
+              <option value="real_estate">Real Estate (Sales)</option>
+              <option value="property_mgmt">Property Management</option>
+              <option value="mortgage">Mortgage Brokers</option>
+            </optgroup>
+            <optgroup label="Health, Beauty &amp; Wellness">
+              <option value="beauty">Salons, Spas &amp; Beauty</option>
+              <option value="fitness">Fitness &amp; Gyms</option>
+              <option value="med_spa">Medical Spa &amp; Aesthetics</option>
+              <option value="nutrition">Nutrition &amp; Dietitian</option>
+            </optgroup>
+            <optgroup label="Education &amp; Childcare">
+              <option value="childcare">Childcare &amp; Daycare</option>
+              <option value="education">Schools &amp; Tutoring</option>
+              <option value="music_dance">Music, Dance &amp; Arts Schools</option>
+            </optgroup>
+            <optgroup label="Pet Services">
+              <option value="pet">Veterinary &amp; Pet Services</option>
+              <option value="pet_grooming">Pet Grooming &amp; Boarding</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="funeral">Funeral &amp; Estate Services</option>
+              <option value="moving">Moving &amp; Storage</option>
+              <option value="photography">Photography &amp; Videography</option>
+              <option value="events">Event Planning</option>
+              <option value="other">Other / General Business</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="field">
+          <label>Market Size</label>
+          <select id="mktSize" onchange="onMkt()">
+            <option value="major">Major Metro (1M+ population)</option>
+            <option value="large">Large City (500K–1M)</option>
+            <option value="mid" selected>Mid-Size City (100K–500K)</option>
+            <option value="small_city">Small City (50K–100K)</option>
+            <option value="small_town">Small Town (10K–50K)</option>
+            <option value="rural">Rural / Under 10K</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="g2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Monthly Local Search Volume <span class="atag">AUTO-EST</span></label>
+          <input type="number" id="searchVol" placeholder="e.g. 1200" min="0">
+          <div class="hint" id="searchHint">Auto-estimated from market + industry. Override if known.</div>
+        </div>
+      </div>
+
       <div class="field">
-        <label>Market Size <span class="auto-tag" id="tag-market">✓ AUTO</span></label>
-        <select id="market" onchange="onMarketChange()">
-          <option value="">— Detecting from location —</option>
-          <option value="major_metro">Major Metro (1M+)</option>
-          <option value="large_city">Large City (500K–1M)</option>
-          <option value="mid_city">Mid-Size City (100K–500K)</option>
-          <option value="small_city">Small City (50K–100K)</option>
-          <option value="small_town">Small Town (10K–50K)</option>
-          <option value="rural">Rural / Under 10K</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Industry <span class="auto-tag" id="tag-industry">✓ AUTO</span></label>
-        <select id="industry" onchange="onIndustryChange()">
-          <option value="">— Detecting from business type —</option>
-          <option value="restaurants">Restaurants &amp; Food Service</option>
-          <option value="home_services">Home Services (Plumbing, HVAC, Roofing)</option>
-          <option value="healthcare">Healthcare &amp; Dental</option>
-          <option value="legal">Legal &amp; Professional Services</option>
-          <option value="retail">Retail (Local Storefront)</option>
-          <option value="auto">Auto Sales &amp; Repair</option>
-          <option value="realestate">Real Estate</option>
-          <option value="beauty">Beauty &amp; Wellness (Salons, Spas)</option>
-          <option value="hospitality">Hospitality (Hotels, B&amp;Bs)</option>
-          <option value="childcare">Childcare &amp; Education</option>
-          <option value="financial">Financial Services</option>
-          <option value="fitness">Fitness &amp; Gyms</option>
-          <option value="pet">Pet Services</option>
-          <option value="funeral">Funeral &amp; Estate Services</option>
-          <option value="construction">General Contractor / Construction</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Currency <span class="auto-tag" id="tag-currency">✓ AUTO</span></label>
-        <div class="cur-toggle">
-          <button class="cur-btn active" id="btn-usd" onclick="setCur('USD')">🇺🇸 USD</button>
-          <button class="cur-btn" id="btn-cad" onclick="setCur('CAD')">🇨🇦 CAD</button>
+        <label>Current Google Star Rating <span class="atag">DECIMAL PRECISION</span></label>
+        <div class="star-wrap">
+          <div class="star-top">
+            <div class="star-num" id="starDisp">3.8 <span>/ 5.0 stars</span></div>
+            <div class="sv" id="starVis"></div>
+          </div>
+          <input type="range" id="starSlider" min="10" max="50" value="38" step="1" oninput="onStar()">
+          <div class="rlabels"><span>1.0★</span><span>2.0★</span><span>3.0★</span><span>4.0★</span><span>5.0★</span></div>
         </div>
-      </div>
-      <div class="field">
-        <label>Current Star Rating <span class="auto-tag" id="tag-stars">✓ AUTO</span></label>
-        <div class="star-row">
-          <span class="star" data-v="1" onclick="setStar(1)">★</span>
-          <span class="star" data-v="2" onclick="setStar(2)">★</span>
-          <span class="star" data-v="3" onclick="setStar(3)">★</span>
-          <span class="star" data-v="4" onclick="setStar(4)">★</span>
-          <span class="star" data-v="5" onclick="setStar(5)">★</span>
-          <span class="star-val" id="star-disp">—</span>
-        </div>
-        <input type="hidden" id="cur-rating" value="0">
-      </div>
-      <div class="field full">
-        <label>Monthly Local Search Volume <span class="est-tag" id="vol-est-tag"></span></label>
-        <input type="number" id="search-vol" placeholder="Auto-estimated — override with your researched number" min="0" oninput="onVolOverride()">
-        <div class="vol-est-bar" id="vol-est-bar" style="display:none">
-          <span class="el">📊 Estimated from market + industry:</span>
-          <span class="ev" id="vol-est-val">—</span>
-          <span class="eh">Edit field above to use your own number</span>
-        </div>
-        <span class="fnote" id="vol-note">Will auto-estimate once business is selected</span>
+        <div class="talert" id="tAlert"></div>
       </div>
     </div>
   </div>
 
-  <div class="sec-label">Step 2 — Business Performance</div>
-  <div class="card">
-    <div class="card-title">Financial Benchmarks — Auto-filled from Industry · Override if Known</div>
-    <div class="fg2">
-      <div class="field">
-        <label>Average Transaction Value <span class="auto-tag" id="tag-txn">✓ BENCHMARK</span></label>
-        <div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0"></div>
-        <span class="fnote">What one customer spends on average</span>
+  <!-- STEP 2 -->
+  <div class="sec">
+    <div class="sec-hd">
+      <div class="badge">2</div>
+      <div><div class="sec-title">Business Financials</div><div class="sec-sub">Auto-filled from industry benchmarks — override if known</div></div>
+    </div>
+    <div class="sec-body">
+      <div class="g2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Avg. Transaction Value <span class="atag">BENCHMARK</span></label>
+          <div class="ipfx"><span class="sym" id="sym1">$</span><input type="number" id="atv" placeholder="0" min="0"></div>
+          <div class="hint">What one customer typically spends</div>
+        </div>
+        <div class="field">
+          <label>Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span></label>
+          <div class="ipfx"><span class="sym sa">$</span><input type="number" id="clvInp" placeholder="0" min="0"></div>
+          <div class="hint">Total value over entire relationship — the key ROI driver</div>
+        </div>
       </div>
-      <div class="field">
-        <label>Customer Lifetime Value <span class="auto-tag" id="tag-ltv">✓ BENCHMARK</span></label>
-        <div class="pfx"><span>$</span><input type="number" id="ltv" placeholder="e.g. 1200" min="0"></div>
-        <span class="fnote">Total value over full relationship</span>
+      <div class="g2">
+        <div class="field">
+          <label>Monthly Revenue (approx.)</label>
+          <div class="ipfx"><span class="sym sa">$</span><input type="number" id="mRev" placeholder="0" min="0"></div>
+        </div>
+        <div class="field">
+          <label>Monthly Leads / Inquiries</label>
+          <input type="number" id="mLeads" placeholder="0" min="0">
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="sec-label">Step 3 — Removal Order</div>
-  <div class="card">
-    <div class="card-title">Select Review Type for Each Removal — Pricing Auto-Updates by Currency</div>
-    <div class="removal-list" id="removal-list"></div>
-    <button class="add-row-btn" onclick="addRow()">＋ Add Another Review to Remove</button>
-    <div class="total-line">
-      <span class="tl">Total Removal Investment</span>
-      <span class="tv" id="total-disp">$0</span>
+  <!-- STEP 3 -->
+  <div class="sec">
+    <div class="sec-hd">
+      <div class="badge">3</div>
+      <div><div class="sec-title">Review Removal Order</div><div class="sec-sub">Select type for each review — investment auto-calculates</div></div>
+    </div>
+    <div class="sec-body">
+      <div class="pcallout">
+        <div class="pcallout-ico">💡</div>
+        <div>
+          <h4>Transparent Two-Tier Pricing</h4>
+          <div class="tiers">
+            <div class="tier-pill">Standard Removal — <span id="stdLbl">$800 USD</span></div>
+            <div class="tier-pill">Posted Within 2 Weeks or Has a Photo — <span id="premLbl">$500 USD</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="remList"></div>
+      <button class="btn-add" onclick="addRem()">＋ Add Another Review</button>
+      <div class="inv-total">
+        <div class="inv-lbl">Total Removal Investment</div>
+        <div class="inv-val" id="invTotal">$0</div>
+      </div>
     </div>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing →</button>
-  <div class="divider"></div>
+  <button class="calc-btn" onclick="calc()">Calculate My ROI &amp; Revenue Recovery →</button>
 
-  <div id="results">
-    <div class="results-hero">
-      <h2>Every Month You Wait,<br><span class="red" id="hl-loss">$0</span> Walks Out the Door.</h2>
-      <p>Based on Harvard Business School research &amp; industry conversion benchmarks</p>
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="roi-hero">
+      <div class="roi-badge">✦ Positive ROI Confirmed</div>
+      <div class="roi-num" id="roiNum">0x</div>
+      <div class="roi-lbl">Return on Investment — for every $1 spent on review removal</div>
+      <div class="roi-eq">
+        <span>Annual Revenue Recovered:</span><span class="vg" id="eqRec">$0</span>
+        <span>÷</span><span>Investment:</span><span class="v" id="eqInv">$0</span>
+        <span>=</span><span class="v" id="eqROI">0x ROI</span>
+      </div>
     </div>
-    <div class="stat-grid">
-      <div class="stat-card loss"><div class="stat-num" id="r-mo-loss">$0</div><div class="stat-lbl">Revenue Lost<br>Per Month</div></div>
-      <div class="stat-card loss"><div class="stat-num" id="r-yr-loss">$0</div><div class="stat-lbl">Revenue Lost<br>Per Year</div></div>
-      <div class="stat-card golt"><div class="stat-num" id="r-cust">0</div><div class="stat-lbl">Customers Lost<br>Per Month</div></div>
-      <div class="stat-card blut"><div class="stat-num" id="r-invest">$0</div><div class="stat-lbl">Removal<br>Investment</div></div>
+
+    <div class="kpi-grid">
+      <div class="kpi danger"><div class="kpi-ico">💸</div><div class="kpi-val" id="kLoss">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Month</div></div>
+      <div class="kpi danger"><div class="kpi-ico">📅</div><div class="kpi-val" id="kAnnual">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Year</div></div>
+      <div class="kpi"><div class="kpi-ico">👤</div><div class="kpi-val" id="kCust">0</div><div class="kpi-lbl">Customers Lost<br>Per Month</div></div>
+      <div class="kpi pos"><div class="kpi-ico">📈</div><div class="kpi-val" id="kRec">$0</div><div class="kpi-lbl">Annual Revenue<br>Recovered</div></div>
     </div>
-    <div class="sec-label">Star Rating Impact</div>
-    <div class="rating-compare">
-      <div class="rblock"><div class="rstars" id="stars-b">☆☆☆☆☆</div><div class="rnum2" id="rnum-b">0.0★</div><div class="rlbl">Current Rating</div></div>
-      <div class="rarrow">→</div>
-      <div class="rblock"><div class="rstars" id="stars-a">☆☆☆☆☆</div><div class="rnum2" id="rnum-a">0.0★</div><div class="rlbl">Projected After Removals</div></div>
-      <div class="rarrow">→</div>
-      <div class="rlift"><div class="lift-n" id="conv-lift">+0%</div><div class="lift-l">Conversion Rate Lift</div></div>
+
+    <div class="sc">
+      <div class="sb before">
+        <div class="lbl">Current Rating</div>
+        <div class="rn" id="scBefore">0.0★</div>
+        <div class="sr" id="scBeforeV"></div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:6px" id="scBeforeC">Conv: 0%</div>
+      </div>
+      <div class="arrowbox">
+        <div class="clift" id="cliftPill">+0% Lift</div>
+        <div class="abig">→</div>
+        <div class="tc-msg" id="tcMsg" style="display:none"></div>
+      </div>
+      <div class="sb after">
+        <div class="lbl">Projected After Removal</div>
+        <div class="rn" id="scAfter">0.0★</div>
+        <div class="sr" id="scAfterV"></div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:6px" id="scAfterC">Conv: 0%</div>
+      </div>
     </div>
-    <div class="sec-label">Revenue Recovered by Removal Count</div>
-    <div class="sc-grid" id="sc-grid"></div>
-    <div class="sec-label">Full Calculation Breakdown</div>
-    <div class="bdown" id="bdown"></div>
-    <div class="urgency">
-      <div class="urg-icon">⚠️</div>
-      <div><div class="urg-title" id="urg-title">The Clock Is Ticking</div><div class="urg-body" id="urg-body"></div></div>
+
+    <div style="text-align:center;margin-bottom:16px">
+      <div class="ticker">⏱ While you read this, you're losing approximately <strong id="tickAmt" style="color:#ff6060;font-family:Montserrat,sans-serif">$0</strong> in potential revenue today</div>
     </div>
-    <p class="footnote">* Revenue impact estimates based on: Harvard Business School (2011) — 1-star increase = 5–9% revenue lift. BrightLocal Consumer Review Survey — 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0★ see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.</p>
-    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+    <div class="bkd">
+      <h3>Full Calculation Breakdown</h3>
+      <div class="brow"><span class="d">Monthly local search volume</span><span class="v gold" id="bdSearch">—</span></div>
+      <div class="brow"><span class="d">Click-through rate</span><span class="v gold" id="bdCTR">—</span></div>
+      <div class="brow"><span class="d">Current conversion rate (at <span id="bdCurStar">—</span>★)</span><span class="v r" id="bdCurConv">—</span></div>
+      <div class="brow"><span class="d">Projected conversion rate (at <span id="bdNewStar">—</span>★)</span><span class="v g" id="bdNewConv">—</span></div>
+      <div class="brow"><span class="d">New customers gained per month</span><span class="v g" id="bdNewCust">—</span></div>
+      <div class="brow"><span class="d">Revenue per customer (CLV basis)</span><span class="v gold" id="bdCLV">—</span></div>
+      <div class="brow"><span class="d">Monthly revenue recovered</span><span class="v g" id="bdMonRec">—</span></div>
+      <div class="brow"><span class="d">Payback period</span><span class="v gold" id="bdPayback">—</span></div>
+      <div class="brow tot"><span>Annual recovered vs. removal investment</span><span class="v g" id="bdROI">—</span></div>
+    </div>
+
+    <div class="chart">
+      <h3>Revenue Impact Visualization</h3>
+      <div class="cbars" id="chartBars"></div>
+    </div>
+
+    <div class="proof-grid">
+      <div class="pcard"><div class="pstat">94%</div><div class="pdesc">of consumers say a negative review convinced them to avoid a business entirely</div><div class="psrc">BrightLocal Consumer Survey</div></div>
+      <div class="pcard"><div class="pstat">5–9%</div><div class="pdesc">revenue lift per 1-star increase — proven by Harvard Business School research</div><div class="psrc">Harvard Business School, 2011</div></div>
+      <div class="pcard"><div class="pstat">+18%</div><div class="pdesc">average conversion boost when a business crosses the critical 4.0★ threshold</div><div class="psrc">Industry Conversion Benchmarks</div></div>
+      <div class="pcard"><div class="pstat">3 in 4</div><div class="pdesc">consumers trust online reviews as much as personal recommendations from family &amp; friends</div><div class="psrc">BrightLocal Consumer Survey</div></div>
+    </div>
+
+    <div class="cta">
+      <h2>Every Month You Wait,<br><span style="color:var(--gold)" id="ctaLoss">$0</span> Walks Out the Door.</h2>
+      <p>Your calculation shows a <strong style="color:var(--gold)" id="ctaROI">strong positive return</strong>. Professional review removal typically pays for itself within weeks.</p>
+      <div style="margin-bottom:20px;font-size:11px;color:var(--text-dim);font-family:Montserrat,sans-serif;letter-spacing:0.08em;text-transform:uppercase;">Trusted in Online Reputation Management Since 2011 · Toronto, ON</div>
+      <div class="cta-btns">
+        <a href="tel:18885055023" class="btn-p">📞 Call 1 (888) 505-5023</a>
+        <a href="https://www.reputation.ca" target="_blank" class="btn-s">→ Visit Reputation.ca</a>
+      </div>
+    </div>
+
+    <div class="footnote">
+      * Revenue impact estimates based on: Harvard Business School (2011) — 1-star increase = 5–9% revenue lift. BrightLocal Consumer Review Survey — 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0★ see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Prices subject to change without notice. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.
+    </div>
   </div>
 
 </div>
 
 <footer class="site-footer">
-  <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
-  <p>© Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
+  © Reputation.ca Ltd. · 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 · <a href="tel:18885055023">1 (888) 505-5023</a> · <a href="/cdn-cgi/l/email-protection#acc5c2cac3ecdec9dcd9d8cdd8c5c3c282cfcd"><span class="__cf_email__" data-cfemail="fa93949c95ba889f8a8f8e9b8e939594d4999b">[email&#160;protected]</span></a>
 </footer>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-<script>
-const IND = {
-  restaurants:   {conv:0.065,avg:45,   ltv:520,   name:"Restaurants & Food"},
-  home_services: {conv:0.055,avg:380,  ltv:1800,  name:"Home Services"},
-  healthcare:    {conv:0.048,avg:220,  ltv:2400,  name:"Healthcare & Dental"},
-  legal:         {conv:0.038,avg:1800, ltv:5200,  name:"Legal & Professional"},
-  retail:        {conv:0.062,avg:85,   ltv:620,   name:"Retail"},
-  auto:          {conv:0.042,avg:420,  ltv:2200,  name:"Auto Sales & Repair"},
-  realestate:    {conv:0.028,avg:8500, ltv:12000, name:"Real Estate"},
-  beauty:        {conv:0.071,avg:95,   ltv:1100,  name:"Beauty & Wellness"},
-  hospitality:   {conv:0.058,avg:180,  ltv:900,   name:"Hospitality"},
-  childcare:     {conv:0.044,avg:1200, ltv:14000, name:"Childcare & Education"},
-  financial:     {conv:0.032,avg:950,  ltv:8500,  name:"Financial Services"},
-  fitness:       {conv:0.066,avg:65,   ltv:780,   name:"Fitness & Gyms"},
-  pet:           {conv:0.072,avg:75,   ltv:850,   name:"Pet Services"},
-  funeral:       {conv:0.051,avg:4200, ltv:4200,  name:"Funeral & Estate"},
-  construction:  {conv:0.039,avg:7500, ltv:15000, name:"Construction"},
-};
-const VOL_MATRIX = {
-  major_metro:  {restaurants:22000,home_services:14000,healthcare:12000,legal:8500,retail:18000,auto:11000,realestate:9500,beauty:16000,hospitality:13000,childcare:7000,financial:6500,fitness:14000,pet:9000,funeral:2200,construction:8000,default:10000},
-  large_city:   {restaurants:12000,home_services:7500,healthcare:6500,legal:4500,retail:9500,auto:6000,realestate:5500,beauty:8500,hospitality:7000,childcare:3800,financial:3500,fitness:7500,pet:5000,funeral:1200,construction:4500,default:5500},
-  mid_city:     {restaurants:5500,home_services:3500,healthcare:3000,legal:2000,retail:4500,auto:2800,realestate:2500,beauty:4000,hospitality:3200,childcare:1800,financial:1600,fitness:3500,pet:2200,funeral:600,construction:2000,default:2500},
-  small_city:   {restaurants:2500,home_services:1600,healthcare:1400,legal:900,retail:2000,auto:1300,realestate:1200,beauty:1800,hospitality:1500,childcare:800,financial:750,fitness:1600,pet:1000,funeral:300,construction:900,default:1200},
-  small_town:   {restaurants:900,home_services:600,healthcare:500,legal:350,retail:750,auto:480,realestate:450,beauty:650,hospitality:550,childcare:300,financial:280,fitness:600,pet:380,funeral:120,construction:350,default:450},
-  rural:        {restaurants:280,home_services:200,healthcare:160,legal:110,retail:240,auto:150,realestate:140,beauty:200,hospitality:170,childcare:90,financial:80,fitness:180,pet:120,funeral:40,construction:110,default:140},
-};
-const TYPE_TO_IND = {
-  restaurant:'restaurants',food:'restaurants',bakery:'restaurants',bar:'restaurants',cafe:'restaurants',meal_delivery:'restaurants',meal_takeaway:'restaurants',
-  plumber:'home_services',electrician:'home_services',roofing_contractor:'home_services',general_contractor:'construction',painter:'home_services',locksmith:'home_services',moving_company:'home_services',
-  doctor:'healthcare',dentist:'healthcare',hospital:'healthcare',pharmacy:'healthcare',physiotherapist:'healthcare',optician:'healthcare',
-  lawyer:'legal',accounting:'financial',insurance_agency:'financial',bank:'financial',finance:'financial',
-  real_estate_agency:'realestate',
-  car_dealer:'auto',car_repair:'auto',car_wash:'auto',
-  beauty_salon:'beauty',hair_care:'beauty',spa:'beauty',nail_salon:'beauty',
-  gym:'fitness',
-  lodging:'hospitality',
-  school:'childcare',primary_school:'childcare',
-  pet_store:'pet',veterinary_care:'pet',
-  funeral_home:'funeral',
-  clothing_store:'retail',shoe_store:'retail',grocery_or_supermarket:'retail',convenience_store:'retail',department_store:'retail',electronics_store:'retail',furniture_store:'retail',hardware_store:'retail',florist:'retail',
-};
-const CITY_POP = {
-  toronto:6200000,montreal:4200000,vancouver:2600000,calgary:1600000,edmonton:1500000,ottawa:1400000,
-  'new york':20000000,'los angeles':13000000,chicago:9500000,houston:7200000,phoenix:5000000,
-  philadelphia:6200000,dallas:7700000,seattle:4000000,miami:6200000,atlanta:6100000,boston:4900000,
-  denver:2900000,minneapolis:3700000,portland:2500000,'las vegas':2300000,
-  winnipeg:860000,hamilton:800000,'quebec city':800000,kitchener:600000,london:550000,victoria:400000,
-  halifax:450000,oshawa:380000,windsor:330000,saskatoon:320000,regina:250000,barrie:210000,
-  kelowna:200000,guelph:160000,kingston:170000,sherbrooke:170000,abbotsford:180000,sudbury:165000,
-  mississauga:750000,brampton:650000,surrey:550000,burnaby:250000,richmond:220000,
-  markham:340000,vaughan:320000,oakville:210000,burlington:190000,
-  tucson:1100000,fresno:1000000,sacramento:2400000,'kansas city':2200000,omaha:950000,raleigh:1400000,
-};
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── CONSTANTS ────────────────────────────────────────────────────────────────
+const STD_USD=800, PREM_USD=500, CAD_RATE=1.36;
+let curCur='USD', remCnt=0;
 
-// Normal Removal: $800 USD / $1,100 CAD
-// New or Has Photo (within 2 weeks): $500 USD / $690 CAD
-const PRICE = {
-  USD:{standard:800,discounted:500,sym:'$',code:'USD'},
-  CAD:{standard:1100,discounted:690,sym:'$',code:'CAD'},
+const IND={
+  restaurant:{atv:45,clv:540,sm:1.4},hospitality:{atv:220,clv:1100,sm:1.0},catering:{atv:1800,clv:3600,sm:0.5},
+  home_services:{atv:420,clv:2100,sm:0.9},contractor:{atv:8500,clv:17000,sm:0.5},cleaning:{atv:180,clv:2160,sm:0.7},landscaping:{atv:350,clv:2800,sm:0.6},
+  healthcare:{atv:280,clv:3360,sm:0.8},dental:{atv:650,clv:8450,sm:0.8},mental_health:{atv:200,clv:4800,sm:0.7},chiro:{atv:120,clv:2400,sm:0.7},optometry:{atv:310,clv:1860,sm:0.6},pharmacy:{atv:85,clv:2040,sm:0.6},
+  legal:{atv:3500,clv:14000,sm:0.6},financial:{atv:1200,clv:18000,sm:0.5},insurance:{atv:1400,clv:9800,sm:0.5},consulting:{atv:4000,clv:24000,sm:0.4},marketing_agency:{atv:3000,clv:36000,sm:0.4},it_services:{atv:2500,clv:20000,sm:0.5},
+  retail:{atv:80,clv:640,sm:1.2},ecommerce:{atv:95,clv:760,sm:1.0},auto:{atv:28000,clv:56000,sm:0.6},auto_repair:{atv:550,clv:3850,sm:0.8},
+  real_estate:{atv:12000,clv:24000,sm:0.5},property_mgmt:{atv:1800,clv:21600,sm:0.4},mortgage:{atv:4000,clv:8000,sm:0.4},
+  beauty:{atv:90,clv:1620,sm:1.1},fitness:{atv:65,clv:1560,sm:0.9},med_spa:{atv:350,clv:4200,sm:0.7},nutrition:{atv:180,clv:2160,sm:0.5},
+  childcare:{atv:1400,clv:50400,sm:0.5},education:{atv:800,clv:9600,sm:0.6},music_dance:{atv:280,clv:6720,sm:0.5},
+  pet:{atv:250,clv:3000,sm:0.8},pet_grooming:{atv:75,clv:1800,sm:0.8},
+  funeral:{atv:6500,clv:6500,sm:0.3},moving:{atv:1200,clv:2400,sm:0.6},photography:{atv:2200,clv:4400,sm:0.5},events:{atv:3500,clv:7000,sm:0.4},other:{atv:350,clv:2100,sm:0.7}
 };
+const MKT={major:4200,large:2400,mid:1100,small_city:550,small_town:200,rural:60};
+const PLAT={google:"Google Review",yelp:"Yelp Review",facebook:"Facebook Review",tripadvisor:"TripAdvisor Review",bbb:"BBB Complaint",glassdoor:"Glassdoor Review",other:"Other Platform"};
 
-let cur='USD',stars=0,rows=[],nxt=1,estVol=0,userOverrodeVol=false;
+// ─── CURRENCY ─────────────────────────────────────────────────────────────────
+function r10(v){return Math.round(v/10)*10;}
+function getSym(){return curCur==='CAD'?'CA$':'$';}
+function getRate(){return curCur==='CAD'?CAD_RATE:1;}
+function toActive(usd){return curCur==='CAD'?r10(usd*CAD_RATE):usd;}
+function fmt(n){return getSym()+Math.round(n).toLocaleString();}
+function fmtP(n){return n.toFixed(1)+'%';}
 
+function setCur(c){
+  curCur=c;
+  document.getElementById('btnUSD').classList.toggle('on',c==='USD');
+  document.getElementById('btnCAD').classList.toggle('on',c==='CAD');
+  document.getElementById('rateNote').textContent=c==='CAD'?`1 USD = ${CAD_RATE.toFixed(2)} CAD`:'Prices shown in USD';
+  document.getElementById('stdLbl').textContent=c==='CAD'?`CA$${r10(STD_USD*CAD_RATE)}`:`$${STD_USD} USD`;
+  document.getElementById('premLbl').textContent=c==='CAD'?`CA$${r10(PREM_USD*CAD_RATE)}`:`$${PREM_USD} USD`;
+  const sym=getSym();
+  document.getElementById('sym1').textContent=sym;
+  document.querySelectorAll('.sa').forEach(el=>el.textContent=sym);
+  const ind=document.getElementById('industry').value;
+  if(ind&&IND[ind]){
+    document.getElementById('atv').value=Math.round(IND[ind].atv*getRate());
+    document.getElementById('clvInp').value=Math.round(IND[ind].clv*getRate());
+  }
+  updInv();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  addRem();
+  updStar();
+});
+
+// ─── GOOGLE PLACES AUTOCOMPLETE ───────────────────────────────────────────────
 function initPlaces(){
-  const inp=document.getElementById('business-search');
-  const ac=new google.maps.places.Autocomplete(inp,{types:['establishment'],fields:['name','rating','formatted_address','address_components','types']});
+  const input=document.getElementById('bizName');
+  const ac=new google.maps.places.Autocomplete(input,{
+    types:['establishment'],
+    fields:['name','rating','user_ratings_total','geometry','address_components','types','formatted_address']
+  });
+
   ac.addListener('place_changed',()=>{
     const place=ac.getPlace();
-    if(!place||!place.name) return;
+    if(!place||!place.geometry) return;
+
+    // 1. Show confirmed card
+    document.getElementById('bizNameDisp').textContent=place.name;
+
+    // 2. Auto-set star rating from real Google rating
     if(place.rating){
-      document.getElementById('cur-rating').value=place.rating;
-      const r=Math.round(place.rating);
-      document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=r));
-      document.getElementById('star-disp').textContent=place.rating.toFixed(1)+' ★';
-      showTag('tag-stars');
+      const val=Math.round(place.rating*10);
+      document.getElementById('starSlider').value=Math.min(50,Math.max(10,val));
+      updStar();
+      checkT();
     }
-    let country='',city='';
-    if(place.address_components){
-      place.address_components.forEach(c=>{
-        if(c.types.includes('country')) country=c.short_name;
-        if(c.types.includes('locality')||c.types.includes('sublocality')) city=c.long_name.toLowerCase();
-      });
+
+    // 3. Auto-set market size from city
+    const addr=place.address_components||[];
+    let city='';
+    addr.forEach(c=>{if(c.types.includes('locality'))city=c.long_name;});
+    setMarketFromCity(city,place.geometry.location.lat(),place.geometry.location.lng());
+
+    // 4. Auto-detect industry
+    autoDetectInd(place.types||[]);
+
+    // 5. Build confirmation meta line
+    const parts=[];
+    if(place.rating) parts.push(`⭐ ${place.rating} stars (${(place.user_ratings_total||0).toLocaleString()} reviews)`);
+    if(place.formatted_address) parts.push(place.formatted_address);
+    document.getElementById('bizMeta').textContent=parts.join(' · ');
+    document.getElementById('bizConfirmed').classList.add('show');
+
+    // 6. Refresh search volume estimate
+    setTimeout(()=>autoSV(),250);
+  });
+}
+
+function setMarketFromCity(city,lat,lng){
+  const major=['toronto','new york','los angeles','chicago','houston','phoenix','philadelphia','san antonio','san diego','dallas','san jose','austin','jacksonville','montreal','vancouver','calgary','ottawa','edmonton','new york city'];
+  const large=['mississauga','brampton','hamilton','london','winnipeg','saskatoon','seattle','denver','boston','nashville','portland','las vegas','memphis','louisville','baltimore','milwaukee','quebec','surrey','laval'];
+  const name=(city||'').toLowerCase();
+  let mkt='mid';
+  if(major.some(c=>name.includes(c))) mkt='major';
+  else if(large.some(c=>name.includes(c))) mkt='large';
+  document.getElementById('mktSize').value=mkt;
+}
+
+function autoDetectInd(types){
+  const map={
+    restaurant:['restaurant','food','meal_takeaway','meal_delivery','cafe','bakery','bar','night_club'],
+    hospitality:['lodging'],
+    dental:['dentist'],
+    healthcare:['doctor','hospital','health','physiotherapist'],
+    beauty:['beauty_salon','hair_care','spa','nail_salon','hair_salon'],
+    fitness:['gym'],
+    legal:['lawyer'],
+    real_estate:['real_estate_agency'],
+    auto:['car_dealer'],
+    auto_repair:['car_repair'],
+    retail:['store','clothing_store','shoe_store','furniture_store','hardware_store','electronics_store','home_goods_store','jewelry_store'],
+    pet:['veterinary_care','pet_store'],
+    education:['school','university','primary_school','secondary_school'],
+    financial:['finance','bank','accounting'],
+    contractor:['general_contractor','roofing_contractor'],
+    cleaning:['laundry'],
+    pharmacy:['pharmacy','drugstore'],
+    moving:['moving_company'],
+    events:['event_venue'],
+    home_services:['plumber','electrician'],
+    chiro:['physiotherapist'],
+    med_spa:['beauty_salon']
+  };
+  for(const[ind,kw] of Object.entries(map)){
+    if(types.some(t=>kw.includes(t))){
+      document.getElementById('industry').value=ind;
+      onInd();
+      return;
     }
-    if(country==='CA'){setCur('CAD');showTag('tag-currency');}
-    else if(country==='US'){setCur('USD');showTag('tag-currency');}
-    const pop=CITY_POP[city]||CITY_POP[city.split(' ')[0]]||0;
-    let mkt=pop>=1000000?'major_metro':pop>=500000?'large_city':pop>=100000?'mid_city':pop>=50000?'small_city':pop>=10000?'small_town':pop>0?'rural':'mid_city';
-    document.getElementById('market').value=mkt;
-    document.getElementById('market').classList.add('auto-filled');
-    showTag('tag-market');
-    let ind='';
-    if(place.types){for(const t of place.types){if(TYPE_TO_IND[t]){ind=TYPE_TO_IND[t];break;}}}
-    if(ind){document.getElementById('industry').value=ind;document.getElementById('industry').classList.add('auto-filled');showTag('tag-industry');applyBenchmarks(ind);}
-    estimateVol(mkt,ind||document.getElementById('industry').value);
-    document.getElementById('found-banner').classList.add('show');
-    document.getElementById('search-icon').textContent='✓';
-    document.getElementById('search-icon').style.color='var(--green)';
-  });
+  }
 }
 
-function estimateVol(mkt,ind){
-  if(!mkt) return;
-  const m=VOL_MATRIX[mkt];if(!m) return;
-  estVol=m[ind]||m['default'];
-  userOverrodeVol=false;
-  document.getElementById('vol-est-bar').style.display='flex';
-  document.getElementById('vol-est-val').textContent=estVol.toLocaleString()+' searches/mo';
-  document.getElementById('vol-note').textContent='Auto-estimated — override with your researched number';
-  document.getElementById('vol-note').style.color='var(--red)';
-  document.getElementById('vol-est-tag').textContent='★ ESTIMATED';
-  document.getElementById('search-vol').value=estVol;
-  document.getElementById('search-vol').classList.add('auto-filled');
+// ─── INDUSTRY / MARKET ────────────────────────────────────────────────────────
+function onInd(){
+  const ind=document.getElementById('industry').value;
+  if(!ind||!IND[ind]) return;
+  document.getElementById('atv').value=Math.round(IND[ind].atv*getRate());
+  document.getElementById('clvInp').value=Math.round(IND[ind].clv*getRate());
+  autoSV();
 }
-function onVolOverride(){userOverrodeVol=true;document.getElementById('search-vol').classList.remove('auto-filled');document.getElementById('vol-est-tag').textContent='✎ OVERRIDDEN';document.getElementById('vol-note').textContent='Using your researched number';document.getElementById('vol-note').style.color='var(--green)';}
-function onMarketChange(){if(!userOverrodeVol){const m=document.getElementById('market').value,i=document.getElementById('industry').value;if(m) estimateVol(m,i);}}
-function onIndustryChange(){const i=document.getElementById('industry').value;applyBenchmarks(i);if(!userOverrodeVol){const m=document.getElementById('market').value;if(m&&i) estimateVol(m,i);}}
-function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
-function showTag(id){const el=document.getElementById(id);if(el) el.classList.add('show');}
-function setCur(c){cur=c;document.getElementById('btn-usd').classList.toggle('active',c==='USD');document.getElementById('btn-cad').classList.toggle('active',c==='CAD');renderRows();}
-function setStar(v){stars=v;document.getElementById('cur-rating').value=v;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));document.getElementById('star-disp').textContent=v+'.0 ★';}
-function addRow(t='standard'){rows.push({id:nxt++,type:t});renderRows();}
-function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();}
-function changeType(id,t){const r=rows.find(r=>r.id===id);if(r){r.type=t;renderRows();}}
-function renderRows(){
-  const p=PRICE[cur],list=document.getElementById('removal-list');
-  list.innerHTML='';let total=0;
-  rows.forEach((r,i)=>{
-    const price=p[r.type];total+=price;
-    const d=document.createElement('div');d.className='removal-row';
-    d.innerHTML=`<div class="rnum">${i+1}</div><select onchange="changeType(${r.id},this.value)"><option value="standard" ${r.type==='standard'?'selected':''}>Normal Removal — ${p.sym}${p.standard.toLocaleString()} ${p.code}</option><option value="discounted" ${r.type==='discounted'?'selected':''}>New (within 2 weeks) or Has Photo — ${p.sym}${p.discounted.toLocaleString()} ${p.code}</option></select><div class="rprice-del"><span class="rprice">${p.sym}${price.toLocaleString()} ${p.code}</span><button class="del-btn" onclick="delRow(${r.id})">×</button></div>`;
-    list.appendChild(d);
-  });
-  document.getElementById('total-disp').textContent=rows.length?`${p.sym}${total.toLocaleString()} ${p.code}`:`${p.sym}0`;
+function onMkt(){autoSV();}
+function autoSV(){
+  const m=document.getElementById('mktSize').value;
+  const ind=document.getElementById('industry').value;
+  const base=MKT[m]||1100;
+  const mult=(ind&&IND[ind])?IND[ind].sm:0.7;
+  const est=Math.round(base*mult);
+  document.getElementById('searchVol').value=est;
+  document.getElementById('searchHint').textContent=`Auto-estimated: ~${est.toLocaleString()} searches/mo. Override with your known figure.`;
 }
-addRow();
 
-function fmt(n){const p=PRICE[cur];if(n>=1000000) return p.sym+(n/1000000).toFixed(1)+'M '+p.code;if(n>=1000) return p.sym+Math.round(n/1000)+'K '+p.code;return p.sym+Math.round(n).toLocaleString()+' '+p.code;}
-function fmtF(n){return PRICE[cur].sym+Math.round(n).toLocaleString()+' '+PRICE[cur].code;}
-function starsHtml(r){let s='';for(let i=1;i<=5;i++) s+=r>=i?'★':(r>=i-0.5?'⯨':'☆');return s;}
-function projRating(curR,neg,removed){const est=40,newCount=est-removed;if(newCount<=0) return 5.0;return Math.round(Math.min(5.0,(Math.round(curR*est)+removed)/newCount)*10)/10;}
-function penalty(rating,negCount){let sp=rating<4.0?0.18+(4.0-rating)*0.10:(rating<4.5?0.05:0);return Math.min(sp+negCount*0.07,0.78);}
+// ─── STARS ─────────────────────────────────────────────────────────────────────
+function getCurStars(){return parseInt(document.getElementById('starSlider').value)/10;}
+function starsHTML(r){
+  let h='';
+  for(let i=1;i<=5;i++){
+    const f=Math.min(1,Math.max(0,r-(i-1)));
+    if(f>=0.85) h+=`<span class="s" style="color:#FFB800">★</span>`;
+    else if(f>=0.35) h+=`<span class="s" style="color:#FFB800;opacity:.4">★</span>`;
+    else h+=`<span class="s" style="color:#2C4080">★</span>`;
+  }
+  return h;
+}
+function onStar(){updStar();checkT();}
+function updStar(){
+  const s=getCurStars();
+  document.getElementById('starDisp').innerHTML=`${s.toFixed(1)} <span>/ 5.0 stars</span>`;
+  document.getElementById('starVis').innerHTML=starsHTML(s);
+}
+function checkT(){
+  const s=getCurStars();
+  const el=document.getElementById('tAlert');
+  el.className='talert';
+  if(s<3.0){el.classList.add('show','danger');el.innerHTML='🚨 Critical: Below 3.0★ — most consumers will immediately disqualify your business';}
+  else if(s<4.0){el.classList.add('show','warn');el.innerHTML=`⚠️ You are ${(4.0-s).toFixed(1)}★ below the 4.0 threshold — crossing it unlocks an average +18% conversion boost`;}
+  else if(s<4.5){el.classList.add('show','good');el.innerHTML='✓ Above 4.0★ — good standing. Removing residual negatives protects your position.';}
+  else{el.classList.remove('show');}
+}
+function convRate(s){
+  if(s<2.0) return 0.8;
+  if(s<2.5) return 1.5+(s-2.0)*1.4;
+  if(s<3.0) return 2.2+(s-2.5)*2.0;
+  if(s<3.5) return 3.2+(s-3.0)*2.4;
+  if(s<4.0) return 4.4+(s-3.5)*4.4;
+  if(s<4.5) return 6.6+(s-4.0)*4.8;
+  return 9.0+(s-4.5)*2.4;
+}
 
-function calculate(){
-  const indKey=document.getElementById('industry').value;
-  const searchVol=parseFloat(document.getElementById('search-vol').value)||0;
-  const curR=parseFloat(document.getElementById('cur-rating').value)||0;
-  const avgTxn=parseFloat(document.getElementById('avg-txn').value)||0;
-  if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n• Industry\n• Search Volume\n• Star Rating\n• Average Transaction Value\n• At least one removal');return;}
-  const ind=IND[indKey],p=PRICE[cur],negCount=rows.length;
-  const totalCost=rows.reduce((s,r)=>s+p[r.type],0);
-  const baseConv=ind.conv,curConv=baseConv*(1-penalty(curR,negCount));
-  const searchLeads=searchVol*0.045;
-  const totalLeads=searchLeads;
-  const curRevMo=totalLeads*curConv*avgTxn,idealRevMo=totalLeads*baseConv*avgTxn;
-  const moLoss=idealRevMo-curRevMo,yrLoss=moLoss*12;
-  const custLost=Math.max(0,Math.round(totalLeads*(baseConv-curConv)));
-  const newR=projRating(curR,negCount,negCount);
-  const newConv=baseConv*(1-penalty(newR,0));
-  const convLift=((newConv-curConv)/curConv*100).toFixed(1);
-  const counts=negCount===1?[1]:negCount===2?[1,2]:[1,Math.ceil(negCount/2),negCount];
-  const scenarios=counts.map(n=>{
-    const nr=projRating(curR,negCount,n);
-    const remRp=Math.max(0,(negCount-n)*0.07);
-    const sp2=nr<4.0?0.18+(4.0-nr)*0.10:(nr<4.5?0.05:0);
-    const sc=baseConv*(1-Math.min(sp2+remRp,0.78));
-    const gain=(totalLeads*sc*avgTxn)-curRevMo,annGain=gain*12;
-    const cost=rows.slice(0,n).reduce((s,r)=>s+p[r.type],0);
-    const roi=cost>0?((annGain/cost)*100).toFixed(0):0;
-    const payback=gain>0?Math.round((cost/gain)*30):null;
-    return{n,gain,annGain,cost,roi,payback};
+// ─── REMOVALS ─────────────────────────────────────────────────────────────────
+function addRem(){
+  remCnt++;const id=remCnt;
+  const div=document.createElement('div');
+  div.className='ritem';div.id=`rem_${id}`;
+  div.innerHTML=`
+    <div class="field"><label>Platform</label>
+      <select id="rp_${id}" onchange="updP(${id})">
+        ${Object.entries(PLAT).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>Tier</label>
+      <select id="rt_${id}" onchange="updP(${id})">
+        <option value="std">Standard Removal — $800 USD</option>
+        <option value="prem">Posted Within 2 Weeks or Has a Photo — $500 USD</option>
+      </select></div>
+    <div><label>&nbsp;</label><div class="pdisplay" id="rprice_${id}">$500</div></div>
+    <div><label>&nbsp;</label><button class="btn-rm" onclick="remRem(${id})">×</button></div>`;
+  document.getElementById('remList').appendChild(div);
+  updP(id);
+}
+function updP(id){
+  const t=document.getElementById(`rt_${id}`);if(!t) return;
+  const usd=t.value==='prem'?PREM_USD:STD_USD;
+  document.getElementById(`rprice_${id}`).textContent=`${getSym()}${toActive(usd).toLocaleString()}`;
+  updInv();
+}
+function remRem(id){const el=document.getElementById(`rem_${id}`);if(el)el.remove();updInv();}
+function updInv(){
+  let tot=0;
+  document.querySelectorAll('.ritem').forEach(item=>{
+    const id=item.id.replace('rem_','');
+    const t=document.getElementById(`rt_${id}`);
+    if(t) tot+=toActive(t.value==='prem'?PREM_USD:STD_USD);
   });
-  document.getElementById('hl-loss').textContent=fmt(moLoss);
-  document.getElementById('r-mo-loss').textContent=fmtF(moLoss);
-  document.getElementById('r-yr-loss').textContent=fmtF(yrLoss);
-  document.getElementById('r-cust').textContent=custLost;
-  document.getElementById('r-invest').textContent=fmtF(totalCost);
-  document.getElementById('stars-b').textContent=starsHtml(curR);
-  document.getElementById('rnum-b').textContent=parseFloat(curR).toFixed(1)+'★';
-  document.getElementById('stars-a').textContent=starsHtml(newR);
-  document.getElementById('rnum-a').textContent=newR.toFixed(1)+'★';
-  document.getElementById('conv-lift').textContent='+'+convLift+'%';
-  const sg=document.getElementById('sc-grid');sg.innerHTML='';
-  const mi=Math.floor(scenarios.length/2);
-  scenarios.forEach((s,i)=>{
-    const feat=i===mi&&scenarios.length>1;
-    const div=document.createElement('div');
-    div.className='sc-card'+(feat?' feat':'');
-    div.innerHTML=(feat?'<div class="sc-badge">Recommended</div>':'')+
-      `<div class="sc-title">${s.n} Removal${s.n>1?'s':''} · ${fmtF(s.cost)}</div>`+
-      `<div class="sc-gain">${fmt(s.gain)}<span style="font-size:11px;color:var(--muted)">/mo</span></div>`+
-      `<div class="sc-sub">${fmt(s.annGain)} recovered / year</div>`+
-      `<div class="sc-roi">📈 ${s.roi}% annual ROI</div>`+
-      (s.payback?`<div class="sc-payback">Break-even in ~${s.payback} days</div>`:'');
-    sg.appendChild(div);
-  });
-  const bd=document.getElementById('bdown');
-  bd.innerHTML=[
-    {l:'Monthly Local Search Volume',v:Math.round(searchVol).toLocaleString(),c:''},
-    {l:'Est. Monthly Visitors via Search (4.5% CTR)',v:Math.round(searchLeads).toLocaleString(),c:''},
-    {l:'Industry Baseline Conversion Rate',v:(baseConv*100).toFixed(1)+'%',c:'gld'},
-    {l:`Effective Conversion (${parseFloat(curR).toFixed(1)}★ · ${negCount} neg. review${negCount>1?'s':''})`,v:(curConv*100).toFixed(1)+'%',c:'neg'},
-    {l:'Projected Conversion After All Removals',v:(newConv*100).toFixed(1)+'%',c:'pos'},
-    {l:'Customers Lost to Reputation Per Month',v:custLost,c:'neg'},
-    {l:'Revenue Lost Per Month',v:fmtF(moLoss),c:'neg'},
-    {l:'Revenue Lost Per Year',v:fmtF(yrLoss),c:'neg'},
-    {l:'Total Removal Investment',v:fmtF(totalCost),c:'gld',tot:true},
-  ].map(r=>`<div class="brow ${r.tot?'tot':''}"><span class="blbl">${r.l}</span><span class="bval ${r.c}">${r.v}</span></div>`).join('');
-  const name=document.getElementById('business-search').value.split(',')[0]||'Your business';
-  const best=scenarios[scenarios.length-1];
-  document.getElementById('urg-title').textContent=`${name} is losing ${fmt(moLoss)} every single month.`;
-  document.getElementById('urg-body').innerHTML=`That's <strong>${fmtF(yrLoss)} per year</strong> leaving on the table — not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> — a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in approximately ${best.payback} days`:''}.  Every month of delay is another <strong>${fmt(moLoss)}</strong> gone.`;
+  document.getElementById('invTotal').textContent=`${getSym()}${tot.toLocaleString()}`;
+  return tot;
+}
+
+// ─── PROJECTED RATING ─────────────────────────────────────────────────────────
+function getProjStars(){
+  const cur=getCurStars();
+  const mkts={major:180,large:110,mid:65,small_city:35,small_town:18,rural:8};
+  const total=mkts[document.getElementById('mktSize').value]||65;
+  let lift=0;
+  document.querySelectorAll('.ritem').forEach(()=>{lift+=Math.max(0,cur-1.5)/total;});
+  return Math.min(5.0,cur+lift);
+}
+
+// ─── ANIMATE ──────────────────────────────────────────────────────────────────
+function animVal(id,target,sym){
+  const el=document.getElementById(id);
+  el.classList.remove('ca');void el.offsetWidth;el.classList.add('ca');
+  let cur=0;const step=target/28;
+  const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t);}el.textContent=sym+Math.round(cur).toLocaleString();},18);
+}
+
+// ─── CALCULATE ────────────────────────────────────────────────────────────────
+function calc(){
+  const sym=getSym();const rate=getRate();const ind=document.getElementById('industry').value;
+  const sv=parseFloat(document.getElementById('searchVol').value)||800;
+  const curS=getCurStars();const projS=getProjStars();
+  const atv=parseFloat(document.getElementById('atv').value)||((IND[ind]?.atv||350)*rate);
+  const clv=parseFloat(document.getElementById('clvInp').value)||((IND[ind]?.clv||2100)*rate);
+  const inv=updInv();
+  const ctr=0.032,clicks=sv*ctr;
+  const cC=convRate(curS)/100,nC=convRate(projS)/100,iC=convRate(4.3)/100;
+  const gained=Math.max(0,(clicks*nC)-(clicks*cC));
+  const lostVI=Math.max(0,(clicks*iC)-(clicks*cC));
+  const mRec=gained*clv,aRec=mRec*12,mLost=lostVI*clv,aLost=mLost*12;
+  const roi=inv>0?aRec/inv:0;
+  const payback=mRec>0?inv/mRec:999;
+  const c4=curS<4.0&&projS>=4.0;
+  const lift=cC>0?((nC-cC)/cC)*100:0;
+
+  document.getElementById('roiNum').textContent=roi.toFixed(1)+'x';
+  document.getElementById('eqRec').textContent=fmt(aRec);
+  document.getElementById('eqInv').textContent=fmt(inv);
+  document.getElementById('eqROI').textContent=roi.toFixed(1)+'x';
+  animVal('kLoss',mLost,sym);
+  animVal('kAnnual',aLost,sym);
+  document.getElementById('kCust').textContent=Math.round(lostVI);
+  animVal('kRec',aRec,sym);
+  document.getElementById('scBefore').textContent=curS.toFixed(1)+'★';
+  document.getElementById('scAfter').textContent=projS.toFixed(1)+'★';
+  document.getElementById('scBeforeV').innerHTML=starsHTML(curS);
+  document.getElementById('scAfterV').innerHTML=starsHTML(projS);
+  document.getElementById('scBeforeC').textContent=`Conv: ${fmtP(cC*100)}`;
+  document.getElementById('scAfterC').textContent=`Conv: ${fmtP(nC*100)}`;
+  document.getElementById('cliftPill').textContent=`+${lift.toFixed(0)}% Conv. Lift`;
+  const tcEl=document.getElementById('tcMsg');
+  if(c4){tcEl.style.display='block';tcEl.textContent='🎯 Crosses 4.0★ — +18% conversion bonus unlocked!';}
+  else{tcEl.style.display='none';}
+  document.getElementById('tickAmt').textContent=fmt(mLost/30);
+  document.getElementById('bdSearch').textContent=Math.round(sv).toLocaleString();
+  document.getElementById('bdCTR').textContent=fmtP(ctr*100);
+  document.getElementById('bdCurStar').textContent=curS.toFixed(1);
+  document.getElementById('bdCurConv').textContent=fmtP(cC*100);
+  document.getElementById('bdNewStar').textContent=projS.toFixed(1);
+  document.getElementById('bdNewConv').textContent=fmtP(nC*100);
+  document.getElementById('bdNewCust').textContent=gained.toFixed(1)+' customers/mo';
+  document.getElementById('bdCLV').textContent=fmt(clv)+' (CLV)';
+  document.getElementById('bdMonRec').textContent=fmt(mRec);
+  document.getElementById('bdPayback').textContent=payback<1?'< 1 month':payback.toFixed(1)+' months';
+  document.getElementById('bdROI').textContent=`${fmt(aRec)} vs ${fmt(inv)} = ${roi.toFixed(1)}x`;
+  buildChart(inv,aRec,aLost,sym);
+  document.getElementById('ctaLoss').textContent=fmt(mLost);
+  document.getElementById('ctaROI').textContent=`${roi.toFixed(1)}x ROI — a ${fmt(aRec-inv)} net annual gain`;
   const res=document.getElementById('results');
-  res.classList.add('visible');
-  res.scrollIntoView({behavior:'smooth',block:'start'});
+  res.classList.add('show');
+  setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
-</script>
-</body>
-</html>
+
+function buildChart(inv,rec,loss,sym){
+  const mx=Math.max(inv,rec,loss,1);
+  const bars=[
+    {l:'Removal\nInvestment',v:inv,c:'bi'},
+    {l:'Annual\nRecovered',v:rec,c:'br'},
+    {l:'Annual\nLost (Now)',v:loss,c:'bl'}
+  ];
+  document.getElementById('chartBars').innerHTML=bars.map(b=>{
+    const p=Math.round((b.v/mx)*100);
+    return `<div class
