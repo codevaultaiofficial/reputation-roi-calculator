@@ -885,4 +885,8 @@ function buildChart(inv, rec, loss, sym) {
 }
 </script>
 
-<!-- Google Plac
+<!-- Google Places API — loaded LAST so DOM and all JS functions exist before callback fires -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
+
+</body>
+</html>
