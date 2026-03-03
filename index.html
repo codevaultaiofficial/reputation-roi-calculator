@@ -170,14 +170,22 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 @keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .ca{animation:countUp .45s cubic-bezier(.34,1.56,.64,1) both;}
 
+.print-biz-banner{display:none;background:rgba(46,204,113,0.08);border:2px solid rgba(46,204,113,0.4);border-radius:6px;padding:16px 22px;margin-bottom:18px;align-items:center;gap:14px;}
+.print-biz-banner .pbb-check{font-size:26px;color:#2ECC71;flex-shrink:0;}
+.print-biz-banner .pbb-name{font-family:Montserrat,sans-serif;font-weight:900;color:#fff;font-size:20px;margin-bottom:4px;letter-spacing:-0.01em;}
+.print-biz-banner .pbb-meta{font-size:13px;color:#8FA3C8;}
+.print-biz-banner.active{display:flex;}
+
 /* PDF DOWNLOAD BUTTON */
 .pdf-bar{max-width:960px;margin:0 auto;padding:0 24px 40px;position:relative;z-index:1;}
 .pdf-btn{width:100%;padding:18px;background:linear-gradient(135deg,#1E3057,#243662);border:2px solid rgba(255,255,255,0.25);border-radius:4px;color:#fff;font-family:Montserrat,sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:12px;}
 .pdf-btn:hover{border-color:rgba(255,255,255,0.6);background:linear-gradient(135deg,#243662,#2e4480);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.5);}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-  .site-header,.urgency,.cur-bar,.pdf-bar,.calc-btn,.btn-add,.btn-rm,input[type=range],.rlabels,.biz-search-box,.biz-confirmed,.site-footer{display:none!important;}
+  .site-header,.urgency,.cur-bar,.pdf-bar,.calc-btn,.btn-add,.btn-rm,input[type=range],.rlabels,.biz-search-box,.site-footer,#bizSearchSec{display:none!important;}
   .results{display:block!important;}
+  .print-biz-banner.active{display:flex!important;}
+  .biz-confirmed.show{display:flex!important;}
   body{background:#131F38!important;color:#fff!important;margin:0;padding:0;}
   body::before{display:none;}
   .hero{padding:20px 24px 16px;}
@@ -269,8 +277,17 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 
 <div class="wrap">
 
+  <!-- PRINT-ONLY BUSINESS NAME BANNER -->
+  <div class="print-biz-banner" id="printBizBanner">
+    <div class="pbb-check">&#10003;</div>
+    <div>
+      <div class="pbb-name" id="printBizName"></div>
+      <div class="pbb-meta" id="printBizMeta"></div>
+    </div>
+  </div>
+
   <!-- STEP 0: BUSINESS SEARCH — at the very top -->
-  <div class="sec">
+  <div class="sec" id="bizSearchSec">
     <div class="sec-hd">
       <div class="badge">&#9733;</div>
       <div>
@@ -632,6 +649,8 @@ function initPlaces() {
 
     // Show business name
     document.getElementById('bizNameDisp').textContent = place.name;
+    document.getElementById('printBizName').textContent = place.name;
+    document.getElementById('printBizBanner').classList.add('active');
 
     // Auto-set star rating from Google rating
     if (place.rating) {
@@ -658,6 +677,7 @@ function initPlaces() {
     if (place.rating) parts.push('\u2B50 ' + place.rating + ' stars (' + (place.user_ratings_total||0).toLocaleString() + ' reviews)');
     if (place.formatted_address) parts.push(place.formatted_address);
     document.getElementById('bizMeta').textContent = parts.join(' \u00B7 ');
+    document.getElementById('printBizMeta').textContent = parts.join(' · ');
     document.getElementById('bizConfirmed').classList.add('show');
 
     // Refresh search volume estimate
