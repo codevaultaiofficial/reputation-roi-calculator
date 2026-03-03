@@ -5,20 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Review Removal ROI Calculator — Reputation.ca</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
 <style>
-:root{
-  --navy:#1B2A4A;--navy-dark:#131F38;--navy-mid:#1E3057;--navy-light:#243662;
-  --red:#C0272D;--red-dark:#A01F24;--red-light:#D93030;
-  --text:#FFFFFF;--text-muted:#8FA3C8;--text-dim:#4A6090;
-  --border:rgba(255,255,255,0.1);--border-s:rgba(255,255,255,0.2);
-  --green:#2ECC71;--gold:#FFB800;
-}
+:root{--navy:#1B2A4A;--navy-dark:#131F38;--navy-mid:#1E3057;--navy-light:#243662;--red:#C0272D;--red-dark:#A01F24;--red-light:#D93030;--text:#FFFFFF;--text-muted:#8FA3C8;--text-dim:#4A6090;--border:rgba(255,255,255,0.1);--border-s:rgba(255,255,255,0.2);--green:#2ECC71;--gold:#FFB800;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--navy-dark);color:var(--text);font-family:'Open Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(192,39,45,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
-
-/* HEADER */
 .site-header{background:var(--navy);border-bottom:3px solid var(--red);position:relative;z-index:10;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
 .header-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:74px;}
 .header-right{display:flex;align-items:center;gap:16px;}
@@ -26,24 +17,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .header-phone:hover{color:#ff8080;}
 .header-btn{background:var(--red);color:#fff;padding:9px 18px;border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:background .2s;}
 .header-btn:hover{background:var(--red-dark);}
-
-/* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%);padding:52px 24px 44px;text-align:center;position:relative;z-index:1;overflow:hidden;}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--red),transparent);opacity:0.5;}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(192,39,45,0.15);border:1px solid rgba(192,39,45,0.35);color:#ff9090;padding:5px 14px;border-radius:2px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;}
-.hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(24px,5vw,44px);font-weight:900;line-height:1.15;margin-bottom:14px;letter-spacing:-0.01em;}
+.hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(24px,5vw,44px);font-weight:900;line-height:1.15;margin-bottom:14px;}
 .hero h1 span{color:var(--red-light);}
 .hero-sub{font-size:16px;color:var(--text-muted);max-width:520px;margin:0 auto 22px;line-height:1.65;font-weight:300;}
 .trust-bar{display:inline-flex;align-items:center;gap:16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:3px;padding:10px 20px;font-size:12px;color:var(--text-muted);flex-wrap:wrap;justify-content:center;}
 .trust-bar strong{color:#fff;font-family:'Montserrat',sans-serif;}
-.trust-bar .sep{color:var(--text-dim);}
-
-/* URGENCY */
 .urgency{background:rgba(192,39,45,0.1);border-top:1px solid rgba(192,39,45,0.2);border-bottom:1px solid rgba(192,39,45,0.2);padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:#ff9090;position:relative;z-index:1;}
 .pdot{width:7px;height:7px;background:var(--red-light);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,39,45,0.5);}50%{box-shadow:0 0 0 7px rgba(192,39,45,0);}}
-
-/* CURRENCY TOGGLE */
 .cur-bar{max-width:960px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;justify-content:flex-end;gap:12px;position:relative;z-index:1;}
 .cur-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
 .cur-switch{display:flex;background:var(--navy);border:1px solid var(--border-s);border-radius:4px;overflow:hidden;}
@@ -51,12 +35,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .cur-btn.on{background:var(--red);color:#fff;}
 .cur-btn:hover:not(.on){background:rgba(255,255,255,0.07);color:#fff;}
 .rate-note{font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;}
-
-/* PAGE WRAP */
 .wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:22px 24px 80px;}
-
-/* SECTIONS */
-.sec{background:var(--navy);border:1px solid var(--border);border-radius:6px;margin-bottom:18px;overflow:hidden;animation:fadeUp .5s ease both;}
+.sec{background:var(--navy);border:1px solid var(--border);border-radius:6px;margin-bottom:18px;overflow:hidden;}
 .sec-hd{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:13px;background:var(--navy-mid);}
 .badge{width:28px;height:28px;background:var(--red);color:#fff;border-radius:50%;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sec-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;letter-spacing:0.02em;}
@@ -64,12 +44,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sec-body{padding:24px;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:640px){.g2{grid-template-columns:1fr;}}
-
-/* FIELDS */
 .field{display:flex;flex-direction:column;gap:5px;}
 label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);}
 .atag{display:inline-block;font-size:8px;background:rgba(192,39,45,0.2);color:#ff9090;padding:1px 6px;border-radius:2px;margin-left:5px;letter-spacing:0.06em;font-weight:700;vertical-align:middle;}
-input[type=text],input[type=number],select{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.11);color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;padding:10px 13px;border-radius:4px;transition:border-color .2s,box-shadow .2s;outline:none;width:100%;appearance:none;}
+input[type=text],input[type=number],select{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.11);color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;padding:10px 13px;border-radius:4px;transition:border-color .2s,box-shadow .2s;outline:none;width:100%;-webkit-appearance:none;appearance:none;}
 input:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,39,45,0.15);}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238FA3C8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
 select option{background:var(--navy-mid);}
@@ -77,54 +55,45 @@ select option{background:var(--navy-mid);}
 .ipfx .sym{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--red-light);font-size:14px;font-weight:600;pointer-events:none;font-family:'Montserrat',sans-serif;}
 .ipfx input{padding-left:26px;}
 .hint{font-size:11px;color:var(--text-dim);margin-top:3px;}
-
-/* BUSINESS SEARCH */
-.biz-search-wrap{margin-bottom:22px;text-align:center;}
-.biz-search-inner{max-width:560px;margin:0 auto;}
-.biz-search-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:6px;}
-.biz-search-box{position:relative;}
+/* BIZ SEARCH */
+.biz-search-box{position:relative;margin-top:6px;}
 .biz-search-box .search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;z-index:1;}
-#bizName{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.2);color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;padding:12px 14px 12px 44px;border-radius:4px;width:100%;outline:none;transition:border-color .2s,box-shadow .2s;}
+#bizName{padding-left:44px;font-size:15px;border:1px solid rgba(255,255,255,0.2);}
 #bizName:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,39,45,0.18);}
 #bizName::placeholder{color:var(--text-dim);}
-.biz-confirmed{display:none;margin-top:10px;padding:11px 15px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.25);border-radius:4px;font-size:13px;color:#5ddda0;align-items:flex-start;gap:10px;text-align:left;}
+.biz-confirmed{display:none;margin-top:12px;padding:11px 15px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.25);border-radius:4px;font-size:13px;align-items:flex-start;gap:10px;}
 .biz-confirmed.show{display:flex;}
-.biz-check{font-size:18px;flex-shrink:0;margin-top:1px;}
+.biz-check{font-size:18px;flex-shrink:0;color:#5ddda0;}
 .biz-name-disp{font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:14px;margin-bottom:2px;}
 .biz-meta{font-size:12px;color:var(--text-muted);}
-/* Google autocomplete dropdown styling */
-.pac-container{background:var(--navy-mid)!important;border:1px solid rgba(255,255,255,0.2)!important;border-radius:4px!important;box-shadow:0 8px 32px rgba(0,0,0,0.6)!important;font-family:'Open Sans',sans-serif!important;margin-top:4px!important;}
-.pac-item{padding:10px 14px!important;color:var(--text-muted)!important;border-top:1px solid rgba(255,255,255,0.05)!important;cursor:pointer!important;font-size:13px!important;}
+.pac-container{background:#1E3057!important;border:1px solid rgba(255,255,255,0.2)!important;border-radius:4px!important;box-shadow:0 8px 32px rgba(0,0,0,0.6)!important;font-family:'Open Sans',sans-serif!important;margin-top:4px!important;z-index:9999!important;}
+.pac-item{padding:10px 14px!important;color:#8FA3C8!important;border-top:1px solid rgba(255,255,255,0.05)!important;cursor:pointer!important;font-size:13px!important;}
 .pac-item:hover,.pac-item-selected{background:rgba(192,39,45,0.15)!important;}
 .pac-item-query{color:#fff!important;font-weight:600!important;}
-.pac-matched{color:var(--red-light)!important;}
+.pac-matched{color:#D93030!important;}
 .pac-icon{display:none!important;}
-
-/* STAR SLIDER */
+/* STARS */
 .star-wrap{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:16px 18px;}
 .star-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .star-num{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;}
 .star-num span{font-size:14px;color:var(--text-muted);font-family:'Open Sans',sans-serif;font-weight:300;}
 .sv{display:flex;gap:2px;}
-.sv .s{font-size:22px;transition:all .15s;}
-input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:none;border-radius:2px;cursor:pointer;accent-color:var(--red);appearance:auto;padding:0;}
+input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:none;border-radius:2px;cursor:pointer;accent-color:var(--red);padding:0;}
 .rlabels{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;color:var(--text-dim);font-family:'Montserrat',sans-serif;font-weight:600;}
 .talert{margin-top:10px;padding:9px 13px;border-radius:3px;font-size:13px;display:none;align-items:center;gap:8px;}
 .talert.show{display:flex;}
 .talert.danger{background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.3);color:#ff9090;}
 .talert.warn{background:rgba(230,126,34,0.08);border:1px solid rgba(230,126,34,0.25);color:#ffb060;}
 .talert.good{background:rgba(46,204,113,0.07);border:1px solid rgba(46,204,113,0.2);color:#5ddda0;}
-
-/* PRICING CALLOUT */
+/* PRICING */
 .pcallout{background:linear-gradient(135deg,rgba(192,39,45,0.08),rgba(192,39,45,0.03));border:1px solid rgba(192,39,45,0.25);border-radius:4px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:13px;}
 .pcallout-ico{font-size:18px;flex-shrink:0;margin-top:2px;}
 .pcallout h4{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#fff;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
 .tiers{display:flex;gap:10px;flex-wrap:wrap;}
 .tier-pill{background:rgba(192,39,45,0.15);border:1px solid rgba(192,39,45,0.3);border-radius:3px;padding:5px 12px;font-size:12px;color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;}
 .tier-pill span{color:#ffb0b0;font-size:11px;}
-
-/* REMOVAL ITEMS */
-.ritem{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;padding:15px 17px;margin-bottom:11px;display:grid;grid-template-columns:1fr 1fr auto auto;gap:11px;align-items:end;animation:fadeUp .3s ease both;}
+/* REMOVAL ROWS */
+.ritem{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;padding:15px 17px;margin-bottom:11px;display:grid;grid-template-columns:1fr 1fr auto auto;gap:11px;align-items:end;}
 @media(max-width:640px){.ritem{grid-template-columns:1fr 1fr;}}
 .pdisplay{background:var(--navy-dark);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:10px 12px;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:var(--gold);text-align:center;white-space:nowrap;}
 .btn-rm{width:38px;height:38px;background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.25);color:#ff8080;border-radius:4px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
@@ -134,26 +103,16 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 .inv-total{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(192,39,45,0.07);border:1px solid rgba(192,39,45,0.25);border-radius:4px;margin-top:15px;}
 .inv-lbl{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);}
 .inv-val{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;color:var(--gold);}
-
-/* CALC BTN */
 .calc-btn{width:100%;padding:18px;background:var(--red);border:none;border-radius:4px;color:#fff;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:0.06em;text-transform:uppercase;margin-top:8px;}
 .calc-btn:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 28px rgba(192,39,45,0.4);}
-
 /* RESULTS */
 .results{display:none;}
-.results.show{display:block;animation:fadeUp .6s ease both;}
-
-/* ROI HERO */
-.roi-hero{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border:1px solid rgba(255,255,255,0.15);border-top:3px solid var(--red);border-radius:6px;padding:40px 36px;margin-bottom:18px;text-align:center;position:relative;overflow:hidden;}
-.roi-hero::before{content:'';position:absolute;top:-60%;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(192,39,45,0.09),transparent 70%);pointer-events:none;}
+.roi-hero{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border:1px solid rgba(255,255,255,0.15);border-top:3px solid var(--red);border-radius:6px;padding:40px 36px;margin-bottom:18px;text-align:center;}
 .roi-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.3);color:var(--green);padding:6px 16px;border-radius:20px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:16px;}
-.roi-num{font-family:'Montserrat',sans-serif;font-size:clamp(54px,11vw,100px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px;letter-spacing:-0.02em;}
+.roi-num{font-family:'Montserrat',sans-serif;font-size:clamp(54px,11vw,100px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px;}
 .roi-lbl{font-size:15px;color:var(--text-muted);margin-bottom:22px;}
 .roi-eq{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text-muted);background:var(--navy-dark);padding:10px 20px;border-radius:30px;border:1px solid var(--border);flex-wrap:wrap;justify-content:center;}
-.roi-eq .v{color:var(--gold);font-weight:700;}
-.roi-eq .vg{color:var(--green);font-weight:700;}
-
-/* KPIs */
+.roi-eq .v{color:var(--gold);font-weight:700;}.roi-eq .vg{color:var(--green);font-weight:700;}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px;}
 @media(max-width:700px){.kpi-grid{grid-template-columns:1fr 1fr;}}
 .kpi{background:var(--navy);border:1px solid var(--border);border-radius:5px;padding:19px 15px;text-align:center;}
@@ -161,70 +120,52 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 .kpi.pos{border-color:rgba(46,204,113,0.3);background:rgba(46,204,113,0.04);}
 .kpi-ico{font-size:20px;margin-bottom:7px;}
 .kpi-val{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:900;line-height:1;margin-bottom:5px;color:var(--gold);}
-.kpi.danger .kpi-val{color:#ff6060;}
-.kpi.pos .kpi-val{color:var(--green);}
+.kpi.danger .kpi-val{color:#ff6060;}.kpi.pos .kpi-val{color:var(--green);}
 .kpi-lbl{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;line-height:1.4;}
-
-/* STAR COMPARE */
 .sc{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:26px;margin-bottom:18px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;text-align:center;}
 @media(max-width:600px){.sc{grid-template-columns:1fr;}}
 .sb .lbl{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);margin-bottom:9px;}
 .sb .rn{font-family:'Montserrat',sans-serif;font-size:42px;font-weight:900;line-height:1;margin-bottom:5px;}
-.sb.before .rn{color:#ff6060;}
-.sb.after .rn{color:var(--green);}
-.sb .sr{font-size:18px;letter-spacing:1px;}
+.sb.before .rn{color:#ff6060;}.sb.after .rn{color:var(--green);}
 .arrowbox{display:flex;flex-direction:column;align-items:center;gap:8px;}
 .clift{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.25);color:var(--green);padding:4px 10px;border-radius:3px;white-space:nowrap;}
 .abig{font-size:28px;color:var(--gold);}
 .tc-msg{padding:8px 13px;border-radius:3px;font-size:12px;font-family:'Montserrat',sans-serif;font-weight:700;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#5ddda0;text-align:center;}
-
-/* TICKER */
 .ticker{display:inline-flex;align-items:center;gap:10px;background:rgba(192,39,45,0.1);border:1px solid rgba(192,39,45,0.25);border-radius:4px;padding:10px 18px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#ffb0b0;margin-bottom:18px;}
-
-/* BREAKDOWN */
 .bkd{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:18px;}
-.bkd h3{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+.bkd h3,.chart h3{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#fff;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--border);}
 .brow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
 .brow:last-child{border-bottom:none;}
 .brow .d{color:var(--text-muted);}
 .brow .v{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;}
 .brow .v.r{color:#ff6060;}.brow .v.g{color:var(--green);}.brow .v.gold{color:var(--gold);}
 .brow.tot{padding-top:13px;border-top:2px solid rgba(255,255,255,0.1);font-weight:600;font-size:14px;margin-top:3px;}
-
-/* CHART */
 .chart{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:18px;}
-.chart h3{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#fff;margin-bottom:18px;padding-bottom:11px;border-bottom:1px solid var(--border);}
 .cbars{display:flex;gap:8px;align-items:flex-end;height:155px;}
 .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;}
-.bfill{width:100%;border-radius:3px 3px 0 0;transition:height .8s cubic-bezier(.34,1.56,.64,1);min-height:3px;}
+.bfill{width:100%;border-radius:3px 3px 0 0;min-height:3px;}
 .bfill.bi{background:rgba(192,39,45,0.5);border:1px solid rgba(192,39,45,0.6);}
-.bfill.br{background:linear-gradient(180deg,#ffd060,var(--gold));}
+.bfill.br{background:linear-gradient(180deg,#ffd060,#FFB800);}
 .bfill.bl{background:rgba(255,80,80,0.35);border:1px solid rgba(255,80,80,0.5);}
 .btop{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;white-space:nowrap;}
-.bbot{font-family:'Montserrat',sans-serif;font-size:9px;color:var(--text-dim);text-align:center;letter-spacing:0.03em;}
-
-/* PROOF */
+.bbot{font-family:'Montserrat',sans-serif;font-size:9px;color:var(--text-dim);text-align:center;}
 .proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:18px;}
 @media(max-width:600px){.proof-grid{grid-template-columns:1fr;}}
 .pcard{background:var(--navy);border:1px solid var(--border);border-radius:5px;padding:17px 19px;}
 .pstat{font-family:'Montserrat',sans-serif;font-size:32px;color:var(--red-light);font-weight:900;line-height:1;margin-bottom:6px;}
 .pdesc{font-size:13px;color:var(--text-muted);line-height:1.5;}
 .psrc{font-family:'Montserrat',sans-serif;font-size:10px;color:var(--text-dim);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
-
-/* CTA */
 .cta{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border:1px solid var(--border-s);border-top:3px solid var(--red);border-radius:6px;padding:36px;text-align:center;}
-.cta h2{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;margin-bottom:10px;letter-spacing:-.01em;}
+.cta h2{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;margin-bottom:10px;}
 .cta p{font-size:15px;color:var(--text-muted);margin-bottom:22px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
 .cta-btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
 .btn-p{background:var(--red);color:#fff;padding:13px 26px;border-radius:4px;border:none;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;text-transform:uppercase;letter-spacing:0.07em;}
-.btn-p:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(192,39,45,0.4);}
+.btn-p:hover{background:var(--red-dark);}
 .btn-s{background:transparent;color:#fff;padding:13px 26px;border-radius:4px;border:1px solid var(--border-s);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;text-transform:uppercase;letter-spacing:0.07em;}
 .btn-s:hover{background:rgba(255,255,255,0.07);}
-
 .footnote{font-size:11px;color:var(--text-dim);margin-top:30px;line-height:1.75;text-align:center;padding:0 16px;}
 .site-footer{background:var(--navy);border-top:1px solid var(--border);padding:18px 24px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text-dim);position:relative;z-index:1;}
 .site-footer a{color:var(--text-muted);}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .ca{animation:countUp .45s cubic-bezier(.34,1.56,.64,1) both;}
@@ -232,38 +173,36 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
     <svg viewBox="0 0 280 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:48px;width:auto;">
-      <rect x="0"  y="0"  width="22" height="22" rx="3" fill="#C0272D"/>
-      <rect x="25" y="0"  width="22" height="22" rx="3" fill="#C0272D"/>
-      <rect x="0"  y="25" width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="0" y="0" width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="25" y="0" width="22" height="22" rx="3" fill="#C0272D"/>
+      <rect x="0" y="25" width="22" height="22" rx="3" fill="#C0272D"/>
       <rect x="25" y="25" width="22" height="22" rx="3" fill="white" opacity="0.18"/>
-      <rect x="4"  y="5"  width="14" height="5" rx="1.5" fill="white"/>
-      <rect x="4"  y="13" width="9"  height="5" rx="1.5" fill="white"/>
-      <rect x="15" y="13" width="7"  height="5" rx="1.5" fill="white" opacity="0.55"/>
-      <rect x="30" y="5"  width="12" height="12" rx="2" fill="white" opacity="0.9"/>
-      <rect x="4"  y="30" width="12" height="12" rx="2" fill="white" opacity="0.9"/>
+      <rect x="4" y="5" width="14" height="5" rx="1.5" fill="white"/>
+      <rect x="4" y="13" width="9" height="5" rx="1.5" fill="white"/>
+      <rect x="15" y="13" width="7" height="5" rx="1.5" fill="white" opacity="0.55"/>
+      <rect x="30" y="5" width="12" height="12" rx="2" fill="white" opacity="0.9"/>
+      <rect x="4" y="30" width="12" height="12" rx="2" fill="white" opacity="0.9"/>
       <text x="56" y="31" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="21" fill="white" letter-spacing="0.3">REPUTATION.CA</text>
       <text x="56" y="45" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="8.5" fill="#8FA3C8" letter-spacing="2.2">ONLINE REPUTATION MANAGEMENT</text>
     </svg>
     <div class="header-right">
-      <a href="tel:18885055023" class="header-phone">📞 1 (888) 505-5023</a>
+      <a href="tel:18885055023" class="header-phone">&#128222; 1 (888) 505-5023</a>
       <a href="https://www.reputation.ca/contact/" target="_blank" class="header-btn">Free Consultation</a>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="eyebrow">⚡ Free ROI Analysis Tool</div>
+  <div class="eyebrow">&#9889; Free ROI Analysis Tool</div>
   <h1>How Much Are <span>Negative Reviews</span><br>Costing Your Business?</h1>
-  <p class="hero-sub">Enter your details for a precise calculation of your monthly revenue loss — and the exact ROI of professional review removal.</p>
+  <p class="hero-sub">Enter your details for a precise calculation of your monthly revenue loss and the exact ROI of professional review removal.</p>
   <div class="trust-bar">
-    <strong>Trusted Since 2011</strong><span class="sep">·</span>
-    <span>4.8★ Google Rating</span><span class="sep">·</span>
-    <strong>Toronto, ON</strong><span class="sep">·</span>
+    <strong>Trusted Since 2011</strong><span style="color:var(--text-dim)">·</span>
+    <span>4.8&#9733; Google Rating</span><span style="color:var(--text-dim)">·</span>
+    <strong>Toronto, ON</strong><span style="color:var(--text-dim)">·</span>
     <span>1 (888) 505-5023</span>
   </div>
 </div>
@@ -273,17 +212,41 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
   <span>Every day without action, competitors with cleaner reviews are capturing the customers you're losing. Quantify exactly how much below.</span>
 </div>
 
-<!-- CURRENCY TOGGLE -->
 <div class="cur-bar">
   <span class="cur-label">Currency:</span>
   <div class="cur-switch">
-    <button class="cur-btn on" id="btnUSD" onclick="setCur('USD')">🇺🇸 USD</button>
-    <button class="cur-btn"    id="btnCAD" onclick="setCur('CAD')">🇨🇦 CAD</button>
+    <button class="cur-btn on" id="btnUSD" onclick="setCur('USD')">&#127482;&#127480; USD</button>
+    <button class="cur-btn" id="btnCAD" onclick="setCur('CAD')">&#127464;&#127462; CAD</button>
   </div>
   <span class="rate-note" id="rateNote">Prices shown in USD</span>
 </div>
 
 <div class="wrap">
+
+  <!-- STEP 0: BUSINESS SEARCH — at the very top -->
+  <div class="sec">
+    <div class="sec-hd">
+      <div class="badge">&#9733;</div>
+      <div>
+        <div class="sec-title">Find Your Business</div>
+        <div class="sec-sub">Auto-fills your star rating, market size &amp; industry from your Google Business Profile</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <label style="display:block;margin-bottom:6px">Business Name <span class="atag">POWERED BY GOOGLE</span></label>
+      <div class="biz-search-box">
+        <span class="search-ico">&#128269;</span>
+        <input type="text" id="bizName" placeholder="Start typing your business name&#8230;" autocomplete="off">
+      </div>
+      <div class="biz-confirmed" id="bizConfirmed">
+        <span class="biz-check">&#10003;</span>
+        <div>
+          <div class="biz-name-disp" id="bizNameDisp"></div>
+          <div class="biz-meta" id="bizMeta"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- STEP 1 -->
   <div class="sec">
@@ -292,30 +255,11 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
       <div><div class="sec-title">Business Profile</div><div class="sec-sub">Industry, market size &amp; current reputation standing</div></div>
     </div>
     <div class="sec-body">
-
-      <!-- BUSINESS NAME SEARCH — centered, above dropdowns -->
-      <div class="biz-search-wrap">
-        <div class="biz-search-inner">
-          <span class="biz-search-label">Business Name <span class="atag">POWERED BY GOOGLE</span></span>
-          <div class="biz-search-box">
-            <span class="search-ico">🔍</span>
-            <input type="text" id="bizName" placeholder="Start typing your business name…" autocomplete="off">
-          </div>
-          <div class="biz-confirmed" id="bizConfirmed">
-            <span class="biz-check">✓</span>
-            <div>
-              <div class="biz-name-disp" id="bizNameDisp"></div>
-              <div class="biz-meta" id="bizMeta"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="g2" style="margin-bottom:16px">
         <div class="field">
           <label>Industry</label>
           <select id="industry" onchange="onInd()">
-            <option value="">— Select Industry —</option>
+            <option value="">&#8212; Select Industry &#8212;</option>
             <optgroup label="Food &amp; Hospitality">
               <option value="restaurant">Restaurants &amp; Food Service</option>
               <option value="hospitality">Hotels &amp; Hospitality</option>
@@ -382,15 +326,14 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
           <label>Market Size</label>
           <select id="mktSize" onchange="onMkt()">
             <option value="major">Major Metro (1M+ population)</option>
-            <option value="large">Large City (500K–1M)</option>
-            <option value="mid" selected>Mid-Size City (100K–500K)</option>
-            <option value="small_city">Small City (50K–100K)</option>
-            <option value="small_town">Small Town (10K–50K)</option>
+            <option value="large">Large City (500K&#8211;1M)</option>
+            <option value="mid" selected>Mid-Size City (100K&#8211;500K)</option>
+            <option value="small_city">Small City (50K&#8211;100K)</option>
+            <option value="small_town">Small Town (10K&#8211;50K)</option>
             <option value="rural">Rural / Under 10K</option>
           </select>
         </div>
       </div>
-
       <div class="g2" style="margin-bottom:16px">
         <div class="field">
           <label>Monthly Local Search Volume <span class="atag">AUTO-EST</span></label>
@@ -398,7 +341,6 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
           <div class="hint" id="searchHint">Auto-estimated from market + industry. Override if known.</div>
         </div>
       </div>
-
       <div class="field">
         <label>Current Google Star Rating <span class="atag">DECIMAL PRECISION</span></label>
         <div class="star-wrap">
@@ -407,7 +349,7 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
             <div class="sv" id="starVis"></div>
           </div>
           <input type="range" id="starSlider" min="10" max="50" value="38" step="1" oninput="onStar()">
-          <div class="rlabels"><span>1.0★</span><span>2.0★</span><span>3.0★</span><span>4.0★</span><span>5.0★</span></div>
+          <div class="rlabels"><span>1.0&#9733;</span><span>2.0&#9733;</span><span>3.0&#9733;</span><span>4.0&#9733;</span><span>5.0&#9733;</span></div>
         </div>
         <div class="talert" id="tAlert"></div>
       </div>
@@ -418,7 +360,7 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
   <div class="sec">
     <div class="sec-hd">
       <div class="badge">2</div>
-      <div><div class="sec-title">Business Financials</div><div class="sec-sub">Auto-filled from industry benchmarks — override if known</div></div>
+      <div><div class="sec-title">Business Financials</div><div class="sec-sub">Auto-filled from industry benchmarks &#8212; override if known</div></div>
     </div>
     <div class="sec-body">
       <div class="g2" style="margin-bottom:16px">
@@ -430,7 +372,7 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
         <div class="field">
           <label>Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span></label>
           <div class="ipfx"><span class="sym sa">$</span><input type="number" id="clvInp" placeholder="0" min="0"></div>
-          <div class="hint">Total value over entire relationship — the key ROI driver</div>
+          <div class="hint">Total value over entire relationship &#8212; the key ROI driver</div>
         </div>
       </div>
       <div class="g2">
@@ -450,21 +392,21 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
   <div class="sec">
     <div class="sec-hd">
       <div class="badge">3</div>
-      <div><div class="sec-title">Review Removal Order</div><div class="sec-sub">Select type for each review — investment auto-calculates</div></div>
+      <div><div class="sec-title">Review Removal Order</div><div class="sec-sub">Select type for each review &#8212; investment auto-calculates</div></div>
     </div>
     <div class="sec-body">
       <div class="pcallout">
-        <div class="pcallout-ico">💡</div>
+        <div class="pcallout-ico">&#128161;</div>
         <div>
           <h4>Transparent Two-Tier Pricing</h4>
           <div class="tiers">
-            <div class="tier-pill">Standard Removal — <span id="stdLbl">$800 USD</span></div>
-            <div class="tier-pill">Posted Within 2 Weeks or Has a Photo — <span id="premLbl">$500 USD</span></div>
+            <div class="tier-pill">Standard Removal &#8212; <span id="stdLbl">$800 USD</span></div>
+            <div class="tier-pill">Posted Within 2 Weeks or Has a Photo &#8212; <span id="premLbl">$500 USD</span></div>
           </div>
         </div>
       </div>
       <div id="remList"></div>
-      <button class="btn-add" onclick="addRem()">＋ Add Another Review</button>
+      <button class="btn-add" onclick="addRem()">&#65291; Add Another Review</button>
       <div class="inv-total">
         <div class="inv-lbl">Total Removal Investment</div>
         <div class="inv-val" id="invTotal">$0</div>
@@ -472,105 +414,101 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
     </div>
   </div>
 
-  <button class="calc-btn" onclick="calc()">Calculate My ROI &amp; Revenue Recovery →</button>
+  <button class="calc-btn" onclick="runCalc()">Calculate My ROI &amp; Revenue Recovery &#8594;</button>
 
   <!-- RESULTS -->
   <div class="results" id="results">
-
+    <div style="height:24px"></div>
     <div class="roi-hero">
-      <div class="roi-badge">✦ Positive ROI Confirmed</div>
+      <div class="roi-badge">&#10022; Positive ROI Confirmed</div>
       <div class="roi-num" id="roiNum">0x</div>
-      <div class="roi-lbl">Return on Investment — for every $1 spent on review removal</div>
+      <div class="roi-lbl">Return on Investment &#8212; for every $1 spent on review removal</div>
       <div class="roi-eq">
         <span>Annual Revenue Recovered:</span><span class="vg" id="eqRec">$0</span>
-        <span>÷</span><span>Investment:</span><span class="v" id="eqInv">$0</span>
+        <span>&#247;</span><span>Investment:</span><span class="v" id="eqInv">$0</span>
         <span>=</span><span class="v" id="eqROI">0x ROI</span>
       </div>
     </div>
-
     <div class="kpi-grid">
-      <div class="kpi danger"><div class="kpi-ico">💸</div><div class="kpi-val" id="kLoss">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Month</div></div>
-      <div class="kpi danger"><div class="kpi-ico">📅</div><div class="kpi-val" id="kAnnual">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Year</div></div>
-      <div class="kpi"><div class="kpi-ico">👤</div><div class="kpi-val" id="kCust">0</div><div class="kpi-lbl">Customers Lost<br>Per Month</div></div>
-      <div class="kpi pos"><div class="kpi-ico">📈</div><div class="kpi-val" id="kRec">$0</div><div class="kpi-lbl">Annual Revenue<br>Recovered</div></div>
+      <div class="kpi danger"><div class="kpi-ico">&#128184;</div><div class="kpi-val" id="kLoss">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Month</div></div>
+      <div class="kpi danger"><div class="kpi-ico">&#128197;</div><div class="kpi-val" id="kAnnual">$0</div><div class="kpi-lbl">Revenue Lost<br>Per Year</div></div>
+      <div class="kpi"><div class="kpi-ico">&#128100;</div><div class="kpi-val" id="kCust">0</div><div class="kpi-lbl">Customers Lost<br>Per Month</div></div>
+      <div class="kpi pos"><div class="kpi-ico">&#128200;</div><div class="kpi-val" id="kRec">$0</div><div class="kpi-lbl">Annual Revenue<br>Recovered</div></div>
     </div>
-
     <div class="sc">
       <div class="sb before">
         <div class="lbl">Current Rating</div>
-        <div class="rn" id="scBefore">0.0★</div>
+        <div class="rn" id="scBefore">0.0&#9733;</div>
         <div class="sr" id="scBeforeV"></div>
         <div style="font-size:12px;color:var(--text-dim);margin-top:6px" id="scBeforeC">Conv: 0%</div>
       </div>
       <div class="arrowbox">
         <div class="clift" id="cliftPill">+0% Lift</div>
-        <div class="abig">→</div>
+        <div class="abig">&#8594;</div>
         <div class="tc-msg" id="tcMsg" style="display:none"></div>
       </div>
       <div class="sb after">
         <div class="lbl">Projected After Removal</div>
-        <div class="rn" id="scAfter">0.0★</div>
+        <div class="rn" id="scAfter">0.0&#9733;</div>
         <div class="sr" id="scAfterV"></div>
         <div style="font-size:12px;color:var(--text-dim);margin-top:6px" id="scAfterC">Conv: 0%</div>
       </div>
     </div>
-
     <div style="text-align:center;margin-bottom:16px">
-      <div class="ticker">⏱ While you read this, you're losing approximately <strong id="tickAmt" style="color:#ff6060;font-family:Montserrat,sans-serif">$0</strong> in potential revenue today</div>
+      <div class="ticker">&#8987; While you read this, you're losing approximately <strong id="tickAmt" style="color:#ff6060">$0</strong> in potential revenue today</div>
     </div>
-
     <div class="bkd">
       <h3>Full Calculation Breakdown</h3>
-      <div class="brow"><span class="d">Monthly local search volume</span><span class="v gold" id="bdSearch">—</span></div>
-      <div class="brow"><span class="d">Click-through rate</span><span class="v gold" id="bdCTR">—</span></div>
-      <div class="brow"><span class="d">Current conversion rate (at <span id="bdCurStar">—</span>★)</span><span class="v r" id="bdCurConv">—</span></div>
-      <div class="brow"><span class="d">Projected conversion rate (at <span id="bdNewStar">—</span>★)</span><span class="v g" id="bdNewConv">—</span></div>
-      <div class="brow"><span class="d">New customers gained per month</span><span class="v g" id="bdNewCust">—</span></div>
-      <div class="brow"><span class="d">Revenue per customer (CLV basis)</span><span class="v gold" id="bdCLV">—</span></div>
-      <div class="brow"><span class="d">Monthly revenue recovered</span><span class="v g" id="bdMonRec">—</span></div>
-      <div class="brow"><span class="d">Payback period</span><span class="v gold" id="bdPayback">—</span></div>
-      <div class="brow tot"><span>Annual recovered vs. removal investment</span><span class="v g" id="bdROI">—</span></div>
+      <div class="brow"><span class="d">Monthly local search volume</span><span class="v gold" id="bdSearch">&#8212;</span></div>
+      <div class="brow"><span class="d">Click-through rate</span><span class="v gold" id="bdCTR">&#8212;</span></div>
+      <div class="brow"><span class="d">Current conversion rate (at <span id="bdCurStar">&#8212;</span>&#9733;)</span><span class="v r" id="bdCurConv">&#8212;</span></div>
+      <div class="brow"><span class="d">Projected conversion rate (at <span id="bdNewStar">&#8212;</span>&#9733;)</span><span class="v g" id="bdNewConv">&#8212;</span></div>
+      <div class="brow"><span class="d">New customers gained per month</span><span class="v g" id="bdNewCust">&#8212;</span></div>
+      <div class="brow"><span class="d">Revenue per customer (CLV basis)</span><span class="v gold" id="bdCLV">&#8212;</span></div>
+      <div class="brow"><span class="d">Monthly revenue recovered</span><span class="v g" id="bdMonRec">&#8212;</span></div>
+      <div class="brow"><span class="d">Payback period</span><span class="v gold" id="bdPayback">&#8212;</span></div>
+      <div class="brow tot"><span>Annual recovered vs. removal investment</span><span class="v g" id="bdROI">&#8212;</span></div>
     </div>
-
     <div class="chart">
       <h3>Revenue Impact Visualization</h3>
       <div class="cbars" id="chartBars"></div>
     </div>
-
     <div class="proof-grid">
       <div class="pcard"><div class="pstat">94%</div><div class="pdesc">of consumers say a negative review convinced them to avoid a business entirely</div><div class="psrc">BrightLocal Consumer Survey</div></div>
-      <div class="pcard"><div class="pstat">5–9%</div><div class="pdesc">revenue lift per 1-star increase — proven by Harvard Business School research</div><div class="psrc">Harvard Business School, 2011</div></div>
-      <div class="pcard"><div class="pstat">+18%</div><div class="pdesc">average conversion boost when a business crosses the critical 4.0★ threshold</div><div class="psrc">Industry Conversion Benchmarks</div></div>
+      <div class="pcard"><div class="pstat">5&#8211;9%</div><div class="pdesc">revenue lift per 1-star increase &#8212; proven by Harvard Business School research</div><div class="psrc">Harvard Business School, 2011</div></div>
+      <div class="pcard"><div class="pstat">+18%</div><div class="pdesc">average conversion boost when a business crosses the critical 4.0&#9733; threshold</div><div class="psrc">Industry Conversion Benchmarks</div></div>
       <div class="pcard"><div class="pstat">3 in 4</div><div class="pdesc">consumers trust online reviews as much as personal recommendations from family &amp; friends</div><div class="psrc">BrightLocal Consumer Survey</div></div>
     </div>
-
     <div class="cta">
       <h2>Every Month You Wait,<br><span style="color:var(--gold)" id="ctaLoss">$0</span> Walks Out the Door.</h2>
       <p>Your calculation shows a <strong style="color:var(--gold)" id="ctaROI">strong positive return</strong>. Professional review removal typically pays for itself within weeks.</p>
-      <div style="margin-bottom:20px;font-size:11px;color:var(--text-dim);font-family:Montserrat,sans-serif;letter-spacing:0.08em;text-transform:uppercase;">Trusted in Online Reputation Management Since 2011 · Toronto, ON</div>
+      <div style="margin-bottom:20px;font-size:11px;color:var(--text-dim);font-family:Montserrat,sans-serif;letter-spacing:0.08em;text-transform:uppercase;">Trusted in Online Reputation Management Since 2011 &middot; Toronto, ON</div>
       <div class="cta-btns">
-        <a href="tel:18885055023" class="btn-p">📞 Call 1 (888) 505-5023</a>
-        <a href="https://www.reputation.ca" target="_blank" class="btn-s">→ Visit Reputation.ca</a>
+        <a href="tel:18885055023" class="btn-p">&#128222; Call 1 (888) 505-5023</a>
+        <a href="https://www.reputation.ca" target="_blank" class="btn-s">&#8594; Visit Reputation.ca</a>
       </div>
     </div>
-
     <div class="footnote">
-      * Revenue impact estimates based on: Harvard Business School (2011) — 1-star increase = 5–9% revenue lift. BrightLocal Consumer Review Survey — 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0★ see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Prices subject to change without notice. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.
+      * Revenue impact estimates based on: Harvard Business School (2011) &#8212; 1-star increase = 5&#8211;9% revenue lift. BrightLocal Consumer Review Survey &#8212; 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0&#9733; see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Prices subject to change without notice. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.
     </div>
   </div>
 
 </div>
 
 <footer class="site-footer">
-  © Reputation.ca Ltd. · 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 · <a href="tel:18885055023">1 (888) 505-5023</a> · <a href="/cdn-cgi/l/email-protection#acc5c2cac3ecdec9dcd9d8cdd8c5c3c282cfcd"><span class="__cf_email__" data-cfemail="fa93949c95ba889f8a8f8e9b8e939594d4999b">[email&#160;protected]</span></a>
+  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="mailto:info@reputation.ca">info@reputation.ca</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const STD_USD=800, PREM_USD=500, CAD_RATE=1.36;
-let curCur='USD', remCnt=0;
+<script>
+// ── PRICES: exact USD and exact CAD ──────────────────────────────────────────
+var STD_USD  = 800;
+var PREM_USD = 500;
+var STD_CAD  = 1090;   // exact CA$ for Standard Removal
+var PREM_CAD = 680;    // exact CA$ for Posted Within 2 Weeks / Has Photo
+var curCur   = 'USD';
+var remCnt   = 0;
 
-const IND={
+var IND = {
   restaurant:{atv:45,clv:540,sm:1.4},hospitality:{atv:220,clv:1100,sm:1.0},catering:{atv:1800,clv:3600,sm:0.5},
   home_services:{atv:420,clv:2100,sm:0.9},contractor:{atv:8500,clv:17000,sm:0.5},cleaning:{atv:180,clv:2160,sm:0.7},landscaping:{atv:350,clv:2800,sm:0.6},
   healthcare:{atv:280,clv:3360,sm:0.8},dental:{atv:650,clv:8450,sm:0.8},mental_health:{atv:200,clv:4800,sm:0.7},chiro:{atv:120,clv:2400,sm:0.7},optometry:{atv:310,clv:1860,sm:0.6},pharmacy:{atv:85,clv:2040,sm:0.6},
@@ -582,304 +520,375 @@ const IND={
   pet:{atv:250,clv:3000,sm:0.8},pet_grooming:{atv:75,clv:1800,sm:0.8},
   funeral:{atv:6500,clv:6500,sm:0.3},moving:{atv:1200,clv:2400,sm:0.6},photography:{atv:2200,clv:4400,sm:0.5},events:{atv:3500,clv:7000,sm:0.4},other:{atv:350,clv:2100,sm:0.7}
 };
-const MKT={major:4200,large:2400,mid:1100,small_city:550,small_town:200,rural:60};
-const PLAT={google:"Google Review",yelp:"Yelp Review",facebook:"Facebook Review",tripadvisor:"TripAdvisor Review",bbb:"BBB Complaint",glassdoor:"Glassdoor Review",other:"Other Platform"};
+var MKT  = {major:4200,large:2400,mid:1100,small_city:550,small_town:200,rural:60};
+var PLAT = {google:'Google Review',yelp:'Yelp Review',facebook:'Facebook Review',tripadvisor:'TripAdvisor Review',bbb:'BBB Complaint',glassdoor:'Glassdoor Review',other:'Other Platform'};
 
-// ─── CURRENCY ─────────────────────────────────────────────────────────────────
-function r10(v){return Math.round(v/10)*10;}
-function getSym(){return curCur==='CAD'?'CA$':'$';}
-function getRate(){return curCur==='CAD'?CAD_RATE:1;}
-function toActive(usd){return curCur==='CAD'?r10(usd*CAD_RATE):usd;}
-function fmt(n){return getSym()+Math.round(n).toLocaleString();}
-function fmtP(n){return n.toFixed(1)+'%';}
+// ── CURRENCY ─────────────────────────────────────────────────────────────────
+function getSym()  { return curCur==='CAD' ? 'CA$' : '$'; }
+function getRate() { return curCur==='CAD' ? 1.36 : 1; }
 
-function setCur(c){
-  curCur=c;
-  document.getElementById('btnUSD').classList.toggle('on',c==='USD');
-  document.getElementById('btnCAD').classList.toggle('on',c==='CAD');
-  document.getElementById('rateNote').textContent=c==='CAD'?`1 USD = ${CAD_RATE.toFixed(2)} CAD`:'Prices shown in USD';
-  document.getElementById('stdLbl').textContent=c==='CAD'?`CA$${r10(STD_USD*CAD_RATE)}`:`$${STD_USD} USD`;
-  document.getElementById('premLbl').textContent=c==='CAD'?`CA$${r10(PREM_USD*CAD_RATE)}`:`$${PREM_USD} USD`;
-  const sym=getSym();
-  document.getElementById('sym1').textContent=sym;
-  document.querySelectorAll('.sa').forEach(el=>el.textContent=sym);
-  const ind=document.getElementById('industry').value;
-  if(ind&&IND[ind]){
-    document.getElementById('atv').value=Math.round(IND[ind].atv*getRate());
-    document.getElementById('clvInp').value=Math.round(IND[ind].clv*getRate());
+// Returns the correct price in the active currency for a given USD price
+function toActive(usdPrice) {
+  if (curCur === 'CAD') {
+    return usdPrice === STD_USD ? STD_CAD : PREM_CAD;
   }
-  updInv();
+  return usdPrice;
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
+function fmt(n)  { return getSym() + Math.round(n).toLocaleString(); }
+function fmtP(n) { return n.toFixed(1) + '%'; }
+
+function setCur(c) {
+  curCur = c;
+  document.getElementById('btnUSD').classList.toggle('on', c==='USD');
+  document.getElementById('btnCAD').classList.toggle('on', c==='CAD');
+  document.getElementById('rateNote').textContent = c==='CAD' ? '1 USD = 1.36 CAD' : 'Prices shown in USD';
+
+  // Update pricing callout pills
+  document.getElementById('stdLbl').textContent  = c==='CAD' ? 'CA$' + STD_CAD  : '$' + STD_USD  + ' USD';
+  document.getElementById('premLbl').textContent = c==='CAD' ? 'CA$' + PREM_CAD : '$' + PREM_USD + ' USD';
+
+  // Update Step 2 currency symbols
+  document.getElementById('sym1').textContent = getSym();
+  var sas = document.querySelectorAll('.sa');
+  for (var i = 0; i < sas.length; i++) sas[i].textContent = getSym();
+
+  // Update Step 2 benchmark values
+  var ind = document.getElementById('industry').value;
+  if (ind && IND[ind]) {
+    document.getElementById('atv').value    = Math.round(IND[ind].atv * getRate());
+    document.getElementById('clvInp').value = Math.round(IND[ind].clv * getRate());
+  }
+
+  // *** Refresh EVERY individual removal row price ***
+  var rows = document.querySelectorAll('.ritem');
+  for (var i = 0; i < rows.length; i++) {
+    var id = rows[i].id.replace('rem_', '');
+    updP(id);
+  }
+  // updP calls updInv at the end, so total also updates
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
   addRem();
   updStar();
 });
 
-// ─── GOOGLE PLACES AUTOCOMPLETE ───────────────────────────────────────────────
-function initPlaces(){
-  const input=document.getElementById('bizName');
-  const ac=new google.maps.places.Autocomplete(input,{
-    types:['establishment'],
-    fields:['name','rating','user_ratings_total','geometry','address_components','types','formatted_address']
+// ── GOOGLE PLACES ─────────────────────────────────────────────────────────────
+function initPlaces() {
+  var input = document.getElementById('bizName');
+  var ac = new google.maps.places.Autocomplete(input, {
+    types: ['establishment'],
+    fields: ['name','rating','user_ratings_total','geometry','address_components','types','formatted_address']
   });
+  ac.addListener('place_changed', function() {
+    var place = ac.getPlace();
+    if (!place || !place.geometry) return;
 
-  ac.addListener('place_changed',()=>{
-    const place=ac.getPlace();
-    if(!place||!place.geometry) return;
+    // Show business name
+    document.getElementById('bizNameDisp').textContent = place.name;
 
-    // 1. Show confirmed card
-    document.getElementById('bizNameDisp').textContent=place.name;
-
-    // 2. Auto-set star rating from real Google rating
-    if(place.rating){
-      const val=Math.round(place.rating*10);
-      document.getElementById('starSlider').value=Math.min(50,Math.max(10,val));
+    // Auto-set star rating from Google rating
+    if (place.rating) {
+      var val = Math.round(place.rating * 10);
+      val = Math.min(50, Math.max(10, val));
+      document.getElementById('starSlider').value = val;
       updStar();
       checkT();
     }
 
-    // 3. Auto-set market size from city
-    const addr=place.address_components||[];
-    let city='';
-    addr.forEach(c=>{if(c.types.includes('locality'))city=c.long_name;});
-    setMarketFromCity(city,place.geometry.location.lat(),place.geometry.location.lng());
+    // Auto-set market size from city
+    var addr = place.address_components || [];
+    var city = '';
+    for (var i = 0; i < addr.length; i++) {
+      if (addr[i].types.indexOf('locality') > -1) city = addr[i].long_name;
+    }
+    setMarketFromCity(city);
 
-    // 4. Auto-detect industry
-    autoDetectInd(place.types||[]);
+    // Auto-detect industry
+    autoDetectInd(place.types || []);
 
-    // 5. Build confirmation meta line
-    const parts=[];
-    if(place.rating) parts.push(`⭐ ${place.rating} stars (${(place.user_ratings_total||0).toLocaleString()} reviews)`);
-    if(place.formatted_address) parts.push(place.formatted_address);
-    document.getElementById('bizMeta').textContent=parts.join(' · ');
+    // Build confirmation card
+    var parts = [];
+    if (place.rating) parts.push('\u2B50 ' + place.rating + ' stars (' + (place.user_ratings_total||0).toLocaleString() + ' reviews)');
+    if (place.formatted_address) parts.push(place.formatted_address);
+    document.getElementById('bizMeta').textContent = parts.join(' \u00B7 ');
     document.getElementById('bizConfirmed').classList.add('show');
 
-    // 6. Refresh search volume estimate
-    setTimeout(()=>autoSV(),250);
+    // Refresh search volume estimate
+    setTimeout(autoSV, 250);
   });
 }
 
-function setMarketFromCity(city,lat,lng){
-  const major=['toronto','new york','los angeles','chicago','houston','phoenix','philadelphia','san antonio','san diego','dallas','san jose','austin','jacksonville','montreal','vancouver','calgary','ottawa','edmonton','new york city'];
-  const large=['mississauga','brampton','hamilton','london','winnipeg','saskatoon','seattle','denver','boston','nashville','portland','las vegas','memphis','louisville','baltimore','milwaukee','quebec','surrey','laval'];
-  const name=(city||'').toLowerCase();
-  let mkt='mid';
-  if(major.some(c=>name.includes(c))) mkt='major';
-  else if(large.some(c=>name.includes(c))) mkt='large';
-  document.getElementById('mktSize').value=mkt;
+function setMarketFromCity(city) {
+  var major = ['toronto','new york','los angeles','chicago','houston','phoenix','philadelphia','san antonio','san diego','dallas','san jose','austin','montreal','vancouver','calgary','ottawa','edmonton'];
+  var large = ['mississauga','brampton','hamilton','london','winnipeg','saskatoon','seattle','denver','boston','nashville','portland','las vegas','memphis','louisville','baltimore','milwaukee','surrey','laval'];
+  var n   = (city || '').toLowerCase();
+  var mkt = 'mid';
+  for (var i = 0; i < major.length; i++) { if (n.indexOf(major[i]) > -1) { mkt = 'major'; break; } }
+  if (mkt === 'mid') for (var i = 0; i < large.length; i++) { if (n.indexOf(large[i]) > -1) { mkt = 'large'; break; } }
+  document.getElementById('mktSize').value = mkt;
 }
 
-function autoDetectInd(types){
-  const map={
-    restaurant:['restaurant','food','meal_takeaway','meal_delivery','cafe','bakery','bar','night_club'],
-    hospitality:['lodging'],
-    dental:['dentist'],
-    healthcare:['doctor','hospital','health','physiotherapist'],
-    beauty:['beauty_salon','hair_care','spa','nail_salon','hair_salon'],
-    fitness:['gym'],
-    legal:['lawyer'],
-    real_estate:['real_estate_agency'],
-    auto:['car_dealer'],
-    auto_repair:['car_repair'],
-    retail:['store','clothing_store','shoe_store','furniture_store','hardware_store','electronics_store','home_goods_store','jewelry_store'],
-    pet:['veterinary_care','pet_store'],
-    education:['school','university','primary_school','secondary_school'],
-    financial:['finance','bank','accounting'],
-    contractor:['general_contractor','roofing_contractor'],
-    cleaning:['laundry'],
-    pharmacy:['pharmacy','drugstore'],
-    moving:['moving_company'],
-    events:['event_venue'],
-    home_services:['plumber','electrician'],
-    chiro:['physiotherapist'],
-    med_spa:['beauty_salon']
-  };
-  for(const[ind,kw] of Object.entries(map)){
-    if(types.some(t=>kw.includes(t))){
-      document.getElementById('industry').value=ind;
-      onInd();
-      return;
+function autoDetectInd(types) {
+  var map = [
+    ['restaurant',    ['restaurant','food','meal_takeaway','meal_delivery','cafe','bakery','bar','night_club']],
+    ['hospitality',   ['lodging']],
+    ['dental',        ['dentist']],
+    ['healthcare',    ['doctor','hospital','health']],
+    ['beauty',        ['beauty_salon','hair_care','spa','nail_salon','hair_salon']],
+    ['fitness',       ['gym']],
+    ['legal',         ['lawyer']],
+    ['real_estate',   ['real_estate_agency']],
+    ['auto',          ['car_dealer']],
+    ['auto_repair',   ['car_repair']],
+    ['retail',        ['store','clothing_store','shoe_store','furniture_store','hardware_store','electronics_store']],
+    ['pet',           ['veterinary_care','pet_store']],
+    ['education',     ['school','university','primary_school','secondary_school']],
+    ['financial',     ['finance','bank']],
+    ['pharmacy',      ['pharmacy','drugstore']],
+    ['moving',        ['moving_company']],
+    ['home_services', ['plumber','electrician']]
+  ];
+  for (var i = 0; i < map.length; i++) {
+    var ind = map[i][0], kw = map[i][1];
+    for (var j = 0; j < types.length; j++) {
+      if (kw.indexOf(types[j]) > -1) {
+        document.getElementById('industry').value = ind;
+        onInd();
+        return;
+      }
     }
   }
 }
 
-// ─── INDUSTRY / MARKET ────────────────────────────────────────────────────────
-function onInd(){
-  const ind=document.getElementById('industry').value;
-  if(!ind||!IND[ind]) return;
-  document.getElementById('atv').value=Math.round(IND[ind].atv*getRate());
-  document.getElementById('clvInp').value=Math.round(IND[ind].clv*getRate());
+// ── INDUSTRY / MARKET ────────────────────────────────────────────────────────
+function onInd() {
+  var ind = document.getElementById('industry').value;
+  if (!ind || !IND[ind]) return;
+  document.getElementById('atv').value    = Math.round(IND[ind].atv * getRate());
+  document.getElementById('clvInp').value = Math.round(IND[ind].clv * getRate());
   autoSV();
 }
-function onMkt(){autoSV();}
-function autoSV(){
-  const m=document.getElementById('mktSize').value;
-  const ind=document.getElementById('industry').value;
-  const base=MKT[m]||1100;
-  const mult=(ind&&IND[ind])?IND[ind].sm:0.7;
-  const est=Math.round(base*mult);
-  document.getElementById('searchVol').value=est;
-  document.getElementById('searchHint').textContent=`Auto-estimated: ~${est.toLocaleString()} searches/mo. Override with your known figure.`;
+function onMkt() { autoSV(); }
+function autoSV() {
+  var m    = document.getElementById('mktSize').value;
+  var ind  = document.getElementById('industry').value;
+  var base = MKT[m] || 1100;
+  var mult = (ind && IND[ind]) ? IND[ind].sm : 0.7;
+  var est  = Math.round(base * mult);
+  document.getElementById('searchVol').value = est;
+  document.getElementById('searchHint').textContent = 'Auto-estimated: ~' + est.toLocaleString() + ' searches/mo. Override with your known figure.';
 }
 
-// ─── STARS ─────────────────────────────────────────────────────────────────────
-function getCurStars(){return parseInt(document.getElementById('starSlider').value)/10;}
-function starsHTML(r){
-  let h='';
-  for(let i=1;i<=5;i++){
-    const f=Math.min(1,Math.max(0,r-(i-1)));
-    if(f>=0.85) h+=`<span class="s" style="color:#FFB800">★</span>`;
-    else if(f>=0.35) h+=`<span class="s" style="color:#FFB800;opacity:.4">★</span>`;
-    else h+=`<span class="s" style="color:#2C4080">★</span>`;
+// ── STARS ─────────────────────────────────────────────────────────────────────
+function getCurStars() { return parseInt(document.getElementById('starSlider').value) / 10; }
+function starsHTML(r) {
+  var h = '';
+  for (var i = 1; i <= 5; i++) {
+    var f = Math.min(1, Math.max(0, r - (i - 1)));
+    if (f >= 0.85)      h += '<span style="color:#FFB800;font-size:22px">&#9733;</span>';
+    else if (f >= 0.35) h += '<span style="color:#FFB800;font-size:22px;opacity:.4">&#9733;</span>';
+    else                h += '<span style="color:#2C4080;font-size:22px">&#9733;</span>';
   }
   return h;
 }
-function onStar(){updStar();checkT();}
-function updStar(){
-  const s=getCurStars();
-  document.getElementById('starDisp').innerHTML=`${s.toFixed(1)} <span>/ 5.0 stars</span>`;
-  document.getElementById('starVis').innerHTML=starsHTML(s);
+function onStar()  { updStar(); checkT(); }
+function updStar() {
+  var s = getCurStars();
+  document.getElementById('starDisp').innerHTML = s.toFixed(1) + ' <span style="font-size:14px;color:var(--text-muted);font-weight:300">/ 5.0 stars</span>';
+  document.getElementById('starVis').innerHTML  = starsHTML(s);
 }
-function checkT(){
-  const s=getCurStars();
-  const el=document.getElementById('tAlert');
-  el.className='talert';
-  if(s<3.0){el.classList.add('show','danger');el.innerHTML='🚨 Critical: Below 3.0★ — most consumers will immediately disqualify your business';}
-  else if(s<4.0){el.classList.add('show','warn');el.innerHTML=`⚠️ You are ${(4.0-s).toFixed(1)}★ below the 4.0 threshold — crossing it unlocks an average +18% conversion boost`;}
-  else if(s<4.5){el.classList.add('show','good');el.innerHTML='✓ Above 4.0★ — good standing. Removing residual negatives protects your position.';}
-  else{el.classList.remove('show');}
+function checkT() {
+  var s  = getCurStars();
+  var el = document.getElementById('tAlert');
+  el.className = 'talert';
+  if (s < 3.0)      { el.classList.add('show','danger'); el.innerHTML = '&#128680; Critical: Below 3.0&#9733; \u2014 most consumers will immediately disqualify your business'; }
+  else if (s < 4.0) { el.classList.add('show','warn');   el.innerHTML = '&#9888;&#65039; You are ' + (4.0-s).toFixed(1) + '&#9733; below the 4.0 threshold \u2014 crossing it unlocks an average +18% conversion boost'; }
+  else if (s < 4.5) { el.classList.add('show','good');   el.innerHTML = '&#10003; Above 4.0&#9733; \u2014 good standing. Removing residual negatives protects your position.'; }
 }
-function convRate(s){
-  if(s<2.0) return 0.8;
-  if(s<2.5) return 1.5+(s-2.0)*1.4;
-  if(s<3.0) return 2.2+(s-2.5)*2.0;
-  if(s<3.5) return 3.2+(s-3.0)*2.4;
-  if(s<4.0) return 4.4+(s-3.5)*4.4;
-  if(s<4.5) return 6.6+(s-4.0)*4.8;
-  return 9.0+(s-4.5)*2.4;
+function convRate(s) {
+  if (s < 2.0) return 0.8;
+  if (s < 2.5) return 1.5 + (s-2.0)*1.4;
+  if (s < 3.0) return 2.2 + (s-2.5)*2.0;
+  if (s < 3.5) return 3.2 + (s-3.0)*2.4;
+  if (s < 4.0) return 4.4 + (s-3.5)*4.4;
+  if (s < 4.5) return 6.6 + (s-4.0)*4.8;
+  return 9.0 + (s-4.5)*2.4;
 }
 
-// ─── REMOVALS ─────────────────────────────────────────────────────────────────
-function addRem(){
-  remCnt++;const id=remCnt;
-  const div=document.createElement('div');
-  div.className='ritem';div.id=`rem_${id}`;
-  div.innerHTML=`
-    <div class="field"><label>Platform</label>
-      <select id="rp_${id}" onchange="updP(${id})">
-        ${Object.entries(PLAT).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}
-      </select></div>
-    <div class="field"><label>Tier</label>
-      <select id="rt_${id}" onchange="updP(${id})">
-        <option value="std">Standard Removal — $800 USD</option>
-        <option value="prem">Posted Within 2 Weeks or Has a Photo — $500 USD</option>
-      </select></div>
-    <div><label>&nbsp;</label><div class="pdisplay" id="rprice_${id}">$500</div></div>
-    <div><label>&nbsp;</label><button class="btn-rm" onclick="remRem(${id})">×</button></div>`;
+// ── REMOVALS ─────────────────────────────────────────────────────────────────
+function addRem() {
+  remCnt++;
+  var id  = remCnt;
+  var div = document.createElement('div');
+  div.className = 'ritem';
+  div.id = 'rem_' + id;
+  var platOpts = '';
+  for (var k in PLAT) platOpts += '<option value="' + k + '">' + PLAT[k] + '</option>';
+  div.innerHTML =
+    '<div class="field"><label>Platform</label>' +
+    '<select id="rp_' + id + '" onchange="updP(' + id + ')">' + platOpts + '</select></div>' +
+    '<div class="field"><label>Tier</label>' +
+    '<select id="rt_' + id + '" onchange="updP(' + id + ')">' +
+    '<option value="std">Standard Removal &#8212; $800 / CA$1,090</option>' +
+    '<option value="prem">Posted Within 2 Weeks or Has a Photo &#8212; $500 / CA$680</option>' +
+    '</select></div>' +
+    '<div><label>&nbsp;</label><div class="pdisplay" id="rprice_' + id + '">$800</div></div>' +
+    '<div><label>&nbsp;</label><button class="btn-rm" onclick="remRem(' + id + ')">&#215;</button></div>';
   document.getElementById('remList').appendChild(div);
   updP(id);
 }
-function updP(id){
-  const t=document.getElementById(`rt_${id}`);if(!t) return;
-  const usd=t.value==='prem'?PREM_USD:STD_USD;
-  document.getElementById(`rprice_${id}`).textContent=`${getSym()}${toActive(usd).toLocaleString()}`;
+
+function updP(id) {
+  var t = document.getElementById('rt_' + id);
+  if (!t) return;
+  var price = (t.value === 'prem') ? toActive(PREM_USD) : toActive(STD_USD);
+  document.getElementById('rprice_' + id).textContent = getSym() + price.toLocaleString();
   updInv();
 }
-function remRem(id){const el=document.getElementById(`rem_${id}`);if(el)el.remove();updInv();}
-function updInv(){
-  let tot=0;
-  document.querySelectorAll('.ritem').forEach(item=>{
-    const id=item.id.replace('rem_','');
-    const t=document.getElementById(`rt_${id}`);
-    if(t) tot+=toActive(t.value==='prem'?PREM_USD:STD_USD);
-  });
-  document.getElementById('invTotal').textContent=`${getSym()}${tot.toLocaleString()}`;
+
+function remRem(id) {
+  var el = document.getElementById('rem_' + id);
+  if (el) el.remove();
+  updInv();
+}
+
+function updInv() {
+  var tot  = 0;
+  var rows = document.querySelectorAll('.ritem');
+  for (var i = 0; i < rows.length; i++) {
+    var id = rows[i].id.replace('rem_', '');
+    var t  = document.getElementById('rt_' + id);
+    if (t) tot += (t.value === 'prem') ? toActive(PREM_USD) : toActive(STD_USD);
+  }
+  document.getElementById('invTotal').textContent = getSym() + tot.toLocaleString();
   return tot;
 }
 
-// ─── PROJECTED RATING ─────────────────────────────────────────────────────────
-function getProjStars(){
-  const cur=getCurStars();
-  const mkts={major:180,large:110,mid:65,small_city:35,small_town:18,rural:8};
-  const total=mkts[document.getElementById('mktSize').value]||65;
-  let lift=0;
-  document.querySelectorAll('.ritem').forEach(()=>{lift+=Math.max(0,cur-1.5)/total;});
-  return Math.min(5.0,cur+lift);
+// ── PROJECTED RATING ─────────────────────────────────────────────────────────
+function getProjStars() {
+  var cur   = getCurStars();
+  var mkts  = {major:180, large:110, mid:65, small_city:35, small_town:18, rural:8};
+  var total = mkts[document.getElementById('mktSize').value] || 65;
+  var lift  = 0;
+  var rows  = document.querySelectorAll('.ritem');
+  for (var i = 0; i < rows.length; i++) lift += Math.max(0, (cur - 1.5) / total);
+  return Math.min(5.0, cur + lift);
 }
 
-// ─── ANIMATE ──────────────────────────────────────────────────────────────────
-function animVal(id,target,sym){
-  const el=document.getElementById(id);
-  el.classList.remove('ca');void el.offsetWidth;el.classList.add('ca');
-  let cur=0;const step=target/28;
-  const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t);}el.textContent=sym+Math.round(cur).toLocaleString();},18);
+// ── ANIMATE VALUE ────────────────────────────────────────────────────────────
+function animVal(id, target, sym) {
+  var el   = document.getElementById(id);
+  var cur  = 0;
+  var step = Math.max(1, target / 28);
+  var t = setInterval(function() {
+    cur += step;
+    if (cur >= target) { cur = target; clearInterval(t); }
+    el.textContent = sym + Math.round(cur).toLocaleString();
+  }, 18);
 }
 
-// ─── CALCULATE ────────────────────────────────────────────────────────────────
-function calc(){
-  const sym=getSym();const rate=getRate();const ind=document.getElementById('industry').value;
-  const sv=parseFloat(document.getElementById('searchVol').value)||800;
-  const curS=getCurStars();const projS=getProjStars();
-  const atv=parseFloat(document.getElementById('atv').value)||((IND[ind]?.atv||350)*rate);
-  const clv=parseFloat(document.getElementById('clvInp').value)||((IND[ind]?.clv||2100)*rate);
-  const inv=updInv();
-  const ctr=0.032,clicks=sv*ctr;
-  const cC=convRate(curS)/100,nC=convRate(projS)/100,iC=convRate(4.3)/100;
-  const gained=Math.max(0,(clicks*nC)-(clicks*cC));
-  const lostVI=Math.max(0,(clicks*iC)-(clicks*cC));
-  const mRec=gained*clv,aRec=mRec*12,mLost=lostVI*clv,aLost=mLost*12;
-  const roi=inv>0?aRec/inv:0;
-  const payback=mRec>0?inv/mRec:999;
-  const c4=curS<4.0&&projS>=4.0;
-  const lift=cC>0?((nC-cC)/cC)*100:0;
+// ── CALCULATE ────────────────────────────────────────────────────────────────
+function runCalc() {
+  var sym   = getSym();
+  var rate  = getRate();
+  var ind   = document.getElementById('industry').value;
+  var sv    = parseFloat(document.getElementById('searchVol').value) || 800;
+  var curS  = getCurStars();
+  var projS = getProjStars();
+  var defAtv = IND[ind] ? IND[ind].atv * rate : 350 * rate;
+  var defClv = IND[ind] ? IND[ind].clv * rate : 2100 * rate;
+  var atv   = parseFloat(document.getElementById('atv').value)    || defAtv;
+  var clv   = parseFloat(document.getElementById('clvInp').value) || defClv;
+  var inv   = updInv();
 
-  document.getElementById('roiNum').textContent=roi.toFixed(1)+'x';
-  document.getElementById('eqRec').textContent=fmt(aRec);
-  document.getElementById('eqInv').textContent=fmt(inv);
-  document.getElementById('eqROI').textContent=roi.toFixed(1)+'x';
-  animVal('kLoss',mLost,sym);
-  animVal('kAnnual',aLost,sym);
-  document.getElementById('kCust').textContent=Math.round(lostVI);
-  animVal('kRec',aRec,sym);
-  document.getElementById('scBefore').textContent=curS.toFixed(1)+'★';
-  document.getElementById('scAfter').textContent=projS.toFixed(1)+'★';
-  document.getElementById('scBeforeV').innerHTML=starsHTML(curS);
-  document.getElementById('scAfterV').innerHTML=starsHTML(projS);
-  document.getElementById('scBeforeC').textContent=`Conv: ${fmtP(cC*100)}`;
-  document.getElementById('scAfterC').textContent=`Conv: ${fmtP(nC*100)}`;
-  document.getElementById('cliftPill').textContent=`+${lift.toFixed(0)}% Conv. Lift`;
-  const tcEl=document.getElementById('tcMsg');
-  if(c4){tcEl.style.display='block';tcEl.textContent='🎯 Crosses 4.0★ — +18% conversion bonus unlocked!';}
-  else{tcEl.style.display='none';}
-  document.getElementById('tickAmt').textContent=fmt(mLost/30);
-  document.getElementById('bdSearch').textContent=Math.round(sv).toLocaleString();
-  document.getElementById('bdCTR').textContent=fmtP(ctr*100);
-  document.getElementById('bdCurStar').textContent=curS.toFixed(1);
-  document.getElementById('bdCurConv').textContent=fmtP(cC*100);
-  document.getElementById('bdNewStar').textContent=projS.toFixed(1);
-  document.getElementById('bdNewConv').textContent=fmtP(nC*100);
-  document.getElementById('bdNewCust').textContent=gained.toFixed(1)+' customers/mo';
-  document.getElementById('bdCLV').textContent=fmt(clv)+' (CLV)';
-  document.getElementById('bdMonRec').textContent=fmt(mRec);
-  document.getElementById('bdPayback').textContent=payback<1?'< 1 month':payback.toFixed(1)+' months';
-  document.getElementById('bdROI').textContent=`${fmt(aRec)} vs ${fmt(inv)} = ${roi.toFixed(1)}x`;
-  buildChart(inv,aRec,aLost,sym);
-  document.getElementById('ctaLoss').textContent=fmt(mLost);
-  document.getElementById('ctaROI').textContent=`${roi.toFixed(1)}x ROI — a ${fmt(aRec-inv)} net annual gain`;
-  const res=document.getElementById('results');
-  res.classList.add('show');
-  setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  var ctr    = 0.032;
+  var clicks = sv * ctr;
+  var cC = convRate(curS)  / 100;
+  var nC = convRate(projS) / 100;
+  var iC = convRate(4.3)   / 100;
+
+  var gained = Math.max(0, (clicks*nC) - (clicks*cC));
+  var lostVI = Math.max(0, (clicks*iC) - (clicks*cC));
+  var mRec   = gained * clv;
+  var aRec   = mRec * 12;
+  var mLost  = lostVI * clv;
+  var aLost  = mLost * 12;
+  var roi    = inv > 0 ? aRec / inv : 0;
+  var payback = mRec > 0 ? inv / mRec : 999;
+  var c4     = curS < 4.0 && projS >= 4.0;
+  var lift   = cC > 0 ? ((nC - cC) / cC) * 100 : 0;
+
+  document.getElementById('roiNum').textContent = roi.toFixed(1) + 'x';
+  document.getElementById('eqRec').textContent  = fmt(aRec);
+  document.getElementById('eqInv').textContent  = fmt(inv);
+  document.getElementById('eqROI').textContent  = roi.toFixed(1) + 'x';
+
+  animVal('kLoss',   mLost, sym);
+  animVal('kAnnual', aLost, sym);
+  animVal('kRec',    aRec,  sym);
+  document.getElementById('kCust').textContent = Math.round(lostVI);
+
+  document.getElementById('scBefore').textContent  = curS.toFixed(1)  + '\u2605';
+  document.getElementById('scAfter').textContent   = projS.toFixed(1) + '\u2605';
+  document.getElementById('scBeforeV').innerHTML   = starsHTML(curS);
+  document.getElementById('scAfterV').innerHTML    = starsHTML(projS);
+  document.getElementById('scBeforeC').textContent = 'Conv: ' + fmtP(cC * 100);
+  document.getElementById('scAfterC').textContent  = 'Conv: ' + fmtP(nC * 100);
+  document.getElementById('cliftPill').textContent = '+' + lift.toFixed(0) + '% Conv. Lift';
+
+  var tcEl = document.getElementById('tcMsg');
+  if (c4) { tcEl.style.display = 'block'; tcEl.textContent = '\uD83C\uDFAF Crosses 4.0\u2605 \u2014 +18% conversion bonus unlocked!'; }
+  else    { tcEl.style.display = 'none'; }
+
+  document.getElementById('tickAmt').textContent   = fmt(mLost / 30);
+  document.getElementById('bdSearch').textContent  = Math.round(sv).toLocaleString();
+  document.getElementById('bdCTR').textContent     = fmtP(ctr * 100);
+  document.getElementById('bdCurStar').textContent = curS.toFixed(1);
+  document.getElementById('bdCurConv').textContent = fmtP(cC * 100);
+  document.getElementById('bdNewStar').textContent = projS.toFixed(1);
+  document.getElementById('bdNewConv').textContent = fmtP(nC * 100);
+  document.getElementById('bdNewCust').textContent = gained.toFixed(1) + ' customers/mo';
+  document.getElementById('bdCLV').textContent     = fmt(clv) + ' (CLV)';
+  document.getElementById('bdMonRec').textContent  = fmt(mRec);
+  document.getElementById('bdPayback').textContent = payback < 1 ? '< 1 month' : payback.toFixed(1) + ' months';
+  document.getElementById('bdROI').textContent     = fmt(aRec) + ' vs ' + fmt(inv) + ' = ' + roi.toFixed(1) + 'x';
+
+  buildChart(inv, aRec, aLost, sym);
+
+  document.getElementById('ctaLoss').textContent = fmt(mLost);
+  document.getElementById('ctaROI').textContent  = roi.toFixed(1) + 'x ROI \u2014 a ' + fmt(aRec - inv) + ' net annual gain';
+
+  var res = document.getElementById('results');
+  res.style.display = 'block';
+  setTimeout(function() { res.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
 }
 
-function buildChart(inv,rec,loss,sym){
-  const mx=Math.max(inv,rec,loss,1);
-  const bars=[
-    {l:'Removal\nInvestment',v:inv,c:'bi'},
-    {l:'Annual\nRecovered',v:rec,c:'br'},
-    {l:'Annual\nLost (Now)',v:loss,c:'bl'}
+function buildChart(inv, rec, loss, sym) {
+  var mx   = Math.max(inv, rec, loss, 1);
+  var bars = [
+    {l:'Removal<br>Investment', v:inv,  c:'bi'},
+    {l:'Annual<br>Recovered',   v:rec,  c:'br'},
+    {l:'Annual<br>Lost (Now)',  v:loss, c:'bl'}
   ];
-  document.getElementById('chartBars').innerHTML=bars.map(b=>{
-    const p=Math.round((b.v/mx)*100);
-    return `<div class
+  var html = '';
+  for (var i = 0; i < bars.length; i++) {
+    var b = bars[i];
+    var p = Math.round((b.v / mx) * 100);
+    html += '<div class="bcol">' +
+      '<div class="btop">' + sym + Math.round(b.v).toLocaleString() + '</div>' +
+      '<div class="bfill ' + b.c + '" style="height:' + Math.max(p, 2) + '%"></div>' +
+      '<div class="bbot">' + b.l + '</div>' +
+    '</div>';
+  }
+  document.getElementById('chartBars').innerHTML = html;
+}
+</script>
+
+<!-- Google Places API — loaded last so DOM and all JS functions exist first -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
+
+</body>
+</html>
