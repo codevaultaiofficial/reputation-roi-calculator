@@ -52,8 +52,8 @@ input:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,3
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238FA3C8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
 select option{background:var(--navy-mid);}
 .ipfx{position:relative;}
-.ipfx .sym{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--red-light);font-size:14px;font-weight:600;pointer-events:none;font-family:'Montserrat',sans-serif;}
-.ipfx input{padding-left:26px;}
+.ipfx .sym{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:13px;font-weight:600;pointer-events:none;font-family:'Montserrat',sans-serif;line-height:1;white-space:nowrap;}
+.ipfx input{padding-left:42px;}
 .hint{font-size:11px;color:var(--text-dim);margin-top:3px;}
 /* BIZ SEARCH */
 .biz-search-box{position:relative;margin-top:6px;}
@@ -360,25 +360,25 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
   <div class="sec">
     <div class="sec-hd">
       <div class="badge">2</div>
-      <div><div class="sec-title">Business Financials</div><div class="sec-sub">Auto-filled from industry benchmarks &#8212; override if known</div></div>
+      <div><div class="sec-title">Business Financials</div><div class="sec-sub">Auto-filled from industry benchmarks &#8212; override if known &nbsp;<span id="step2cur" style="color:var(--gold);font-weight:700">USD $</span></div></div>
     </div>
     <div class="sec-body">
       <div class="g2" style="margin-bottom:16px">
         <div class="field">
           <label>Avg. Transaction Value <span class="atag">BENCHMARK</span></label>
-          <div class="ipfx"><span class="sym" id="sym1">$</span><input type="number" id="atv" placeholder="0" min="0"></div>
+          <input type="number" id="atv" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">What one customer typically spends</div>
         </div>
         <div class="field">
           <label>Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span></label>
-          <div class="ipfx"><span class="sym sa">$</span><input type="number" id="clvInp" placeholder="0" min="0"></div>
+          <input type="number" id="clvInp" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">Total value over entire relationship &#8212; the key ROI driver</div>
         </div>
       </div>
       <div class="g2">
         <div class="field">
           <label>Monthly Revenue (approx.)</label>
-          <div class="ipfx"><span class="sym sa">$</span><input type="number" id="mRev" placeholder="0" min="0"></div>
+          <input type="number" id="mRev" placeholder="0" min="0" style="padding-left:13px">
         </div>
         <div class="field">
           <label>Monthly Leads / Inquiries</label>
@@ -496,10 +496,10 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 </div>
 
 <footer class="site-footer">
-  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="mailto:info@reputation.ca">info@reputation.ca</a>
+  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="/cdn-cgi/l/email-protection#86efe8e0e9c6f4e3f6f3f2e7f2efe9e8a8e5e7"><span class="__cf_email__" data-cfemail="b5dcdbd3daf5c7d0c5c0c1d4c1dcdadb9bd6d4">[email&#160;protected]</span></a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── PRICES: exact USD and exact CAD ──────────────────────────────────────────
 var STD_USD  = 800;
 var PREM_USD = 500;
@@ -548,10 +548,8 @@ function setCur(c) {
   document.getElementById('stdLbl').textContent  = c==='CAD' ? 'CA$' + STD_CAD  : '$' + STD_USD  + ' USD';
   document.getElementById('premLbl').textContent = c==='CAD' ? 'CA$' + PREM_CAD : '$' + PREM_USD + ' USD';
 
-  // Update Step 2 currency symbols
-  document.getElementById('sym1').textContent = getSym();
-  var sas = document.querySelectorAll('.sa');
-  for (var i = 0; i < sas.length; i++) sas[i].textContent = getSym();
+  // Update Step 2 currency note in section subtitle
+  document.getElementById('step2cur').textContent = c==='CAD' ? 'CA$' : 'USD $';
 
   // Update Step 2 benchmark values
   var ind = document.getElementById('industry').value;
@@ -887,8 +885,4 @@ function buildChart(inv, rec, loss, sym) {
 }
 </script>
 
-<!-- Google Places API — loaded last so DOM and all JS functions exist first -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-
-</body>
-</html>
+<!-- Google Plac
