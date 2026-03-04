@@ -35,8 +35,8 @@
   .site-header{background:var(--navy);padding:0;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
   .header-inner{max-width:1000px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
   .header-logo img{height:40px;width:auto;}
-  .header-logo-text{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:var(--white);letter-spacing:-0.02em;}
-  .header-logo-text span{color:#e8b84b;}
+  .header-logo-text{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.02em;}
+  .header-logo-text span{color:#ffffff;}
   .header-tagline{font-size:12px;color:rgba(255,255,255,0.65);letter-spacing:0.08em;text-transform:uppercase;text-align:right;}
   .header-phone{font-size:14px;color:var(--white);font-weight:600;}
 
@@ -216,7 +216,7 @@
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <p>Trusted in online reputation management since 2011 — <a href="https://www.reputation.ca" target="_blank">reputation.ca</a> &nbsp;|&nbsp; 1 (888) 505-5023</p>
+  <p>Trusted in online reputation management since 2011 &mdash; <a href="https://www.reputation.ca" target="_blank">reputation.ca</a> &nbsp;|&nbsp; 1 (888) 505-5023</p>
 </div>
 
 <!-- HEADER -->
@@ -224,7 +224,7 @@
   <div class="header-inner">
     <div class="header-logo">
       <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'">
-      <span id="logo-fallback" style="display:none" class="header-logo-text">Reputation<span>.ca™</span></span>
+      <span id="logo-fallback" style="display:none" class="header-logo-text">Reputation<span>.ca&trade;</span></span>
     </div>
     <div style="text-align:right">
       <div class="header-tagline">Review Removal ROI Calculator</div>
@@ -237,45 +237,45 @@
 <div class="hero">
   <div class="hero-label">Free ROI Analysis Tool</div>
   <h1>How Much Are <span>Negative Reviews</span><br>Costing Your Business?</h1>
-  <p>Enter your business name below and we'll calculate exactly how much revenue you're losing — and how much you could recover with professional review removal.</p>
+  <p>Enter your business name below and we&rsquo;ll calculate exactly how much revenue you&rsquo;re losing &mdash; and how much you could recover with professional review removal.</p>
 </div>
 
 <div class="wrapper">
 
   <!-- STEP 1 -->
-  <div class="sec-label">Step 1 — Find Your Business</div>
+  <div class="sec-label">Step 1 &mdash; Find Your Business</div>
   <div class="card">
-    <div class="card-title">Business Information — Auto-Populated from Google</div>
+    <div class="card-title">Business Information &mdash; Auto-Populated from Google</div>
     <div class="fg3">
 
       <div class="field full">
         <label>Business Name <span style="color:var(--red);font-size:9px;font-weight:700;letter-spacing:0.06em">POWERED BY GOOGLE PLACES</span></label>
         <div class="search-wrap">
           <input type="text" id="business-search" placeholder="Start typing your client's business name..." autocomplete="off">
-          <span class="search-icon" id="search-icon">🔍</span>
+          <span class="search-icon" id="search-icon">&#128269;</span>
         </div>
         <div class="found-banner" id="found-banner">
-          ✓ &nbsp;<span id="found-text"><strong>Business found.</strong> Star rating, location, market size, currency and search volume have been auto-populated from Google.</span>
+          &#10003; &nbsp;<span id="found-text"><strong>Business found.</strong> Star rating, location, market size, currency and search volume have been auto-populated from Google.</span>
         </div>
       </div>
 
       <div class="field">
-        <label>Market Size <span class="auto-tag" id="tag-market">✓ AUTO</span></label>
+        <label>Market Size <span class="auto-tag" id="tag-market">&#10003; AUTO</span></label>
         <select id="market" onchange="onMarketChange()">
-          <option value="">— Detecting from location —</option>
+          <option value="">&mdash; Detecting from location &mdash;</option>
           <option value="major_metro">Major Metro (1M+)</option>
-          <option value="large_city">Large City (500K–1M)</option>
-          <option value="mid_city">Mid-Size City (100K–500K)</option>
-          <option value="small_city">Small City (50K–100K)</option>
-          <option value="small_town">Small Town (10K–50K)</option>
+          <option value="large_city">Large City (500K&ndash;1M)</option>
+          <option value="mid_city">Mid-Size City (100K&ndash;500K)</option>
+          <option value="small_city">Small City (50K&ndash;100K)</option>
+          <option value="small_town">Small Town (10K&ndash;50K)</option>
           <option value="rural">Rural / Under 10K</option>
         </select>
       </div>
 
       <div class="field">
-        <label>Industry <span class="auto-tag" id="tag-industry">✓ AUTO</span></label>
+        <label>Industry <span class="auto-tag" id="tag-industry">&#10003; AUTO</span></label>
         <select id="industry" onchange="onIndustryChange()">
-          <option value="">— Detecting from business type —</option>
+          <option value="">&mdash; Detecting from business type &mdash;</option>
           <option value="restaurants">Restaurants &amp; Food Service</option>
           <option value="home_services">Home Services (Plumbing, HVAC, Roofing)</option>
           <option value="healthcare">Healthcare &amp; Dental</option>
@@ -295,32 +295,32 @@
       </div>
 
       <div class="field">
-        <label>Currency <span class="auto-tag" id="tag-currency">✓ AUTO</span></label>
+        <label>Currency <span class="auto-tag" id="tag-currency">&#10003; AUTO</span></label>
         <div class="cur-toggle">
-          <button class="cur-btn active" id="btn-usd" onclick="setCur('USD')">🇺🇸 USD</button>
-          <button class="cur-btn" id="btn-cad" onclick="setCur('CAD')">🇨🇦 CAD</button>
+          <button class="cur-btn active" id="btn-usd" onclick="setCur('USD')">&#127482;&#127480; USD</button>
+          <button class="cur-btn" id="btn-cad" onclick="setCur('CAD')">&#127464;&#127462; CAD</button>
         </div>
       </div>
 
       <div class="field">
-        <label>Current Star Rating <span class="auto-tag" id="tag-stars">✓ AUTO</span></label>
+        <label>Current Star Rating <span class="auto-tag" id="tag-stars">&#10003; AUTO</span></label>
         <div class="star-row">
-          <span class="star" data-v="1" onclick="setStar(1)">★</span>
-          <span class="star" data-v="2" onclick="setStar(2)">★</span>
-          <span class="star" data-v="3" onclick="setStar(3)">★</span>
-          <span class="star" data-v="4" onclick="setStar(4)">★</span>
-          <span class="star" data-v="5" onclick="setStar(5)">★</span>
-          <span class="star-val" id="star-disp">—</span>
+          <span class="star" data-v="1" onclick="setStar(1)">&#9733;</span>
+          <span class="star" data-v="2" onclick="setStar(2)">&#9733;</span>
+          <span class="star" data-v="3" onclick="setStar(3)">&#9733;</span>
+          <span class="star" data-v="4" onclick="setStar(4)">&#9733;</span>
+          <span class="star" data-v="5" onclick="setStar(5)">&#9733;</span>
+          <span class="star-val" id="star-disp">&mdash;</span>
         </div>
         <input type="hidden" id="cur-rating" value="0">
       </div>
 
       <div class="field full">
         <label>Monthly Local Search Volume <span class="est-tag" id="vol-est-tag"></span></label>
-        <input type="number" id="search-vol" placeholder="Auto-estimated — override with your researched number" min="0" oninput="onVolOverride()">
+        <input type="number" id="search-vol" placeholder="Auto-estimated &mdash; override with your researched number" min="0" oninput="onVolOverride()">
         <div class="vol-est-bar" id="vol-est-bar" style="display:none">
-          <span class="el">📊 Estimated from market + industry:</span>
-          <span class="ev" id="vol-est-val">—</span>
+          <span class="el">&#128202; Estimated from market + industry:</span>
+          <span class="ev" id="vol-est-val">&mdash;</span>
           <span class="eh">Edit field above to use your own number</span>
         </div>
         <span class="fnote" id="vol-note">Will auto-estimate once business is selected</span>
@@ -330,44 +330,44 @@
   </div>
 
   <!-- STEP 2 -->
-  <div class="sec-label">Step 2 — Business Performance</div>
+  <div class="sec-label">Step 2 &mdash; Business Performance</div>
   <div class="card">
-    <div class="card-title">Financial Benchmarks — Auto-filled from Industry · Override if Known</div>
+    <div class="card-title">Financial Benchmarks &mdash; Auto-filled from Industry &middot; Override if Known</div>
     <div class="fg2">
       <div class="field">
-        <label>Average Transaction Value <span class="auto-tag" id="tag-txn">✓ BENCHMARK</span></label>
-        <div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0"></div>
+        <label>Average Transaction Value <span class="auto-tag" id="tag-txn">&#10003; BENCHMARK</span></label>
+        <div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0" oninput="document.getElementById('mo-rev').value=this.value"></div>
         <span class="fnote">What one customer spends on average</span>
       </div>
       <div class="field">
-        <label>Customer Lifetime Value <span class="auto-tag" id="tag-ltv">✓ BENCHMARK</span></label>
+        <label>Customer Lifetime Value <span class="auto-tag" id="tag-ltv">&#10003; BENCHMARK</span></label>
         <div class="pfx"><span>$</span><input type="number" id="ltv" placeholder="e.g. 1200" min="0"></div>
         <span class="fnote">Total value over full relationship</span>
       </div>
       <div class="field">
         <label>Monthly Revenue (approx.)</label>
-        <div class="pfx"><span>$</span><input type="number" id="mo-rev" placeholder="Optional" min="0"></div>
+        <div class="pfx"><span>$</span><input type="number" id="mo-rev" placeholder="Auto-filled from Avg. Transaction Value" min="0"></div>
       </div>
       <div class="field">
         <label>Monthly Leads / Inquiries</label>
-        <input type="number" id="mo-leads" placeholder="Optional — calls, walk-ins/mo" min="0">
+        <input type="number" id="mo-leads" placeholder="Optional &mdash; calls, walk-ins/mo" min="0">
       </div>
     </div>
   </div>
 
   <!-- STEP 3 -->
-  <div class="sec-label">Step 3 — Removal Order</div>
+  <div class="sec-label">Step 3 &mdash; Removal Order</div>
   <div class="card">
-    <div class="card-title">Select Review Type for Each Removal — Pricing Auto-Updates by Currency</div>
+    <div class="card-title">Select Review Type for Each Removal &mdash; Pricing Auto-Updates by Currency</div>
     <div class="removal-list" id="removal-list"></div>
-    <button class="add-row-btn" onclick="addRow()">＋ Add Another Review to Remove</button>
+    <button class="add-row-btn" onclick="addRow()">&#65291; Add Another Review to Remove</button>
     <div class="total-line">
       <span class="tl">Total Removal Investment</span>
       <span class="tv" id="total-disp">$0</span>
     </div>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing →</button>
+  <button class="calc-btn" onclick="calculate()">Calculate My Cost of Doing Nothing &rarr;</button>
   <div class="divider"></div>
 
   <!-- RESULTS -->
@@ -386,10 +386,10 @@
 
     <div class="sec-label">Star Rating Impact</div>
     <div class="rating-compare">
-      <div class="rblock"><div class="rstars" id="stars-b">☆☆☆☆☆</div><div class="rnum2" id="rnum-b">0.0★</div><div class="rlbl">Current Rating</div></div>
-      <div class="rarrow">→</div>
-      <div class="rblock"><div class="rstars" id="stars-a">☆☆☆☆☆</div><div class="rnum2" id="rnum-a">0.0★</div><div class="rlbl">Projected After Removals</div></div>
-      <div class="rarrow">→</div>
+      <div class="rblock"><div class="rstars" id="stars-b">&#9734;&#9734;&#9734;&#9734;&#9734;</div><div class="rnum2" id="rnum-b">0.0&#9733;</div><div class="rlbl">Current Rating</div></div>
+      <div class="rarrow">&rarr;</div>
+      <div class="rblock"><div class="rstars" id="stars-a">&#9734;&#9734;&#9734;&#9734;&#9734;</div><div class="rnum2" id="rnum-a">0.0&#9733;</div><div class="rlbl">Projected After Removals</div></div>
+      <div class="rarrow">&rarr;</div>
       <div class="rlift"><div class="lift-n" id="conv-lift">+0%</div><div class="lift-l">Conversion Rate Lift</div></div>
     </div>
 
@@ -400,11 +400,11 @@
     <div class="bdown" id="bdown"></div>
 
     <div class="urgency">
-      <div class="urg-icon">⚠️</div>
+      <div class="urg-icon">&#9888;&#65039;</div>
       <div><div class="urg-title" id="urg-title">The Clock Is Ticking</div><div class="urg-body" id="urg-body"></div></div>
     </div>
 
-    <p class="footnote">* Revenue impact estimates based on: Harvard Business School (2011) — 1-star increase = 5–9% revenue lift. BrightLocal Consumer Review Survey — 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0★ see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.</p>
+    <p class="footnote">* Revenue impact estimates based on: Harvard Business School (2011) &mdash; 1-star increase = 5&ndash;9% revenue lift. BrightLocal Consumer Review Survey &mdash; 94% of consumers avoid businesses due to negative reviews. Businesses crossing 4.0&#9733; see an average 18% conversion rate jump. Search volume estimates based on industry + market size benchmarks. Results are projections for illustration purposes only. Reputation.ca Ltd., 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5.</p>
     <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
   </div>
 
@@ -413,7 +413,7 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
-  <p>© Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
+  <p>&copy; Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
 </footer>
 
 <!-- Google Places API -->
@@ -489,7 +489,7 @@ function initPlaces(){
       document.getElementById('cur-rating').value=place.rating;
       const r=Math.round(place.rating);
       document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=r));
-      document.getElementById('star-disp').textContent=place.rating.toFixed(1)+' ★';
+      document.getElementById('star-disp').textContent=place.rating.toFixed(1)+' \u2605';
       showTag('tag-stars');
     }
     let country='',city='';
@@ -511,7 +511,7 @@ function initPlaces(){
     if(ind){document.getElementById('industry').value=ind;document.getElementById('industry').classList.add('auto-filled');showTag('tag-industry');applyBenchmarks(ind);}
     estimateVol(mkt,ind||document.getElementById('industry').value);
     document.getElementById('found-banner').classList.add('show');
-    document.getElementById('search-icon').textContent='✓';
+    document.getElementById('search-icon').textContent='\u2713';
     document.getElementById('search-icon').style.color='var(--green)';
   });
 }
@@ -523,19 +523,19 @@ function estimateVol(mkt,ind){
   userOverrodeVol=false;
   document.getElementById('vol-est-bar').style.display='flex';
   document.getElementById('vol-est-val').textContent=estVol.toLocaleString()+' searches/mo';
-  document.getElementById('vol-note').textContent='Auto-estimated — override with your researched number';
+  document.getElementById('vol-note').textContent='Auto-estimated \u2014 override with your researched number';
   document.getElementById('vol-note').style.color='var(--red)';
-  document.getElementById('vol-est-tag').textContent='★ ESTIMATED';
+  document.getElementById('vol-est-tag').textContent='\u2605 ESTIMATED';
   document.getElementById('search-vol').value=estVol;
   document.getElementById('search-vol').classList.add('auto-filled');
 }
-function onVolOverride(){userOverrodeVol=true;document.getElementById('search-vol').classList.remove('auto-filled');document.getElementById('vol-est-tag').textContent='✎ OVERRIDDEN';document.getElementById('vol-note').textContent='Using your researched number';document.getElementById('vol-note').style.color='var(--green)';}
+function onVolOverride(){userOverrodeVol=true;document.getElementById('search-vol').classList.remove('auto-filled');document.getElementById('vol-est-tag').textContent='\u270e OVERRIDDEN';document.getElementById('vol-note').textContent='Using your researched number';document.getElementById('vol-note').style.color='var(--green)';}
 function onMarketChange(){if(!userOverrodeVol){const m=document.getElementById('market').value,i=document.getElementById('industry').value;if(m) estimateVol(m,i);}}
 function onIndustryChange(){const i=document.getElementById('industry').value;applyBenchmarks(i);if(!userOverrodeVol){const m=document.getElementById('market').value;if(m&&i) estimateVol(m,i);}}
-function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
+function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');document.getElementById('mo-rev').value=d.avg;showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
 function showTag(id){const el=document.getElementById(id);if(el) el.classList.add('show');}
 function setCur(c){cur=c;document.getElementById('btn-usd').classList.toggle('active',c==='USD');document.getElementById('btn-cad').classList.toggle('active',c==='CAD');renderRows();}
-function setStar(v){stars=v;document.getElementById('cur-rating').value=v;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));document.getElementById('star-disp').textContent=v+'.0 ★';}
+function setStar(v){stars=v;document.getElementById('cur-rating').value=v;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));document.getElementById('star-disp').textContent=v+'.0 \u2605';}
 function addRow(t='standard'){rows.push({id:nxt++,type:t});renderRows();}
 function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();}
 function changeType(id,t){const r=rows.find(r=>r.id===id);if(r){r.type=t;renderRows();}}
@@ -545,7 +545,7 @@ function renderRows(){
   rows.forEach((r,i)=>{
     const price=p[r.type];total+=price;
     const d=document.createElement('div');d.className='removal-row';
-    d.innerHTML=`<div class="rnum">${i+1}</div><select onchange="changeType(${r.id},this.value)"><option value="standard" ${r.type==='standard'?'selected':''}>Standard Review Removal — ${p.sym}${p.standard.toLocaleString()} ${p.code}</option><option value="discounted" ${r.type==='discounted'?'selected':''}>New (≤2 wks) or Has Photo — ${p.sym}${p.discounted.toLocaleString()} ${p.code}</option></select><div class="rprice-del"><span class="rprice">${p.sym}${price.toLocaleString()} ${p.code}</span><button class="del-btn" onclick="delRow(${r.id})">×</button></div>`;
+    d.innerHTML=`<div class="rnum">${i+1}</div><select onchange="changeType(${r.id},this.value)"><option value="standard" ${r.type==='standard'?'selected':''}>Standard Review Removal \u2014 ${p.sym}${p.standard.toLocaleString()} ${p.code}</option><option value="discounted" ${r.type==='discounted'?'selected':''}>New (\u22642 wks) or Has Photo \u2014 ${p.sym}${p.discounted.toLocaleString()} ${p.code}</option></select><div class="rprice-del"><span class="rprice">${p.sym}${price.toLocaleString()} ${p.code}</span><button class="del-btn" onclick="delRow(${r.id})">\u00d7</button></div>`;
     list.appendChild(d);
   });
   document.getElementById('total-disp').textContent=rows.length?`${p.sym}${total.toLocaleString()} ${p.code}`:`${p.sym}0`;
@@ -554,7 +554,7 @@ addRow();
 
 function fmt(n){const p=PRICE[cur];if(n>=1000000) return p.sym+(n/1000000).toFixed(1)+'M '+p.code;if(n>=1000) return p.sym+Math.round(n/1000)+'K '+p.code;return p.sym+Math.round(n).toLocaleString()+' '+p.code;}
 function fmtF(n){return PRICE[cur].sym+Math.round(n).toLocaleString()+' '+PRICE[cur].code;}
-function starsHtml(r){let s='';for(let i=1;i<=5;i++) s+=r>=i?'★':(r>=i-0.5?'⯨':'☆');return s;}
+function starsHtml(r){let s='';for(let i=1;i<=5;i++) s+=r>=i?'\u2605':(r>=i-0.5?'\u2be8':'\u2606');return s;}
 function projRating(curR,neg,removed){const est=40,newCount=est-removed;if(newCount<=0) return 5.0;return Math.round(Math.min(5.0,(Math.round(curR*est)+removed)/newCount)*10)/10;}
 function penalty(rating,negCount){let sp=rating<4.0?0.18+(4.0-rating)*0.10:(rating<4.5?0.05:0);return Math.min(sp+negCount*0.07,0.78);}
 
@@ -564,7 +564,7 @@ function calculate(){
   const curR=parseFloat(document.getElementById('cur-rating').value)||0;
   const avgTxn=parseFloat(document.getElementById('avg-txn').value)||0;
   const moLeads=parseFloat(document.getElementById('mo-leads').value)||0;
-  if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n• Industry\n• Search Volume\n• Star Rating\n• Average Transaction Value\n• At least one removal');return;}
+  if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n\u2022 Industry\n\u2022 Search Volume\n\u2022 Star Rating\n\u2022 Average Transaction Value\n\u2022 At least one removal');return;}
   const ind=IND[indKey],p=PRICE[cur],negCount=rows.length;
   const totalCost=rows.reduce((s,r)=>s+p[r.type],0);
   const baseConv=ind.conv,curConv=baseConv*(1-penalty(curR,negCount));
@@ -593,22 +593,30 @@ function calculate(){
   document.getElementById('r-cust').textContent=custLost;
   document.getElementById('r-invest').textContent=fmtF(totalCost);
   document.getElementById('stars-b').textContent=starsHtml(curR);
-  document.getElementById('rnum-b').textContent=parseFloat(curR).toFixed(1)+'★';
+  document.getElementById('rnum-b').textContent=parseFloat(curR).toFixed(1)+'\u2605';
   document.getElementById('stars-a').textContent=starsHtml(newR);
-  document.getElementById('rnum-a').textContent=newR.toFixed(1)+'★';
+  document.getElementById('rnum-a').textContent=newR.toFixed(1)+'\u2605';
   document.getElementById('conv-lift').textContent='+'+convLift+'%';
   const sg=document.getElementById('sc-grid');sg.innerHTML='';
   const mi=Math.floor(scenarios.length/2);
   scenarios.forEach((s,i)=>{
     const feat=i===mi&&scenarios.length>1;
-    sg.innerHTML+=`<div class="sc-card ${feat?'feat':''}"><${feat?'div class="sc-badge">Recommended</div><':''}div class="sc-title">${s.n} Removal${s.n>1?'s':''} · ${fmtF(s.cost)}</div><div class="sc-gain">${fmt(s.gain)}<span style="font-size:11px;color:var(--muted)">/mo</span></div><div class="sc-sub">${fmt(s.annGain)} recovered / year</div><div class="sc-roi">📈 ${s.roi}% annual ROI</div>${s.payback?`<div class="sc-payback">Break-even in ~${s.payback} days</div>`:''}</div>`;
+    const div=document.createElement('div');
+    div.className='sc-card'+(feat?' feat':'');
+    div.innerHTML=(feat?'<div class="sc-badge">Recommended</div>':'')+
+      `<div class="sc-title">${s.n} Removal${s.n>1?'s':''} \u00b7 ${fmtF(s.cost)}</div>`+
+      `<div class="sc-gain">${fmt(s.gain)}<span style="font-size:11px;color:var(--muted)">/mo</span></div>`+
+      `<div class="sc-sub">${fmt(s.annGain)} recovered / year</div>`+
+      `<div class="sc-roi">\ud83d\udcc8 ${s.roi}% annual ROI</div>`+
+      (s.payback?`<div class="sc-payback">Break-even in ~${s.payback} days</div>`:'');
+    sg.appendChild(div);
   });
   const bd=document.getElementById('bdown');
   bd.innerHTML=[
     {l:'Monthly Local Search Volume',v:Math.round(searchVol).toLocaleString(),c:''},
     {l:'Est. Monthly Visitors via Search (4.5% CTR)',v:Math.round(searchLeads).toLocaleString(),c:''},
     {l:'Industry Baseline Conversion Rate',v:(baseConv*100).toFixed(1)+'%',c:'gld'},
-    {l:`Effective Conversion (${parseFloat(curR).toFixed(1)}★ · ${negCount} neg. review${negCount>1?'s':''})`,v:(curConv*100).toFixed(1)+'%',c:'neg'},
+    {l:`Effective Conversion (${parseFloat(curR).toFixed(1)}\u2605 \u00b7 ${negCount} neg. review${negCount>1?'s':''})`,v:(curConv*100).toFixed(1)+'%',c:'neg'},
     {l:'Projected Conversion After All Removals',v:(newConv*100).toFixed(1)+'%',c:'pos'},
     {l:'Customers Lost to Reputation Per Month',v:custLost,c:'neg'},
     {l:'Revenue Lost Per Month',v:fmtF(moLoss),c:'neg'},
@@ -618,7 +626,7 @@ function calculate(){
   const name=document.getElementById('business-search').value.split(',')[0]||'Your business';
   const best=scenarios[scenarios.length-1];
   document.getElementById('urg-title').textContent=`${name} is losing ${fmt(moLoss)} every single month.`;
-  document.getElementById('urg-body').innerHTML=`That's <strong>${fmtF(yrLoss)} per year</strong> leaving on the table — not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> — a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in just <strong>~${best.payback} days</strong>`:''}.`;
+  document.getElementById('urg-body').innerHTML=`That\u2019s <strong>${fmtF(yrLoss)} per year</strong> leaving on the table \u2014 not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> \u2014 a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in just <strong>~${best.payback} days</strong>`:''}.`;
   const res=document.getElementById('results');res.classList.add('visible');
   setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
