@@ -169,17 +169,22 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .ca{animation:countUp .45s cubic-bezier(.34,1.56,.64,1) both;}
-
 .print-biz-banner{display:none;background:rgba(46,204,113,0.08);border:2px solid rgba(46,204,113,0.4);border-radius:6px;padding:16px 22px;margin-bottom:18px;align-items:center;gap:14px;}
 .print-biz-banner .pbb-check{font-size:26px;color:#2ECC71;flex-shrink:0;}
 .print-biz-banner .pbb-name{font-family:Montserrat,sans-serif;font-weight:900;color:#fff;font-size:20px;margin-bottom:4px;letter-spacing:-0.01em;}
 .print-biz-banner .pbb-meta{font-size:13px;color:#8FA3C8;}
 .print-biz-banner.active{display:flex;}
-
 /* PDF DOWNLOAD BUTTON */
 .pdf-bar{max-width:960px;margin:0 auto;padding:0 24px 40px;position:relative;z-index:1;}
 .pdf-btn{width:100%;padding:18px;background:linear-gradient(135deg,#1E3057,#243662);border:2px solid rgba(255,255,255,0.25);border-radius:4px;color:#fff;font-family:Montserrat,sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:12px;}
 .pdf-btn:hover{border-color:rgba(255,255,255,0.6);background:linear-gradient(135deg,#243662,#2e4480);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.5);}
+/* ── INFO TOOLTIP (i) BOXES ────────────────────────────────────────────── */
+.ibox{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(143,163,200,0.2);border:1px solid rgba(143,163,200,0.4);color:var(--text-muted);font-size:10px;font-weight:800;cursor:default;margin-left:6px;vertical-align:middle;font-style:normal;line-height:1;font-family:'Montserrat',sans-serif;}
+.ibox:hover .ibox-tip{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.ibox-tip{position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);background:#0d1a2e;border:1px solid rgba(143,163,200,0.3);border-radius:5px;padding:12px 15px;width:260px;font-size:12px;color:#c8d8f0;line-height:1.6;opacity:0;pointer-events:none;transition:all .2s;z-index:999;font-family:'Open Sans',sans-serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:0;box-shadow:0 8px 28px rgba(0,0,0,0.6);}
+.ibox-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0d1a2e;}
+.ibox-tip strong{color:#fff;display:block;margin-bottom:5px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
+.ibox-tip em{color:var(--gold);font-style:normal;font-weight:600;}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   .site-header,.urgency,.cur-bar,.pdf-bar,.calc-btn,.btn-add,.btn-rm,input[type=range],.rlabels,.biz-search-box,.site-footer,#bizSearchSec{display:none!important;}
@@ -286,7 +291,7 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
     </div>
   </div>
 
-  <!-- STEP 0: BUSINESS SEARCH — at the very top -->
+  <!-- STEP 0: BUSINESS SEARCH -->
   <div class="sec" id="bizSearchSec">
     <div class="sec-hd">
       <div class="badge">&#9733;</div>
@@ -428,24 +433,34 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
     <div class="sec-body">
       <div class="g2" style="margin-bottom:16px">
         <div class="field">
-          <label>Avg. Transaction Value <span class="atag">BENCHMARK</span></label>
+          <label>
+            Avg. Transaction Value <span class="atag">BENCHMARK</span>
+            <i class="ibox">i<span class="ibox-tip"><strong>Average Transaction Value</strong>This is what a typical customer spends in a <em>single visit or purchase</em>. For example: a restaurant might enter <em>$45</em>, a dentist <em>$280</em>, a contractor <em>$4,000</em>. If unsure, divide last month's total revenue by the number of invoices or customers served.</span></i>
+          </label>
           <input type="number" id="atv" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">What one customer typically spends</div>
         </div>
         <div class="field">
-          <label>Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span></label>
+          <label>
+            Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span>
+            <i class="ibox">i<span class="ibox-tip"><strong>Customer Lifetime Value (CLV)</strong>The total revenue one customer generates over their <em>entire relationship</em> with your business — not just one visit. A gym member paying $65/month for 2 years = <em>$1,560 CLV</em>. A dental patient visiting twice yearly at $650 for 8 years = <em>$10,400 CLV</em>. This is the number that makes ROI calculations powerful.</span></i>
+          </label>
           <input type="number" id="clvInp" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">Total value over entire relationship &#8212; the key ROI driver</div>
         </div>
       </div>
       <div class="g2">
         <div class="field">
-          <label>Monthly Revenue (approx.)</label>
+          <label>
+            Monthly Revenue (approx.)
+            <i class="ibox">i<span class="ibox-tip"><strong>Monthly Revenue</strong>Your business's <em>total gross revenue</em> in a typical month — what comes in before expenses. This is optional and used only as a sanity check against the calculated loss. If revenue swings seasonally, use your <em>average month</em>. Not sure? Leave it blank — the calculator works without it.</span></i>
+          </label>
           <input type="number" id="mRev" placeholder="0" min="0" style="padding-left:13px">
         </div>
         <div class="field">
-          <label>Monthly Leads / Inquiries</label>
-          <input type="number" id="mLeads" placeholder="0" min="0">
+          <label>Monthly Leads / Inquiries <span class="atag">AUTO-EST</span></label>
+          <input type="number" id="mLeads" placeholder="Auto-estimated" min="0">
+          <div class="hint">Estimated from your search volume. Override if known.</div>
         </div>
       </div>
     </div>
@@ -559,15 +574,15 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 </div>
 
 <footer class="site-footer">
-  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="/cdn-cgi/l/email-protection#86efe8e0e9c6f4e3f6f3f2e7f2efe9e8a8e5e7"><span class="__cf_email__" data-cfemail="b5dcdbd3daf5c7d0c5c0c1d4c1dcdadb9bd6d4">[email&#160;protected]</span></a>
+  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="mailto:info@reputation.ca">info@reputation.ca</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── PRICES: exact USD and exact CAD ──────────────────────────────────────────
+<script>
+// ── PRICES ───────────────────────────────────────────────────────────────────
 var STD_USD  = 800;
 var PREM_USD = 500;
-var STD_CAD  = 1090;   // exact CA$ for Standard Removal
-var PREM_CAD = 680;    // exact CA$ for Posted Within 2 Weeks / Has Photo
+var STD_CAD  = 1090;
+var PREM_CAD = 680;
 var curCur   = 'USD';
 var remCnt   = 0;
 
@@ -587,10 +602,9 @@ var MKT  = {major:4200,large:2400,mid:1100,small_city:550,small_town:200,rural:6
 var PLAT = {google:'Google Review',yelp:'Yelp Review',facebook:'Facebook Review',tripadvisor:'TripAdvisor Review',bbb:'BBB Complaint',glassdoor:'Glassdoor Review',other:'Other Platform'};
 
 // ── CURRENCY ─────────────────────────────────────────────────────────────────
-function getSym()  { return curCur==='CAD' ? 'CA$' : '$'; }
-function getRate() { return curCur==='CAD' ? 1.36 : 1; }
+function getSym()  { return curCur === 'CAD' ? 'CA$' : '$'; }
+function getRate() { return curCur === 'CAD' ? 1.36 : 1; }
 
-// Returns the correct price in the active currency for a given USD price
 function toActive(usdPrice) {
   if (curCur === 'CAD') {
     return usdPrice === STD_USD ? STD_CAD : PREM_CAD;
@@ -603,37 +617,32 @@ function fmtP(n) { return n.toFixed(1) + '%'; }
 
 function setCur(c) {
   curCur = c;
-  document.getElementById('btnUSD').classList.toggle('on', c==='USD');
-  document.getElementById('btnCAD').classList.toggle('on', c==='CAD');
-  document.getElementById('rateNote').textContent = c==='CAD' ? '1 USD = 1.36 CAD' : 'Prices shown in USD';
-
-  // Update pricing callout pills
-  document.getElementById('stdLbl').textContent  = c==='CAD' ? 'CA$' + STD_CAD  : '$' + STD_USD  + ' USD';
-  document.getElementById('premLbl').textContent = c==='CAD' ? 'CA$' + PREM_CAD : '$' + PREM_USD + ' USD';
-
-  // Update Step 2 currency note in section subtitle
-  document.getElementById('step2cur').textContent = c==='CAD' ? 'CA$' : 'USD $';
-
-  // Update Step 2 benchmark values
+  document.getElementById('btnUSD').classList.toggle('on', c === 'USD');
+  document.getElementById('btnCAD').classList.toggle('on', c === 'CAD');
+  document.getElementById('rateNote').textContent = c === 'CAD' ? '1 USD = 1.36 CAD' : 'Prices shown in USD';
+  document.getElementById('stdLbl').textContent   = c === 'CAD' ? 'CA$' + STD_CAD  : '$' + STD_USD  + ' USD';
+  document.getElementById('premLbl').textContent  = c === 'CAD' ? 'CA$' + PREM_CAD : '$' + PREM_USD + ' USD';
+  document.getElementById('step2cur').textContent = c === 'CAD' ? 'CA$' : 'USD $';
   var ind = document.getElementById('industry').value;
   if (ind && IND[ind]) {
     document.getElementById('atv').value    = Math.round(IND[ind].atv * getRate());
     document.getElementById('clvInp').value = Math.round(IND[ind].clv * getRate());
   }
-
-  // *** Refresh EVERY individual removal row price ***
   var rows = document.querySelectorAll('.ritem');
   for (var i = 0; i < rows.length; i++) {
     var id = rows[i].id.replace('rem_', '');
     updP(id);
   }
-  // updP calls updInv at the end, so total also updates
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   addRem();
   updStar();
+  // Flag manual edits to mLeads so auto-estimate doesn't overwrite them
+  document.getElementById('mLeads').addEventListener('input', function() {
+    this.dataset.userSet = '1';
+  });
 });
 
 // ── GOOGLE PLACES ─────────────────────────────────────────────────────────────
@@ -647,12 +656,10 @@ function initPlaces() {
     var place = ac.getPlace();
     if (!place || !place.geometry) return;
 
-    // Show business name
     document.getElementById('bizNameDisp').textContent = place.name;
     document.getElementById('printBizName').textContent = place.name;
     document.getElementById('printBizBanner').classList.add('active');
 
-    // Auto-set star rating from Google rating
     if (place.rating) {
       var val = Math.round(place.rating * 10);
       val = Math.min(50, Math.max(10, val));
@@ -661,26 +668,21 @@ function initPlaces() {
       checkT();
     }
 
-    // Auto-set market size from city
     var addr = place.address_components || [];
     var city = '';
     for (var i = 0; i < addr.length; i++) {
       if (addr[i].types.indexOf('locality') > -1) city = addr[i].long_name;
     }
     setMarketFromCity(city);
-
-    // Auto-detect industry
     autoDetectInd(place.types || []);
 
-    // Build confirmation card
     var parts = [];
-    if (place.rating) parts.push('\u2B50 ' + place.rating + ' stars (' + (place.user_ratings_total||0).toLocaleString() + ' reviews)');
+    if (place.rating) parts.push('\u2B50 ' + place.rating + ' stars (' + (place.user_ratings_total || 0).toLocaleString() + ' reviews)');
     if (place.formatted_address) parts.push(place.formatted_address);
     document.getElementById('bizMeta').textContent = parts.join(' \u00B7 ');
     document.getElementById('printBizMeta').textContent = parts.join(' · ');
     document.getElementById('bizConfirmed').classList.add('show');
 
-    // Refresh search volume estimate
     setTimeout(autoSV, 250);
   });
 }
@@ -735,7 +737,9 @@ function onInd() {
   document.getElementById('clvInp').value = Math.round(IND[ind].clv * getRate());
   autoSV();
 }
+
 function onMkt() { autoSV(); }
+
 function autoSV() {
   var m    = document.getElementById('mktSize').value;
   var ind  = document.getElementById('industry').value;
@@ -744,10 +748,15 @@ function autoSV() {
   var est  = Math.round(base * mult);
   document.getElementById('searchVol').value = est;
   document.getElementById('searchHint').textContent = 'Auto-estimated: ~' + est.toLocaleString() + ' searches/mo. Override with your known figure.';
+  // Auto-populate Monthly Leads (3.2% of search volume) unless user has manually set it
+  var estLeads = Math.round(est * 0.032);
+  var leadsEl  = document.getElementById('mLeads');
+  if (leadsEl && !leadsEl.dataset.userSet) leadsEl.value = estLeads;
 }
 
 // ── STARS ─────────────────────────────────────────────────────────────────────
 function getCurStars() { return parseInt(document.getElementById('starSlider').value) / 10; }
+
 function starsHTML(r) {
   var h = '';
   for (var i = 1; i <= 5; i++) {
@@ -758,28 +767,32 @@ function starsHTML(r) {
   }
   return h;
 }
+
 function onStar()  { updStar(); checkT(); }
+
 function updStar() {
   var s = getCurStars();
   document.getElementById('starDisp').innerHTML = s.toFixed(1) + ' <span style="font-size:14px;color:var(--text-muted);font-weight:300">/ 5.0 stars</span>';
   document.getElementById('starVis').innerHTML  = starsHTML(s);
 }
+
 function checkT() {
   var s  = getCurStars();
   var el = document.getElementById('tAlert');
   el.className = 'talert';
   if (s < 3.0)      { el.classList.add('show','danger'); el.innerHTML = '&#128680; Critical: Below 3.0&#9733; \u2014 most consumers will immediately disqualify your business'; }
-  else if (s < 4.0) { el.classList.add('show','warn');   el.innerHTML = '&#9888;&#65039; You are ' + (4.0-s).toFixed(1) + '&#9733; below the 4.0 threshold \u2014 crossing it unlocks an average +18% conversion boost'; }
+  else if (s < 4.0) { el.classList.add('show','warn');   el.innerHTML = '&#9888;&#65039; You are ' + (4.0 - s).toFixed(1) + '&#9733; below the 4.0 threshold \u2014 crossing it unlocks an average +18% conversion boost'; }
   else if (s < 4.5) { el.classList.add('show','good');   el.innerHTML = '&#10003; Above 4.0&#9733; \u2014 good standing. Removing residual negatives protects your position.'; }
 }
+
 function convRate(s) {
   if (s < 2.0) return 0.8;
-  if (s < 2.5) return 1.5 + (s-2.0)*1.4;
-  if (s < 3.0) return 2.2 + (s-2.5)*2.0;
-  if (s < 3.5) return 3.2 + (s-3.0)*2.4;
-  if (s < 4.0) return 4.4 + (s-3.5)*4.4;
-  if (s < 4.5) return 6.6 + (s-4.0)*4.8;
-  return 9.0 + (s-4.5)*2.4;
+  if (s < 2.5) return 1.5 + (s - 2.0) * 1.4;
+  if (s < 3.0) return 2.2 + (s - 2.5) * 2.0;
+  if (s < 3.5) return 3.2 + (s - 3.0) * 2.4;
+  if (s < 4.0) return 4.4 + (s - 3.5) * 4.4;
+  if (s < 4.5) return 6.6 + (s - 4.0) * 4.8;
+  return 9.0 + (s - 4.5) * 2.4;
 }
 
 // ── REMOVALS ─────────────────────────────────────────────────────────────────
@@ -872,10 +885,12 @@ function runCalc() {
   var clicks = sv * ctr;
   var cC = convRate(curS)  / 100;
   var nC = convRate(projS) / 100;
-  var iC = convRate(4.3)   / 100;
 
-  var gained = Math.max(0, (clicks*nC) - (clicks*cC));
-  var lostVI = Math.max(0, (clicks*iC) - (clicks*cC));
+  // FIX: Customers Lost compares current vs a healthy 4.5★ baseline (not a hypothetical 4.3)
+  var baseC  = convRate(4.5) / 100;
+  var gained = Math.max(0, (clicks * nC) - (clicks * cC));
+  var lostVI = Math.max(0, (clicks * baseC) - (clicks * cC));
+
   var mRec   = gained * clv;
   var aRec   = mRec * 12;
   var mLost  = lostVI * clv;
@@ -927,7 +942,7 @@ function runCalc() {
 
   var res = document.getElementById('results');
   res.style.display = 'block';
-  setTimeout(function() { res.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
+  setTimeout(function() { res.scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100);
 }
 
 function buildChart(inv, rec, loss, sym) {
@@ -941,19 +956,19 @@ function buildChart(inv, rec, loss, sym) {
   for (var i = 0; i < bars.length; i++) {
     var b = bars[i];
     var p = Math.round((b.v / mx) * 100);
-    html += '<div class="bcol">' +
-      '<div class="btop">' + sym + Math.round(b.v).toLocaleString() + '</div>' +
-      '<div class="bfill ' + b.c + '" style="height:' + Math.max(p, 2) + '%"></div>' +
-      '<div class="bbot">' + b.l + '</div>' +
-    '</div>';
+    html +=
+      '<div class="bcol">' +
+        '<div class="btop">' + sym + Math.round(b.v).toLocaleString() + '</div>' +
+        '<div class="bfill ' + b.c + '" style="height:' + Math.max(p, 2) + '%"></div>' +
+        '<div class="bbot">' + b.l + '</div>' +
+      '</div>';
   }
   document.getElementById('chartBars').innerHTML = html;
 }
 </script>
 
-<!-- Google Places API — loaded LAST so DOM and all JS functions exist before callback fires -->
+<!-- Google Places API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-
 
 <!-- PDF DOWNLOAD BUTTON -->
 <div class="pdf-bar">
@@ -965,10 +980,8 @@ function buildChart(inv, rec, loss, sym) {
 
 <script>
 function downloadPDF() {
-  // Make sure results are visible before printing
   var res = document.getElementById('results');
   if (res) res.style.display = 'block';
-  // Small delay to ensure DOM is fully rendered
   setTimeout(function() { window.print(); }, 150);
 }
 </script>
