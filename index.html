@@ -207,9 +207,9 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 .pdf-btn{width:100%;padding:18px;background:linear-gradient(135deg,#1E3057,#243662);border:2px solid rgba(255,255,255,0.25);border-radius:4px;color:#fff;font-family:Montserrat,sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:12px;}
 .pdf-btn:hover{border-color:rgba(255,255,255,0.6);background:linear-gradient(135deg,#243662,#2e4480);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.5);}
 /* ── INFO TOOLTIP (i) BOXES ────────────────────────────────────────────── */
-.ibox{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(143,163,200,0.2);border:1px solid rgba(143,163,200,0.4);color:var(--text-muted);font-size:10px;font-weight:800;cursor:default;margin-left:6px;vertical-align:middle;font-style:normal;line-height:1;font-family:'Montserrat',sans-serif;}
+.ibox{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(143,163,200,0.2);border:1px solid rgba(143,163,200,0.4);color:var(--text-muted);font-size:10px;font-weight:800;cursor:pointer;font-style:normal;line-height:1;font-family:'Montserrat',sans-serif;flex-shrink:0;padding:0;outline:none;}
 .ibox:hover .ibox-tip{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
-.ibox-tip{position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);background:#0d1a2e;border:1px solid rgba(143,163,200,0.3);border-radius:5px;padding:12px 15px;width:260px;font-size:12px;color:#c8d8f0;line-height:1.6;opacity:0;pointer-events:none;transition:all .2s;z-index:999;font-family:'Open Sans',sans-serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:0;box-shadow:0 8px 28px rgba(0,0,0,0.6);}
+.ibox-tip{position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);background:#0d1a2e;border:1px solid rgba(143,163,200,0.3);border-radius:5px;padding:12px 15px;width:260px;font-size:12px;color:#c8d8f0;line-height:1.6;opacity:0;pointer-events:none;transition:all .2s;z-index:9999;font-family:'Open Sans',sans-serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:0;box-shadow:0 8px 28px rgba(0,0,0,0.6);}
 .ibox-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0d1a2e;}
 .ibox-tip strong{color:#fff;display:block;margin-bottom:5px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
 .ibox-tip em{color:var(--gold);font-style:normal;font-weight:600;}
@@ -463,28 +463,28 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
     <div class="sec-body">
       <div class="g2" style="margin-bottom:16px">
         <div class="field">
-          <label>
-            Avg. Transaction Value <span class="atag">BENCHMARK</span>
-            <i class="ibox">i<span class="ibox-tip"><strong>Average Transaction Value</strong>This is what a typical customer spends in a <em>single visit or purchase</em>. For example: a restaurant might enter <em>$45</em>, a dentist <em>$280</em>, a contractor <em>$4,000</em>. If unsure, divide last month's total revenue by the number of invoices or customers served.</span></i>
-          </label>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+            <label style="margin:0">Avg. Transaction Value <span class="atag">BENCHMARK</span></label>
+            <button type="button" class="ibox" onclick="this.querySelector('.ibox-tip').style.opacity=this.querySelector('.ibox-tip').style.opacity==='1'?'0':'1'">i<span class="ibox-tip"><strong>Average Transaction Value</strong>This is what a typical customer spends in a <em>single visit or purchase</em>. For example: a restaurant might enter <em>$45</em>, a dentist <em>$280</em>, a contractor <em>$4,000</em>. If unsure, divide last month's total revenue by the number of invoices or customers served.</span></button>
+          </div>
           <input type="number" id="atv" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">What one customer typically spends</div>
         </div>
         <div class="field">
-          <label>
-            Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span>
-            <i class="ibox">i<span class="ibox-tip"><strong>Customer Lifetime Value (CLV)</strong>The total revenue one customer generates over their <em>entire relationship</em> with your business — not just one visit. A gym member paying $65/month for 2 years = <em>$1,560 CLV</em>. A dental patient visiting twice yearly at $650 for 8 years = <em>$10,400 CLV</em>. This is the number that makes ROI calculations powerful.</span></i>
-          </label>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+            <label style="margin:0">Customer Lifetime Value (CLV) <span class="atag">BENCHMARK</span></label>
+            <button type="button" class="ibox" onclick="this.querySelector('.ibox-tip').style.opacity=this.querySelector('.ibox-tip').style.opacity==='1'?'0':'1'">i<span class="ibox-tip"><strong>Customer Lifetime Value (CLV)</strong>The total revenue one customer generates over their <em>entire relationship</em> with your business — not just one visit. A gym member paying $65/month for 2 years = <em>$1,560 CLV</em>. A dental patient visiting twice yearly at $650 for 8 years = <em>$10,400 CLV</em>. This is the number that makes ROI calculations powerful.</span></button>
+          </div>
           <input type="number" id="clvInp" placeholder="0" min="0" style="padding-left:13px">
           <div class="hint">Total value over entire relationship &#8212; the key ROI driver</div>
         </div>
       </div>
       <div class="g2">
         <div class="field">
-          <label>
-            Monthly Revenue (approx.)
-            <i class="ibox">i<span class="ibox-tip"><strong>Monthly Revenue</strong>Your business's <em>total gross revenue</em> in a typical month — what comes in before expenses. This is optional and used only as a sanity check against the calculated loss. If revenue swings seasonally, use your <em>average month</em>. Not sure? Leave it blank — the calculator works without it.</span></i>
-          </label>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+            <label style="margin:0">Monthly Revenue (approx.)</label>
+            <button type="button" class="ibox" onclick="this.querySelector('.ibox-tip').style.opacity=this.querySelector('.ibox-tip').style.opacity==='1'?'0':'1'">i<span class="ibox-tip"><strong>Monthly Revenue</strong>Your business's <em>total gross revenue</em> in a typical month — what comes in before expenses. This is optional and used only as a sanity check against the calculated loss. If revenue swings seasonally, use your <em>average month</em>. Not sure? Leave it blank — the calculator works without it.</span></button>
+          </div>
           <input type="number" id="mRev" placeholder="0" min="0" style="padding-left:13px">
         </div>
         <div class="field">
@@ -638,10 +638,10 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 </div>
 
 <footer class="site-footer">
-  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="mailto:info@reputation.ca">info@reputation.ca</a>
+  &copy; Reputation.ca Ltd. &middot; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &middot; <a href="tel:18885055023">1 (888) 505-5023</a> &middot; <a href="/cdn-cgi/l/email-protection#ed84838b82ad9f889d98998c99848283c38e8c"><span class="__cf_email__" data-cfemail="6900070f06291b0c191c1d081d000607470a08">[email&#160;protected]</span></a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── PRICES ───────────────────────────────────────────────────────────────────
 var STD_USD  = 800;
 var PREM_USD = 500;
@@ -1077,8 +1077,4 @@ function downloadPDF() {
 }
 </script>
 
-<!-- Google Places API — must be last so initPlaces() is already defined when callback fires -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-
-</body>
-</html>
+<!-- Google Places API — must
