@@ -167,6 +167,33 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
 .site-footer{background:var(--navy);border-top:1px solid var(--border);padding:18px 24px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text-dim);position:relative;z-index:1;}
 .site-footer a{color:var(--text-muted);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+/* ── STAR PROJECTION HERO ───────────────────────────────────────────────── */
+.star-proj{background:linear-gradient(135deg,#0d1f3c,#152a4a);border:2px solid rgba(255,184,0,0.4);border-radius:8px;padding:36px 32px 28px;margin-bottom:18px;text-align:center;position:relative;overflow:hidden;}
+.star-proj::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(255,184,0,0.07),transparent 70%);pointer-events:none;}
+.star-proj-eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);color:var(--gold);padding:5px 14px;border-radius:20px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:22px;}
+.star-proj-ratings{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:20px;flex-wrap:wrap;}
+.star-proj-side{text-align:center;padding:0 28px;}
+.star-proj-side .sp-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;}
+.star-proj-side .sp-num{font-family:'Montserrat',sans-serif;font-size:clamp(52px,10vw,80px);font-weight:900;line-height:1;margin-bottom:6px;}
+.star-proj-side.cur .sp-num{color:#ff6060;}
+.star-proj-side.proj .sp-num{color:var(--gold);}
+.star-proj-side .sp-stars{display:flex;justify-content:center;gap:2px;margin-bottom:6px;}
+.star-proj-side .sp-sub{font-size:12px;color:var(--text-muted);}
+.star-proj-arrow{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 12px;}
+.star-proj-arrow .arr-icon{font-size:32px;color:var(--gold);opacity:0.7;}
+.star-proj-arrow .arr-lift{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:var(--green);background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.25);padding:4px 10px;border-radius:3px;white-space:nowrap;}
+.star-proj-reviews{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:16px 20px;margin-bottom:20px;text-align:left;}
+.star-proj-reviews h4{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;}
+.spr-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;}
+.spr-item:last-child{border-bottom:none;}
+.spr-left{display:flex;align-items:center;gap:8px;}
+.spr-x{color:#ff6060;font-size:11px;font-weight:800;flex-shrink:0;}
+.spr-plat{color:#c8d8f0;}
+.spr-tier{font-size:11px;color:var(--text-dim);margin-left:4px;}
+.spr-price{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--gold);font-size:13px;flex-shrink:0;}
+.star-proj-disclaimer{background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.2);border-radius:5px;padding:14px 18px;font-size:12px;color:#c8d8f0;line-height:1.65;text-align:left;}
+.star-proj-disclaimer strong{color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;}
+.star-proj-disclaimer em{color:var(--gold);font-style:normal;font-weight:600;}
 @keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .ca{animation:countUp .45s cubic-bezier(.34,1.56,.64,1) both;}
 .print-biz-banner{display:none;background:rgba(46,204,113,0.08);border:2px solid rgba(46,204,113,0.4);border-radius:6px;padding:16px 22px;margin-bottom:18px;align-items:center;gap:14px;}
@@ -497,6 +524,40 @@ input[type=range]{width:100%;height:4px;background:rgba(255,255,255,0.1);border:
   <!-- RESULTS -->
   <div class="results" id="results">
     <div style="height:24px"></div>
+
+    <!-- ★ STAR PROJECTION HERO — front and centre -->
+    <div class="star-proj">
+      <div class="star-proj-eyebrow">&#9733; Your Google Rating Projection</div>
+      <div class="star-proj-ratings">
+        <div class="star-proj-side cur">
+          <div class="sp-label">Current Rating</div>
+          <div class="sp-num" id="spCurNum">—</div>
+          <div class="sp-stars" id="spCurStars"></div>
+          <div class="sp-sub">Today, without action</div>
+        </div>
+        <div class="star-proj-arrow">
+          <div class="arr-lift" id="spLiftPill">+0.0 ★</div>
+          <div class="arr-icon">&#8594;</div>
+          <div class="arr-lift" id="spConvLift" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.3);color:var(--gold);">+0% Conv.</div>
+        </div>
+        <div class="star-proj-side proj">
+          <div class="sp-label">Projected After Removal</div>
+          <div class="sp-num" id="spProjNum">—</div>
+          <div class="sp-stars" id="spProjStars"></div>
+          <div class="sp-sub">If you remove the reviews below</div>
+        </div>
+      </div>
+      <div class="star-proj-reviews">
+        <h4>Reviews Quoted for Removal</h4>
+        <div id="spReviewList"></div>
+      </div>
+      <div class="star-proj-disclaimer">
+        <strong>&#9432; How This Projection Is Calculated — &amp; Our No-Removal Guarantee</strong>
+        This projection is based on the <em>Harvard Business School study</em> which found that each 1-star improvement in a business's Google rating drives a <em>5–9% increase in revenue</em> and meaningful conversion rate gains. We apply this to your specific market size and current rating to estimate your post-removal score.<br><br>
+        <em>Important:</em> If we are unable to successfully remove a review for any reason, <em>you are not charged for that review</em> — period. You only pay for removals we complete. There is no risk to you.
+      </div>
+    </div>
+
     <div class="roi-hero">
       <div class="roi-badge">&#10022; Positive ROI Confirmed</div>
       <div class="roi-num" id="roiNum">0x</div>
@@ -901,6 +962,34 @@ function runCalc() {
   var lift   = cC > 0 ? ((nC - cC) / cC) * 100 : 0;
 
   document.getElementById('roiNum').textContent = roi.toFixed(1) + 'x';
+
+  // ── STAR PROJECTION HERO ─────────────────────────────────────────────────
+  document.getElementById('spCurNum').textContent  = curS.toFixed(1) + '★';
+  document.getElementById('spProjNum').textContent = projS.toFixed(1) + '★';
+  document.getElementById('spCurStars').innerHTML  = starsHTML(curS);
+  document.getElementById('spProjStars').innerHTML = starsHTML(projS);
+  document.getElementById('spLiftPill').textContent = '+' + (projS - curS).toFixed(1) + ' ★';
+  document.getElementById('spConvLift').textContent = '+' + lift.toFixed(0) + '% Conv.';
+
+  // Build the quoted reviews list
+  var reviewRows = document.querySelectorAll('.ritem');
+  var reviewHTML = '';
+  for (var i = 0; i < reviewRows.length; i++) {
+    var rid    = reviewRows[i].id.replace('rem_', '');
+    var platEl = document.getElementById('rp_' + rid);
+    var tierEl = document.getElementById('rt_' + rid);
+    if (!platEl || !tierEl) continue;
+    var platName  = PLAT[platEl.value] || platEl.value;
+    var tierLabel = tierEl.value === 'prem' ? 'Posted Within 2 Weeks / Has Photo' : 'Standard Removal';
+    var price     = (tierEl.value === 'prem') ? toActive(PREM_USD) : toActive(STD_USD);
+    reviewHTML +=
+      '<div class="spr-item">' +
+        '<div class="spr-left"><span class="spr-x">✕</span><span class="spr-plat">' + platName + '</span><span class="spr-tier">— ' + tierLabel + '</span></div>' +
+        '<span class="spr-price">' + getSym() + price.toLocaleString() + '</span>' +
+      '</div>';
+  }
+  document.getElementById('spReviewList').innerHTML = reviewHTML || '<div style="color:var(--text-dim);font-size:13px;">No reviews added yet.</div>';
+  // ─────────────────────────────────────────────────────────────────────────
   document.getElementById('eqRec').textContent  = fmt(aRec);
   document.getElementById('eqInv').textContent  = fmt(inv);
   document.getElementById('eqROI').textContent  = roi.toFixed(1) + 'x';
@@ -967,9 +1056,6 @@ function buildChart(inv, rec, loss, sym) {
 }
 </script>
 
-<!-- Google Places API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
-
 <!-- PDF DOWNLOAD BUTTON -->
 <div class="pdf-bar">
   <button class="pdf-btn" onclick="downloadPDF()">
@@ -985,6 +1071,9 @@ function downloadPDF() {
   setTimeout(function() { window.print(); }, 150);
 }
 </script>
+
+<!-- Google Places API — must be last so initPlaces() is already defined when callback fires -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
 
 </body>
 </html>
