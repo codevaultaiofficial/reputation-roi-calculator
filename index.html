@@ -182,7 +182,7 @@ body{background:white;margin:0;padding:0;}
 <!-- PRINT HEADER -->
 <div class="print-header">
 <div class="print-title">Review Removal ROI Calculator &mdash; <span>Reputation.ca</span></div>
-<div class="print-meta">reputation.ca &nbsp;|&nbsp; 1 (888) 505-5023 &nbsp;|&nbsp; info@reputation.ca<br>2482 Yonge St, Suite 28, Toronto, ON M4P 2H5</div>
+<div class="print-meta">reputation.ca &nbsp;|&nbsp; 1 (888) 505-5023 &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fa93949c95ba889f8a8f8e9b8e939594d4999b">[email&#160;protected]</a><br>2482 Yonge St, Suite 28, Toronto, ON M4P 2H5</div>
 </div>
 <div class="print-biz" id="print-biz"><em>Business</em><span id="print-biz-name">&mdash;</span></div>
 <!-- TOP BAR -->
@@ -351,10 +351,10 @@ body{background:white;margin:0;padding:0;}
 <!-- FOOTER -->
 <footer class="site-footer">
 <img src="https://www.reputation.ca/wp-content/uploads/2025/10/reputation-logo.svg" alt="Reputation.ca" onerror="this.style.display='none'">
-<p>&copy; Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="mailto:info@reputation.ca">info@reputation.ca</a></p>
+<p>&copy; Reputation.ca Ltd. &nbsp;|&nbsp; 2482 Yonge St, Suite 28, Toronto, ON M4P 2H5 &nbsp;|&nbsp; <a href="tel:18885055023">1 (888) 505-5023</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#660f08000926140316131207120f0908480507"><span class="__cf_email__" data-cfemail="a0c9cec6cfe0d2c5d0d5d4c1d4c9cfce8ec3c1">[email&#160;protected]</span></a></p>
 </footer>
 <!-- Google Places API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdW_BWbvpW8VIc-BtE7VPh7VZHY4qtzec&libraries=places&callback=initPlaces" async defer></script>
 <script>
 const IND={restaurants:{conv:0.065,avg:45,ltv:520},home_services:{conv:0.055,avg:380,ltv:1800},healthcare:{conv:0.048,avg:220,ltv:2400},legal:{conv:0.038,avg:1800,ltv:5200},retail:{conv:0.062,avg:85,ltv:620},auto:{conv:0.042,avg:420,ltv:2200},realestate:{conv:0.028,avg:8500,ltv:12000},beauty:{conv:0.071,avg:95,ltv:1100},hospitality:{conv:0.058,avg:180,ltv:900},childcare:{conv:0.044,avg:1200,ltv:14000},financial:{conv:0.032,avg:950,ltv:8500},fitness:{conv:0.066,avg:65,ltv:780},pet:{conv:0.072,avg:75,ltv:850},funeral:{conv:0.051,avg:4200,ltv:4200},construction:{conv:0.039,avg:7500,ltv:15000}};
 const VOL_MATRIX={major_metro:{restaurants:22000,home_services:14000,healthcare:12000,legal:8500,retail:18000,auto:11000,realestate:9500,beauty:16000,hospitality:13000,childcare:7000,financial:6500,fitness:14000,pet:9000,funeral:2200,construction:8000,default:10000},large_city:{restaurants:12000,home_services:7500,healthcare:6500,legal:4500,retail:9500,auto:6000,realestate:5500,beauty:8500,hospitality:7000,childcare:3800,financial:3500,fitness:7500,pet:5000,funeral:1200,construction:4500,default:5500},mid_city:{restaurants:5500,home_services:3500,healthcare:3000,legal:2000,retail:4500,auto:2800,realestate:2500,beauty:4000,hospitality:3200,childcare:1800,financial:1600,fitness:3500,pet:2200,funeral:600,construction:2000,default:2500},small_city:{restaurants:2500,home_services:1600,healthcare:1400,legal:900,retail:2000,auto:1300,realestate:1200,beauty:1800,hospitality:1500,childcare:800,financial:750,fitness:1600,pet:1000,funeral:300,construction:900,default:1200},small_town:{restaurants:900,home_services:600,healthcare:500,legal:350,retail:750,auto:480,realestate:450,beauty:650,hospitality:550,childcare:300,financial:280,fitness:600,pet:380,funeral:120,construction:350,default:450},rural:{restaurants:280,home_services:200,healthcare:160,legal:110,retail:240,auto:150,realestate:140,beauty:200,hospitality:170,childcare:90,financial:80,fitness:180,pet:120,funeral:40,construction:110,default:140}};
@@ -488,7 +488,8 @@ function calculate(){
     const feat=i===mi&&scenarios.length>1;
     const div=document.createElement('div');
     div.className='sc-card'+(feat?' feat':'');
-    div.innerHTML=(feat?'<div class="sc-badge">Recommended</div>':'')+`<div class="sc-title">${s.n} Removal${s.n>1?'s':''} \u00b7 ${fmtF(s.cost)}</div><div class="sc-gain">${fmt(s.gain)}<span style="font-size:11px;color:var(--muted)">/mo</span></div><div class="sc-sub">${fmt(s.annGain)} recovered / year</div><div class="sc-roi">\ud83d\udcc8 ${s.roi}% annual ROI</div>`+(s.payback?`<div class="sc-payback">Break-even in ~${s.payback} days</div>`:'');
+    var paybackHtml = s.payback ? '<div class="sc-payback">Break-even in ~'+s.payback+' days</div>' : '';
+    div.innerHTML=(feat?'<div class="sc-badge">Recommended</div>':'')+'<div class="sc-title">'+s.n+' Removal'+(s.n>1?'s':'')+' \u00b7 '+fmtF(s.cost)+'</div><div class="sc-gain">'+fmt(s.gain)+'<span style="font-size:11px;color:var(--muted)">/mo</span></div><div class="sc-sub">'+fmt(s.annGain)+' recovered / year</div><div class="sc-roi">\ud83d\udcc8 '+s.roi+'% annual ROI</div>'+paybackHtml;
     sg.appendChild(div);
   });
   const bd=document.getElementById('bdown');
@@ -506,7 +507,8 @@ function calculate(){
   const name=document.getElementById('business-search').value.split(',')[0]||'Your business';
   const best=scenarios[scenarios.length-1];
   document.getElementById('urg-title').textContent=`${name} is losing ${fmt(moLoss)} every single month.`;
-  document.getElementById('urg-body').innerHTML=`That\u2019s <strong>${fmtF(yrLoss)} per year</strong> leaving on the table \u2014 not because of their service, but because of what strangers read before they ever call. Removing all <strong>${negCount} review${negCount>1?'s':''}</strong> is a <strong>${fmtF(totalCost)} investment</strong> projected to recover <strong>${fmt(best.annGain)} in year one</strong> \u2014 a <strong>${best.roi}% return on investment</strong>${best.payback?`, with break-even in just <strong>~${best.payback} days</strong>`:''}.`;
+  var urgPayback = best.payback ? ', with break-even in just <strong>~'+best.payback+' days</strong>' : '';
+  document.getElementById('urg-body').innerHTML='That\u2019s <strong>'+fmtF(yrLoss)+' per year</strong> leaving on the table \u2014 not because of their service, but because of what strangers read before they ever call. Removing all <strong>'+negCount+' review'+(negCount>1?'s':'')+'</strong> is a <strong>'+fmtF(totalCost)+' investment</strong> projected to recover <strong>'+fmt(best.annGain)+' in year one</strong> \u2014 a <strong>'+best.roi+'% return on investment</strong>'+urgPayback+'.';
   const res=document.getElementById('results');res.classList.add('visible');
   setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
