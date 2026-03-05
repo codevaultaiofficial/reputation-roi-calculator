@@ -285,21 +285,13 @@ body{background:white;margin:0;padding:0;}
 <div class="fg2">
 <div class="field">
 <label>Average Transaction Value <span class="auto-tag" id="tag-txn">&#10003; BENCHMARK</span></label>
-<div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0" oninput="document.getElementById('mo-rev').value=this.value"></div>
+<div class="pfx"><span>$</span><input type="number" id="avg-txn" placeholder="e.g. 350" min="0"></div>
 <span class="fnote">What one customer spends on average</span>
 </div>
 <div class="field">
 <label>Customer Lifetime Value <span class="auto-tag" id="tag-ltv">&#10003; BENCHMARK</span></label>
 <div class="pfx"><span>$</span><input type="number" id="ltv" placeholder="e.g. 1200" min="0"></div>
 <span class="fnote">Total value over full relationship</span>
-</div>
-<div class="field">
-<label>Monthly Revenue (approx.)</label>
-<div class="pfx"><span>$</span><input type="number" id="mo-rev" placeholder="Auto-filled from Avg. Transaction Value" min="0"></div>
-</div>
-<div class="field">
-<label>Monthly Leads / Inquiries</label>
-<input type="number" id="mo-leads" placeholder="Optional &mdash; calls, walk-ins/mo" min="0">
 </div>
 </div>
 </div>
@@ -415,7 +407,7 @@ function estimateVol(mkt,ind){
 function onVolOverride(){userOverrodeVol=true;document.getElementById('search-vol').classList.remove('auto-filled');document.getElementById('vol-est-tag').textContent='\u270e OVERRIDDEN';document.getElementById('vol-note').textContent='Using your researched number';document.getElementById('vol-note').style.color='var(--green)';}
 function onMarketChange(){if(!userOverrodeVol){const m=document.getElementById('market').value,i=document.getElementById('industry').value;if(m) estimateVol(m,i);}}
 function onIndustryChange(){const i=document.getElementById('industry').value;applyBenchmarks(i);if(!userOverrodeVol){const m=document.getElementById('market').value;if(m&&i) estimateVol(m,i);}}
-function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');document.getElementById('mo-rev').value=d.avg;showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
+function applyBenchmarks(ind){const d=IND[ind];if(!d) return;if(!document.getElementById('avg-txn').value){document.getElementById('avg-txn').value=d.avg;document.getElementById('avg-txn').classList.add('auto-filled');showTag('tag-txn');}if(!document.getElementById('ltv').value){document.getElementById('ltv').value=d.ltv;document.getElementById('ltv').classList.add('auto-filled');showTag('tag-ltv');}}
 function showTag(id){const el=document.getElementById(id);if(el) el.classList.add('show');}
 function setCur(c){cur=c;document.getElementById('btn-usd').classList.toggle('active',c==='USD');document.getElementById('btn-cad').classList.toggle('active',c==='CAD');renderRows();}
 function setStar(v){stars=v;document.getElementById('cur-rating').value=v;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',+s.dataset.v<=v));document.getElementById('star-disp').textContent=v+'.0 \u2605';}
@@ -444,12 +436,11 @@ function calculate(){
   const searchVol=parseFloat(document.getElementById('search-vol').value)||0;
   const curR=parseFloat(document.getElementById('cur-rating').value)||0;
   const avgTxn=parseFloat(document.getElementById('avg-txn').value)||0;
-  const moLeads=parseFloat(document.getElementById('mo-leads').value)||0;
   if(!indKey||!searchVol||!curR||!avgTxn||rows.length===0){alert('Please complete:\n\n\u2022 Industry\n\u2022 Search Volume\n\u2022 Star Rating\n\u2022 Average Transaction Value\n\u2022 At least one removal');return;}
   const ind=IND[indKey],p=PRICE[cur],negCount=rows.length;
   const totalCost=rows.reduce((s,r)=>s+p[r.type],0);
   const baseConv=ind.conv,curConv=baseConv*(1-penalty(curR,negCount));
-  const searchLeads=searchVol*0.045,totalLeads=Math.max(moLeads,searchLeads);
+  const searchLeads=searchVol*0.045,totalLeads=searchLeads;
   const curRevMo=totalLeads*curConv*avgTxn,idealRevMo=totalLeads*baseConv*avgTxn;
   const moLoss=idealRevMo-curRevMo,yrLoss=moLoss*12;
   const custLost=Math.max(0,Math.round(totalLeads*(baseConv-curConv)));
