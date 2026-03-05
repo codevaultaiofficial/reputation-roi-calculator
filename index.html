@@ -155,8 +155,18 @@ select option{background:white;color:var(--text);}
 @media(max-width:640px){.fg2,.fg3{grid-template-columns:1fr;}.stat-grid{grid-template-columns:1fr 1fr;}.sc-grid{grid-template-columns:1fr;}.rating-compare{flex-direction:column;align-items:center;}.hero h1{font-size:26px;}}
 @media screen{.print-header,.print-biz{display:none;}}
 @media print{
-.topbar,.site-header,.hero,.calc-btn,.print-btn,.add-row-btn,.divider,.found-banner,.vol-est-bar,.fnote,.site-footer,.card,.sec-label{display:none;}
-#results{opacity:1;transform:none;pointer-events:all;}
+/* Hide UI chrome and input sections */
+.topbar,.site-header,.hero,.calc-btn,.print-btn,.add-row-btn,.divider,.found-banner,.vol-est-bar,.fnote,.site-footer{display:none!important;}
+/* Hide the step cards (inputs) but keep results */
+.wrapper > .card, .wrapper > .sec-label{display:none!important;}
+/* Show everything in results */
+#results{opacity:1!important;transform:none!important;pointer-events:all!important;display:block!important;}
+#results .sec-label{display:flex!important;}
+#results .stat-grid,#results .rating-compare,#results .sc-grid,#results .bdown,#results .urgency,#results .footnote,#results .results-hero{display:block!important;}
+.stat-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;}
+.sc-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;}
+.sc-card{opacity:1!important;animation:none!important;}
+.brow{opacity:1!important;animation:none!important;}
 body{background:white;margin:0;padding:0;}
 .wrapper{padding:0 24px 40px;}
 .print-header{display:flex!important;align-items:center;justify-content:space-between;padding:16px 24px 12px;border-bottom:3px solid #c0392b;margin-bottom:8px;}
@@ -167,6 +177,8 @@ body{background:white;margin:0;padding:0;}
 .print-biz em{color:#c0392b;font-style:normal;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-right:8px;}
 .stat-card{box-shadow:none;}
 .urgency{background:#fff5f5;}
+/* Prevent awkward page breaks */
+.stat-grid,.rating-compare,.sc-grid,.bdown,.urgency{page-break-inside:avoid;break-inside:avoid;}
 }
 </style>
 </head>
